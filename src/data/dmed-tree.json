@@ -1,0 +1,1454 @@
+{
+  "sections": [
+    {
+      "title": "Tizimga kirish",
+      "slug": "tizimga-kirish",
+      "icon": "key-round",
+      "children": [
+        {
+          "title": "Tizimga kirish",
+          "slug": "login-to-system-uz"
+        }
+      ]
+    },
+    {
+      "title": "Ro‘yxatga oluvchi",
+      "slug": "royxatga-oluvchi",
+      "icon": "phone",
+      "children": [
+        {
+          "title": "Bepul yozilish",
+          "slug": "bepul-yozilish-26860b77fb"
+        },
+        {
+          "title": "Bepul belgilangan vaqtga yozilish",
+          "slug": "bepul-belgilangan-vaqtga-yozilish-26860b77fb"
+        },
+        {
+          "title": "Bepul jonli navbatga yozilish",
+          "slug": "bepul-jonli-navbatga-yozilish-26860b77fb"
+        },
+        {
+          "title": "Pulli yozilish",
+          "slug": "pulli-yozilish-26860b77fb"
+        },
+        {
+          "title": "Belgilangan vaqtga qabulga pulli yozilish",
+          "slug": "belgilangan-vaqtga-qabulga-pulli-yozilish-26860b77fb"
+        },
+        {
+          "title": "Jonli navbatga qabulga pulli yozilish",
+          "slug": "jonli-navbatga-qabulga-pulli-yozilish-26860b77fb"
+        },
+        {
+          "title": "Tug‘ilgan sanasi ma’lum bo'lmagan bemorni qidirish",
+          "slug": "search-unknown-date-of-birth-uz"
+        },
+        {
+          "title": "Bemorning profili",
+          "slug": "bemorning-profili-24260b77fb"
+        },
+        {
+          "title": "Bemor profilidagi shaxsiy ma’lumotlar yangilash",
+          "slug": "personal-data-update-uz"
+        },
+        {
+          "title": "Hujjatni bemor profiliga biriktirish",
+          "slug": "document-attachment-uz"
+        },
+        {
+          "title": "Yangi kassa",
+          "slug": "yangi-kassa-28d60b77fb"
+        },
+        {
+          "title": "Hisob-fakturalar bilan bog’liq operatsiyalar",
+          "slug": "hisob-fakturalar-bilan-bogliq-operatsiyalar-28d60b77fb-2"
+        },
+        {
+          "title": "\"Shartnomalar\" bo‘limining funksionali",
+          "slug": "shartnomalar-bo-limining-funksionali-28d60b77fb-2"
+        }
+      ]
+    },
+    {
+      "title": "Amaliyotchi hamshira",
+      "slug": "amaliyotchi-hamshira",
+      "icon": "activity",
+      "children": [
+        {
+          "title": "Bemorning antropometriya malumotlarini kiritish va shifokorga yuborish",
+          "slug": "bemorning-antropometriya-malumotlarini-kiritish-va-shif-16860b77fb"
+        },
+        {
+          "title": "Bemorlarning o'z hududiga biriktirilishi",
+          "slug": "bemorlarning-oz-hududiga-biriktirilishi-16860b77fb"
+        },
+        {
+          "title": "DMED Pro mobil ilovasi orqali bemorni oilaviy shifokorga biriktirish",
+          "slug": "patient-assignment-dmed-pro-uz"
+        },
+        {
+          "title": "Patronaj rejasini tuzish",
+          "slug": "patronaj-rejasini-tuzish-16860b77fb"
+        },
+        {
+          "title": "Skrining/So’rovnomalar",
+          "slug": "skrining-so-rovnomalar-27e60b77fb"
+        },
+        {
+          "title": "YUIKning testdan oldingi ehtimolini baholash",
+          "slug": "yuikning-testdan-oldingi-ehtimolini-baholash-2aa60b77fb"
+        },
+        {
+          "title": "Yurak-qon tomir kasalliklarini erta aniqlash skriningi",
+          "slug": "yurak-qon-tomir-kasalliklarini-erta-aniqlash-skriningi-28b60b77fb"
+        },
+        {
+          "title": "MISda YUQTK xavfini erta aniqlash skriningini o‘tkazish",
+          "slug": "misda-yuqtk-xavfini-erta-aniqlash-skriningini-o-tkazish-28b60b77fb"
+        },
+        {
+          "title": "\"Yurak-qon tomir kasalliklari skriningi\" maqsadida patronajni rejalashtirish va amalga oshirish",
+          "slug": "yurak-qon-tomir-kasalliklari-skriningi-maqsadida-patron-28b60b77fb-2"
+        },
+        {
+          "title": "YuQTK skriningi natijalari bo‘yicha bemorlarni saralash",
+          "slug": "yuqtk-skriningi-natijalari-bo-yicha-bemorlarni-saralash-28b60b77fb"
+        },
+        {
+          "title": "051, 051-1 sonli jurnallarni ko’rish",
+          "slug": "051-051-1-sonli-jurnallarni-korish-28b60b77fb"
+        },
+        {
+          "title": "Qandli diabet skriningi",
+          "slug": "qandli-diabet-skriningi-27e60b77fb"
+        },
+        {
+          "title": "MISda qandli diabet xavfini aniqlash skriningini o‘tkazish",
+          "slug": "misda-qandli-diabet-xavfini-aniqlash-skriningini-o-tkaz-27e60b77fb"
+        },
+        {
+          "title": "Skrining natijalari bo‘yicha bemorlar ro‘yxatini saralash",
+          "slug": "skrining-natijalari-bo-yicha-bemorlar-ro-yxatini-sarala-27e60b77fb"
+        },
+        {
+          "title": "\"Qandli diabet skriningi\" maqsadida patronajni rejalashtirish va amalga oshirish",
+          "slug": "qandli-diabet-skriningi-maqsadida-patronajni-rejalashti-28b60b77fb"
+        },
+        {
+          "title": "Qandli diabet skriningi bo‘yicha hujjatlar",
+          "slug": "qandli-diabet-skriningi-bo-yicha-hujjatlar-27e60b77fb"
+        },
+        {
+          "title": "Serebrovaskulyar kasalliklarni erta aniqlash so’rovnomasi",
+          "slug": "serebrovaskulyar-kasalliklarni-erta-aniqlash-sorovnomas-2aa60b77fb"
+        },
+        {
+          "title": "Ko'krak (sut) bezi saratonini erta aniqlash skriningi",
+          "slug": "kokrak-sut-bezi-saratonini-erta-aniqlash-skriningi-27360b77fb"
+        },
+        {
+          "title": "MISda ko‘krak bezi saratonini erta aniqlash uchun skrining o‘tkazish",
+          "slug": "misda-ko-krak-bezi-saratonini-erta-aniqlash-uchun-skrin-27360b77fb"
+        },
+        {
+          "title": "Gelmintoz (gijja) kasalliklarni erta aniqlash skriningi",
+          "slug": "gelmintoz-gijja-kasalliklarni-erta-aniqlash-skriningi-27360b77fb"
+        },
+        {
+          "title": "MISda  gelmintoz kasalliklarni erta aniqlash skriningini o‘tkazish",
+          "slug": "misda-gelmintoz-kasalliklarni-erta-aniqlash-skriningini-27360b77fb"
+        },
+        {
+          "title": "Onkogematologik kasalliklarni erta aniqlash so‘rovnomasi",
+          "slug": "onkogematologik-kasalliklarni-erta-aniqlash-so-rovnomas-26c60b77fb"
+        },
+        {
+          "title": "MISda onkogematologik kasalliklar bo‘yicha so‘rovnoma o‘tkazish",
+          "slug": "misda-onkogematologik-kasalliklar-bo-yicha-so-rovnoma-o-26d60b77fb"
+        },
+        {
+          "title": "\"Onkogematologik kasalliklarni erta aniqlash skriningi\" maqsadida patronaj ko’rikni rejalashtirish",
+          "slug": "onkogematologik-kasalliklarni-erta-aniqlash-skriningi-m-26c60b77fb"
+        },
+        {
+          "title": "Onkogematologik kasalliklar so‘rovnomasi natijalari bo‘yicha bemorlarni saralash",
+          "slug": "onkogematologik-kasalliklar-so-rovnomasi-natijalari-bo--26d60b77fb"
+        },
+        {
+          "title": "Fertillik so‘rovnomasi",
+          "slug": "fertillik-so-rovnomasi-21160b77fb"
+        },
+        {
+          "title": "Fertillik so‘rovnomasini to‘ldirish",
+          "slug": "fertillik-so-rovnomasini-to-ldirish-21160b77fb"
+        },
+        {
+          "title": "Akusher-ginekologning (doyaning) №024-2 kundalik qabul jurnalini ko‘rib chiqish",
+          "slug": "akusher-ginekologning-doyaning-024-2-kundalik-qabul-jur-21160b77fb"
+        }
+      ]
+    },
+    {
+      "title": "Patronaj hamshirasi",
+      "slug": "patronaj-hamshirasi",
+      "icon": "home",
+      "children": [
+        {
+          "title": "\"Yurak-qon tomir kasalliklari skriningi\" maqsadida patronajni rejalashtirish va amalga oshirish",
+          "slug": "yurak-qon-tomir-kasalliklari-skriningi-maqsadida-patron-28b60b77fb"
+        },
+        {
+          "title": "\"Qandli diabet skriningi\" maqsadida patronajni rejalashtirish va amalga oshirish",
+          "slug": "qandli-diabet-skriningi-maqsadida-patronajni-rejalashti-27e60b77fb"
+        },
+        {
+          "title": "DMED PROda \"Onkogematologik kasalliklarni erta aniqlash skriningi\" maqsadida patronaj ko’rikni rejalashtirish",
+          "slug": "dmed-proda-onkogematologik-kasalliklarni-erta-aniqlash--26c60b77fb"
+        },
+        {
+          "title": "Ko‘krak bezi saratonini erta aniqlash skriningini o‘tkazish",
+          "slug": "ko-krak-bezi-saratonini-erta-aniqlash-skriningini-o-tka-30b60b77fb"
+        }
+      ]
+    },
+    {
+      "title": "Shifokor",
+      "slug": "shifokor",
+      "icon": "stethoscope",
+      "children": [
+        {
+          "title": "Bemorni qabulga taklif qilish va yangi epizod yaratish",
+          "slug": "bemorni-qabulga-taklif-qilish-va-yangi-epizod-yaratish-16860b77fb"
+        },
+        {
+          "title": "Bemorning kasallik tarihini davom ettirish",
+          "slug": "bemorning-kasallik-tarihini-davom-ettirish-16860b77fb"
+        },
+        {
+          "title": "Qo’shimcha talon",
+          "slug": "qoshimcha-talon-16860b77fb"
+        },
+        {
+          "title": "Bemorni analizga yuborish",
+          "slug": "bemorni-analizga-yuborish-16860b77fb"
+        },
+        {
+          "title": "Bemorni boshqa mutaxassisga yuborish",
+          "slug": "bemorni-boshqa-mutaxassisga-yuborish-16860b77fb"
+        },
+        {
+          "title": "Murojat epizodi orqali kasalxonaga yotqizish",
+          "slug": "murojat-epizodi-orqali-kasalxonaga-yotqizish-16860b77fb"
+        },
+        {
+          "title": "Homiladorlikni ro‘yxatga olish",
+          "slug": "shifokor-7"
+        },
+        {
+          "title": "Homiladorlik bo‘yicha hisobga qo‘yish",
+          "slug": "111-form-uz"
+        },
+        {
+          "title": "Homiladorlik hisobini o’chirish",
+          "slug": "homiladorlik-hisobini-ochirish-3a060b77fb-2"
+        },
+        {
+          "title": "111-shaklni to‘ldirish (Homilador ayolning shaxsiy kartasi)",
+          "slug": "111-shaklni-to-ldirish-homilador-ayolning-shaxsiy-karta-3a060b77fb"
+        },
+        {
+          "title": "113-shaklni to‘ldirish (Homilador ayolning almashinuv kartasi)",
+          "slug": "113-form-uz"
+        },
+        {
+          "title": "\"Tug‘ruq\" maqsadida shifoxonaga yotqizish uchun yo‘llanma",
+          "slug": "referral-for-hospitalization-for-childbirth-uz"
+        },
+        {
+          "title": "Elektron retsept",
+          "slug": "elektron-retsept-2c760b77fb"
+        },
+        {
+          "title": "MISda oddiy retsept yozish",
+          "slug": "misda-oddiy-retsept-yozish-2c760b77fb"
+        },
+        {
+          "title": "DMED Pro‘da oddiy retsept yozish",
+          "slug": "dmed-pro-da-oddiy-retsept-yozish-2c760b77fb"
+        },
+        {
+          "title": "MISda reimbursatsiya retseptini yozish",
+          "slug": "misda-reimbursatsiya-retseptini-yozish-2c760b77fb"
+        },
+        {
+          "title": "Retseptni bekor qilish",
+          "slug": "retseptni-bekor-qilish-2c760b77fb"
+        },
+        {
+          "title": "Elektron hujjat aylanishi",
+          "slug": "shifokor-9"
+        },
+        {
+          "title": "Mehnatga layoqatsizlik varaqasi",
+          "slug": "mehnatga-layoqatsizlik-varaqasi-1cf60b77fb"
+        },
+        {
+          "title": "Mehnatga layoqatsizlik varaqasini rasmiylashtirish, uzaytirish, bekor qilish va yopish",
+          "slug": "mehnatga-layoqatsizlik-varaqasini-rasmiylashtirish-uzay-1cf60b77fb"
+        },
+        {
+          "title": "Homiladorlik va tug‘ish bo‘yicha mehnatga layoqatsizlik varaqasini rasmiylashtirish, uzaytirish, bekor qilish va yopish",
+          "slug": "homiladorlik-va-tug-ish-bo-yicha-mehnatga-layoqatsizlik-39c60b77fb"
+        },
+        {
+          "title": "Tasdiqlash, tuzatishga qaytarish, mehnatga layoqatsizlik varaqasini chop etish",
+          "slug": "tasdiqlash-tuzatishga-qaytarish-mehnatga-layoqatsizlik--1cf60b77fb"
+        },
+        {
+          "title": "Avval yopilgan mehnatga layoqatsizlik varaqasini davom ettirish",
+          "slug": "avval-yopilgan-mehnatga-layoqatsizlik-varaqasini-davom--1cf60b77fb"
+        },
+        {
+          "title": "Mehnatga layoqatsizlik varaqasini chop etish",
+          "slug": "mehnatga-layoqatsizlik-varaqasini-chop-etish-1cf60b77fb-2"
+        },
+        {
+          "title": "Ma’lumotnoma yaratish",
+          "slug": "malumotnoma-yaratish-1cf60b77fb"
+        },
+        {
+          "title": "Elektron hujjatlarning haqiqiyligini tekshirish",
+          "slug": "elektron-hujjatlarning-haqiqiyligini-tekshirish-1cf60b77fb"
+        },
+        {
+          "title": "Qo‘lda kiritish jurnallarini to‘ldirish",
+          "slug": "qo-lda-kiritish-jurnallarini-to-ldirish-1cf60b77fb"
+        },
+        {
+          "title": "BI orqali jurnallarni ko‘rish",
+          "slug": "bi-orqali-jurnallarni-ko-rish-1cf60b77fb"
+        },
+        {
+          "title": "039-shaklni yuklab olish",
+          "slug": "039-shaklni-yuklab-olish-1cf60b77fb"
+        },
+        {
+          "title": "Nikohdan o‘tish uchun tibbiy ko‘rik ma’lumotnomasi",
+          "slug": "nikohdan-o-tish-uchun-tibbiy-ko-rik-malumotnomasi-2a060b77fb"
+        },
+        {
+          "title": "Ma’lumotnomani yaratish, tahrirlash va ko‘rib chiqish",
+          "slug": "malumotnomani-yaratish-tahrirlash-va-ko-rib-chiqish-2a060b77fb"
+        },
+        {
+          "title": "\"Nikoh uchun ma’lumotnomalar\" kichik bo‘limi funksionali",
+          "slug": "nikoh-uchun-malumotnomalar-kichik-bo-limi-funksionali-2a060b77fb"
+        },
+        {
+          "title": "058-shakl - Yuqumli kasallik haqida shoshilinch xabar",
+          "slug": "058-shakl-yuqumli-kasallik-haqida-shoshilinch-xabar-2cc60b77fb"
+        },
+        {
+          "title": "086-raqamli ma’lumotnomalar",
+          "slug": "doc-086-uz"
+        },
+        {
+          "title": "Tibbiy ma’lumotnoma №086",
+          "slug": "create-086-uz"
+        },
+        {
+          "title": "Tibbiy ma’lumotnoma №086-1",
+          "slug": "create-086-1-uz"
+        },
+        {
+          "title": "Tibbiy ma’lumotnoma №086-2",
+          "slug": "create-086-2-uz"
+        },
+        {
+          "title": "Haj / Umra ziyoratini amalga oshiruvchi ziyoratchilar uchun tibbiy ko'rikdan o'tganligi to'g'risida tibbiy ma'lumotnoma",
+          "slug": "haj-umra-ziyoratini-amalga-oshiruvchi-ziyoratchilar-uch-36060b77fb"
+        },
+        {
+          "title": "Ziyorat vaqtida ko‘rikdan o‘tkazish jarayoni ",
+          "slug": "pilgrimage-medical-examination-uz"
+        },
+        {
+          "title": "Haj / Umra ziyoratini ado etuvchi ziyoratchilar uchun tibbiy ko‘rikdan o‘tganlik to‘g‘risidagi ma’lumotnomani yaratish",
+          "slug": "haj-umra-ziyoratini-ado-etuvchi-ziyoratchilar-uchun-tib-3ac60b77fb"
+        },
+        {
+          "title": "Xavfsizlik kamarini taqmaslikka ruxsat beruvchi tibbiy ma’lumotnoma",
+          "slug": "safety-belt-uz"
+        },
+        {
+          "title": "Xavfsizlik kamarini taqmaslikka ruxsat beruvchi tibbiy ma’lumotnomani yaratish",
+          "slug": "xavfsizlik-kamarini-taqmaslikka-ruxsat-beruvchi-tibbiy--3b960b77fb-2"
+        },
+        {
+          "title": "Xavfsizlik kamarini taqmaslikka ruxsat beruvchi tibbiy ma’lumotnomani tasdiqlash",
+          "slug": "xavfsizlik-kamarini-taqmaslikka-ruxsat-beruvchi-tibbiy--3b960b77fb-3"
+        },
+        {
+          "title": "Davolash kursini yaratish",
+          "slug": "shifokor-10"
+        },
+        {
+          "title": "Fizioterapiya",
+          "slug": "physiotherapy-uz"
+        },
+        {
+          "title": "Fizioterapevtik muolajani tayinlash",
+          "slug": "physiotherapy-prescription-uz"
+        },
+        {
+          "title": "Fizioterapiya kursini o‘tkazish jarayonini kuzatish. 031-jurnalni ko‘rib chiqish",
+          "slug": "physiotherapy-tracking-uz"
+        },
+        {
+          "title": "Emlash",
+          "slug": "vaccination-uz"
+        },
+        {
+          "title": "Profile / Statistika",
+          "slug": "profile-statistika-021ee81bc5"
+        },
+        {
+          "title": "Shifokor profilida vositachilik haqi dasturi bo‘yicha to‘lovlarni ko‘rish",
+          "slug": "view-bonus-uz"
+        },
+        {
+          "title": "Shapka va tekshiruv shablonlarini qo‘shish",
+          "slug": "templates-uz"
+        },
+        {
+          "title": "Ambulator operatsiya",
+          "slug": "ambulator-operatsiya-26560b77fb"
+        },
+        {
+          "title": "Ambulatoriya operatsiyasini o‘tkazish",
+          "slug": "ambulatoriya-operatsiyasini-o-tkazish-26560b77fb"
+        },
+        {
+          "title": "Ambulatoriya operatsiyalarini ro‘yxatga olish jurnalini ko‘rish",
+          "slug": "ambulatoriya-operatsiyalarini-ro-yxatga-olish-jurnalini-26560b77fb"
+        },
+        {
+          "title": "Shifokor-maslahat komissiyasi majlisi",
+          "slug": "shifokor-maslahat-komissiyasi-majlisi-26560b77fb"
+        },
+        {
+          "title": "Shifokor-maslahat komissiyasi majlisini o‘tkazish",
+          "slug": "shifokor-maslahat-komissiyasi-majlisini-o-tkazish-26560b77fb"
+        },
+        {
+          "title": "Shifokor-maslahat komissiya xulosalarini ro‘yxatga olish jurnalini ko‘rib chiqish",
+          "slug": "shifokor-maslahat-komissiya-xulosalarini-ro-yxatga-olis-26560b77fb"
+        },
+        {
+          "title": "Imtiyozli yo'llanma asosida shifoxonaga yotqizish",
+          "slug": "state-funded-hospitalization-uz"
+        },
+        {
+          "title": "D-ro’yxat",
+          "slug": "d-royxat-27d60b77fb"
+        },
+        {
+          "title": "Bemorning D-hisobi haqidagi ma’lumotlarni kiritish va ko‘rish",
+          "slug": "bemorning-d-hisobi-haqidagi-malumotlarni-kiritish-va-ko-27d60b77fb"
+        },
+        {
+          "title": "Dispanser hisobi jurnalini ko‘rish (030-sonli)",
+          "slug": "dispanser-hisobi-jurnalini-ko-rish-030-sonli-27d60b77fb"
+        },
+        {
+          "title": "MISda bemorlarni D-hisob ma’lumotlarini ko‘rish",
+          "slug": "misda-bemorlarni-d-hisob-malumotlarini-ko-rish-27d60b77fb"
+        },
+        {
+          "title": "Skrining/So’rovnomalar",
+          "slug": "skrining-so-rovnomalar-28b60b77fb"
+        },
+        {
+          "title": "Qandli diabet skriningi",
+          "slug": "qandli-diabet-skriningi-28b60b77fb"
+        },
+        {
+          "title": "MISda qandli diabet xavfini aniqlash skriningini o‘tkazish",
+          "slug": "misda-qandli-diabet-xavfini-aniqlash-skriningini-o-tkaz-28b60b77fb"
+        },
+        {
+          "title": "Skrining natijalari bo‘yicha bemorlar ro‘yxatini saralash",
+          "slug": "skrining-natijalari-bo-yicha-bemorlar-ro-yxatini-sarala-28b60b77fb"
+        },
+        {
+          "title": "Qandli diabet skriningi bo‘yicha hujjatlar",
+          "slug": "qandli-diabet-skriningi-bo-yicha-hujjatlar-28b60b77fb-2"
+        },
+        {
+          "title": "Yurak-qon tomir kasalliklarini erta aniqlash skriningi",
+          "slug": "yurak-qon-tomir-kasalliklarini-erta-aniqlash-skriningi-28b60b77fb-2"
+        },
+        {
+          "title": "MISda YUQTK xavfini erta aniqlash skriningini o‘tkazish",
+          "slug": "misda-yuqtk-xavfini-erta-aniqlash-skriningini-o-tkazish-28b60b77fb-2"
+        },
+        {
+          "title": "YuQTK skriningi natijalari bo‘yicha bemorlarni saralash",
+          "slug": "yuqtk-skriningi-natijalari-bo-yicha-bemorlarni-saralash-28b60b77fb-2"
+        },
+        {
+          "title": "051, 051-1 sonli jurnallarni ko’rish",
+          "slug": "051-051-1-sonli-jurnallarni-korish-28b60b77fb-2"
+        },
+        {
+          "title": "Fertillik so‘rovnomasi",
+          "slug": "fertillik-so-rovnomasi-21160b77fb-2"
+        },
+        {
+          "title": "Fertillik so‘rovnomasini to‘ldirish",
+          "slug": "doctor-conducting-a-fertility-questionnaire-uz"
+        },
+        {
+          "title": "Akusher-ginekologning (doyaning) №024-2 kundalik qabul jurnalini ko‘rib chiqish",
+          "slug": "doctor-viewing-journal-024-2-uz"
+        },
+        {
+          "title": "Ko'krak (sut) bezi saratonini erta aniqlash skriningi",
+          "slug": "kokrak-sut-bezi-saratonini-erta-aniqlash-skriningi-27360b77fb-2"
+        },
+        {
+          "title": "MISda ko‘krak bezi saratonini erta aniqlash uchun skrining o‘tkazish",
+          "slug": "misda-ko-krak-bezi-saratonini-erta-aniqlash-uchun-skrin-27360b77fb-2"
+        },
+        {
+          "title": "Onkogematologik kasalliklarni erta aniqlash so‘rovnomasi",
+          "slug": "oncogem-mis-uz"
+        },
+        {
+          "title": "MISda onkogematologik kasalliklar bo‘yicha so‘rovnoma o‘tkazish",
+          "slug": "misda-onkogematologik-kasalliklar-bo-yicha-so-rovnoma-o-26a60b77fb"
+        },
+        {
+          "title": "Onkogematologik kasalliklar so‘rovnomasi natijalari bo‘yicha bemorlarni saralash",
+          "slug": "onkogematologik-kasalliklar-so-rovnomasi-natijalari-bo--26a60b77fb"
+        },
+        {
+          "title": "Gelmintoz (gijja) kasalliklarni erta aniqlash skriningi",
+          "slug": "gelmintoz-gijja-kasalliklarni-erta-aniqlash-skriningi-27360b77fb-2"
+        },
+        {
+          "title": "MISda  gelmintoz kasalliklarni erta aniqlash skriningini o‘tkazish",
+          "slug": "misda-gelmintoz-kasalliklarni-erta-aniqlash-skriningini-27360b77fb-2"
+        },
+        {
+          "title": "Chaqaloqlarda eshitish qobiliyatini tekshirish",
+          "slug": "hearing-screening-uz"
+        },
+        {
+          "title": "Ambulatoriyada 112 xizmati: hodisalar haqida ogohlantirish",
+          "slug": "112-integration-ambulatory-uz"
+        },
+        {
+          "title": "Ambulatoriyada 112 xizmati: qisqacha instruksiya",
+          "slug": "112-ambulance-short-uz"
+        },
+        {
+          "title": "\"Imtiyozli yo’llanmalar\" bo‘limining umumiy funksionali",
+          "slug": "imtiyozli-yollanmalar-bo-limining-umumiy-funksionali-b8260b77fb"
+        },
+        {
+          "title": "Birlamchi bo‘g‘inda yo‘llanma yaratish",
+          "slug": "birlamchi-bo-g-inda-yo-llanma-yaratish-93960b77fb"
+        },
+        {
+          "title": "Imtiyozli yo‘llanma bo‘yicha shifoxonaga rasmiylashtirish jarayoni",
+          "slug": "imtiyozli-yo-llanma-bo-yicha-shifoxonaga-rasmiylashtiri-39560b77fb"
+        },
+        {
+          "title": "Ko‘p tarmoqli poliklinika tomonidan yo‘llanmani ko‘rib chiqish",
+          "slug": "ko-p-tarmoqli-poliklinika-tomonidan-yo-llanmani-ko-rib--0f460b77fb"
+        },
+        {
+          "title": "Oilaviy shifokor tomonidan gospitalizatsiya uchun tibbiyot muassasasini tanlash",
+          "slug": "oilaviy-shifokor-tomonidan-gospitalizatsiya-uchun-tibbi-39560b77fb"
+        },
+        {
+          "title": "Respublika komissiyasi tomonidan yo‘llanmani ko‘rib chiqish",
+          "slug": "respublika-komissiyasi-tomonidan-yo-llanmani-ko-rib-chi-f9b60b77fb"
+        },
+        {
+          "title": "Viloyat komissiyasi tomonidan yo‘llanmani ko‘rib chiqish",
+          "slug": "viloyat-komissiyasi-tomonidan-yo-llanmani-ko-rib-chiqis-3cf60b77fb"
+        }
+      ]
+    },
+    {
+      "title": "Qabul bo‘limining navbatchi shifokor/Hamshirasi",
+      "slug": "qabul-bolimining-navbatchi-shifokorhamshirasi",
+      "icon": "ambulance",
+      "children": [
+        {
+          "title": "Bemorni joylashtirish. Kasalxonaga qabul qilish",
+          "slug": "bemorni-joylashtirish-kasalxonaga-qabul-qilish-16860b77fb"
+        },
+        {
+          "title": "Yo'llanmasiz bemorni ro'yxatga olish va joylashtirish",
+          "slug": "yollanmasiz-bemorni-royxatga-olish-va-joylashtirish-16860b77fb"
+        },
+        {
+          "title": "Shaxsi noma’lum bemorni ro‘yxatga olish (rasmiylashtirish)",
+          "slug": "shaxsi-nomalum-bemorni-ro-yxatga-olish-rasmiylashtirish-3ac60b77fb"
+        },
+        {
+          "title": "\"Tug‘ruq\" maqsadida rejali va shoshilinch kasalxonaga yotqizish",
+          "slug": "pregnancy-hospitalization-uz"
+        },
+        {
+          "title": "Imtiyozli yo'llanma asosida shifoxonaga yotqizish",
+          "slug": "imtiyozli-yollanma-asosida-shifoxonaga-yotqizish-27660b77fb"
+        },
+        {
+          "title": "Imtiyozli yo‘llanma bo‘yicha shifoxonaga rasmiylashtirish jarayoni",
+          "slug": "imtiyozli-yo-llanma-bo-yicha-shifoxonaga-rasmiylashtiri-27660b77fb"
+        },
+        {
+          "title": "058-shakl - Yuqumli kasallik haqida shoshilinch xabar",
+          "slug": "058-shakl-yuqumli-kasallik-haqida-shoshilinch-xabar-3ad60b77fb"
+        }
+      ]
+    },
+    {
+      "title": "Shifoxonaning davolovchi shifokor",
+      "slug": "shifoxonaning-davolovchi-shifokor",
+      "icon": "briefcase-medical",
+      "children": [
+        {
+          "title": "Boshlangich tekshiruvni otkazish",
+          "slug": "boshlangich-tekshiruvni-otkazish-16860b77fb"
+        },
+        {
+          "title": "003-tibbiy xujjat shaklini yaratish/tahrirlash va chop etish",
+          "slug": "003-tibbiy-xujjat-shaklini-yaratish-tahrirlash-va-chop--16860b77fb"
+        },
+        {
+          "title": "Kasalxonaga yotkizish. Bemorni ko'chirish.",
+          "slug": "kasalxonaga-yotkizish-bemorni-kochirish-16860b77fb"
+        },
+        {
+          "title": "Analizga yuborish",
+          "slug": "analizga-yuborish-16860b77fb"
+        },
+        {
+          "title": "Tor mutaxassisga yunaltirish",
+          "slug": "tor-mutaxassisga-yunaltirish-16860b77fb"
+        },
+        {
+          "title": "Davolash kundaligini yaratish va tahrirlash",
+          "slug": "davolash-kundaligini-yaratish-va-tahrirlash-16860b77fb"
+        },
+        {
+          "title": "Klinik tashxisni asoslash",
+          "slug": "klinik-tashxisni-asoslash-16860b77fb"
+        },
+        {
+          "title": "Davolash kursini yaratish",
+          "slug": "shifoxona-davolovchi-8"
+        },
+        {
+          "title": "Fizioterapiya",
+          "slug": "physiotherapy-in-hospital-uz"
+        },
+        {
+          "title": "Fizioterapevtik muolajani tayinlash",
+          "slug": "fizioterapevtik-muolajani-tayinlash-20060b77fb"
+        },
+        {
+          "title": "Fizioterapiya kursini o‘tkazish jarayonini kuzatish. 031-jurnalni ko‘rib chiqish",
+          "slug": "fizioterapiya-kursini-o-tkazish-jarayonini-kuzatish-031-20060b77fb"
+        },
+        {
+          "title": "Bo`limda ko'rikdan o'tkazish",
+          "slug": "bolimda-korikdan-otkazish-16860b77fb"
+        },
+        {
+          "title": "Jarrohlik amaliyotidan oldingi epikriz",
+          "slug": "jarrohlik-amaliyotidan-oldingi-epikriz-38260b77fb"
+        },
+        {
+          "title": "Bosqichli epikrizni yaratish",
+          "slug": "bosqichli-epikrizni-yaratish-16860b77fb"
+        },
+        {
+          "title": "Chiqaruv epikrizi - yaratish va chop etish",
+          "slug": "shifoxona-davolovchi-13"
+        },
+        {
+          "title": "Kasalxonaga qabul qilish. Forma 066 toldirish",
+          "slug": "kasalxonaga-qabul-qilish-forma-066-toldirish-16860b77fb"
+        },
+        {
+          "title": "Homiladorlik va tug‘ruq",
+          "slug": "homiladorlik-va-tug-ruq-1ce60b77fb"
+        },
+        {
+          "title": "Tug‘ruq protokolini to‘ldirish",
+          "slug": "birth-protocol-uz"
+        },
+        {
+          "title": "096-shaklni to‘ldirish (homiladorlik va tug‘ruq bo‘yicha karta)",
+          "slug": "096-form-uz"
+        },
+        {
+          "title": "097-shaklni to‘ldirish (yangi tug‘ilgan chaqaloqning rivojlanish kartasi)",
+          "slug": "097-form-uz"
+        },
+        {
+          "title": "Imtiyozli yo'llanma asosida shifoxonaga yotqizish",
+          "slug": "imtiyozli-yollanma-asosida-shifoxonaga-yotqizish-27660b77fb-2"
+        },
+        {
+          "title": "058-shakl - Yuqumli kasallik haqida shoshilinch xabar",
+          "slug": "058-shakl-yuqumli-kasallik-haqida-shoshilinch-xabar-2cc60b77fb-2"
+        },
+        {
+          "title": "Statsionardagi 112 xizmati: Hodisalar haqida ogohlantirish",
+          "slug": "112-integration-uz"
+        },
+        {
+          "title": "Statsionardagi 112 xizmati: qisqacha instruksiya",
+          "slug": "112-hospital-short-uz"
+        },
+        {
+          "title": "Mehnatga layoqatsizlik varaqasi",
+          "slug": "mehnatga-layoqatsizlik-varaqasi-3ac60b77fb"
+        },
+        {
+          "title": "Mehnatga layoqatsizlik varaqasini rasmiylashtirish, uzaytirish, bekor qilish va yopish",
+          "slug": "mehnatga-layoqatsizlik-varaqasini-rasmiylashtirish-uzay-3ac60b77fb"
+        },
+        {
+          "title": "Homiladorlik va tug‘ish bo‘yicha mehnatga layoqatsizlik varaqasini rasmiylashtirish, uzaytirish, bekor qilish va yopish",
+          "slug": "homiladorlik-va-tug-ish-bo-yicha-mehnatga-layoqatsizlik-3ac60b77fb"
+        },
+        {
+          "title": "Tasdiqlash, tuzatishga qaytarish, mehnatga layoqatsizlik varaqasini chop etish",
+          "slug": "tasdiqlash-tuzatishga-qaytarish-mehnatga-layoqatsizlik--3ac60b77fb"
+        },
+        {
+          "title": "Avval yopilgan mehnatga layoqatsizlik varaqasini davom ettirish",
+          "slug": "avval-yopilgan-mehnatga-layoqatsizlik-varaqasini-davom--3ac60b77fb"
+        },
+        {
+          "title": "Mehnatga layoqatsizlik varaqasini chop etish",
+          "slug": "mehnatga-layoqatsizlik-varaqasini-chop-etish-3ac60b77fb"
+        }
+      ]
+    },
+    {
+      "title": "Shifoxona. Tor mutaxassis korik tartibi",
+      "slug": "shifoxona-tor-mutaxassis-korik-tartibi",
+      "icon": "heart-pulse",
+      "children": [
+        {
+          "title": "Shifoxona. Tor mutaxassis korik tartibi",
+          "slug": "tor-mutaxassis"
+        }
+      ]
+    },
+    {
+      "title": "Laborant",
+      "slug": "laborant",
+      "icon": "microscope",
+      "children": [
+        {
+          "title": "Biomaterialni olish",
+          "slug": "biomaterialni-olish-16860b77fb"
+        },
+        {
+          "title": "Bemor test natijalarini kiritish",
+          "slug": "bemor-test-natijalarini-kiritish-16860b77fb"
+        },
+        {
+          "title": "Yangi LIS",
+          "slug": "yangi-lis-1f160b77fb"
+        },
+        {
+          "title": "\n”Buyurtmalar” bo‘limi funksionali",
+          "slug": "orders-uz"
+        },
+        {
+          "title": "\nBiomaterial olish, buyurtma yaratish, buyurtma shtrix-kodi va tekshiruv ro‘yxatini (chek-listni) chop etish, buyurtmani boshqa laboratoriyaga yo‘naltirish, buyurtmani rad etish, buyurtmani nolga tenglashtirish",
+          "slug": "order-actions-uz"
+        },
+        {
+          "title": "\nNatijani kiritish uchun tahlilni qidirish",
+          "slug": "order-search-uz"
+        },
+        {
+          "title": "\nTahlil natijasini kiritish va tasdiqlash. Tahlilni chop etish",
+          "slug": "result-input-and-print-uz"
+        },
+        {
+          "title": "\nLaboratoriyadan buyurtma yaratish",
+          "slug": "create-order-from-lis-uz"
+        },
+        {
+          "title": "\nTahlillardan foydalanish imkoniyatini boshqarish Tarkibiy tahlil ichida parametrlarni ko‘rsatish tartibini sozlash",
+          "slug": "configuration-of-analyses-uz"
+        }
+      ]
+    },
+    {
+      "title": "Taqrizchi (qayta ko'rib chiquvchi)",
+      "slug": "taqrizchi-qayta-korib-chiquvchi",
+      "icon": "badge-check",
+      "children": [
+        {
+          "title": "Reimbursatsiya retseptini tasdiqlash/qayta ishlashga yuborish",
+          "slug": "taqrizchi-1"
+        }
+      ]
+    },
+    {
+      "title": "Direktor",
+      "slug": "direktor",
+      "icon": "briefcase",
+      "children": [
+        {
+          "title": "Akkaunt yaratish",
+          "slug": "akkaunt-yaratish-16860b77fb"
+        },
+        {
+          "title": "Hisobni (akkauntni) faolsizlantirish",
+          "slug": "hisobni-akkauntni-faolsizlantirish-3ac60b77fb"
+        },
+        {
+          "title": "Kasalxonaga yotqizish holatini tasdiqlash",
+          "slug": "kasalxonaga-yotqizish-holatini-tasdiqlash-16960b77fb"
+        },
+        {
+          "title": "Elektron hujjat aylanishi",
+          "slug": "elektron-hujjat-aylanishi-1cf60b77fb"
+        },
+        {
+          "title": "Mehnatga layoqatsizlik varaqasini tasdiqlash, tuzatish uchun qaytarish",
+          "slug": "mehnatga-layoqatsizlik-varaqasini-tasdiqlash-tuzatish-u-38a60b77fb"
+        },
+        {
+          "title": "Mehnatga layoqatsizlik varaqasini chop etish",
+          "slug": "mehnatga-layoqatsizlik-varaqasini-chop-etish-1cf60b77fb"
+        },
+        {
+          "title": "Ma’lumotnoma yaratish",
+          "slug": "malumotnoma-yaratish-1cf60b77fb-2"
+        },
+        {
+          "title": "Elektron hujjatlarning haqiqiyligini tekshirish",
+          "slug": "elektron-hujjatlarning-haqiqiyligini-tekshirish-1cf60b77fb-2"
+        },
+        {
+          "title": "Qo‘lda kiritish jurnallarini to‘ldirish",
+          "slug": "qo-lda-kiritish-jurnallarini-to-ldirish-1cf60b77fb-2"
+        },
+        {
+          "title": "BI orqali jurnallarni ko‘rish",
+          "slug": "bi-orqali-jurnallarni-ko-rish-1cf60b77fb-2"
+        },
+        {
+          "title": "Yurak-qon tomir kasalliklarini erta aniqlash skriningi bo‘yicha hujjatlar",
+          "slug": "yurak-qon-tomir-kasalliklarini-erta-aniqlash-skriningi--28b60b77fb"
+        },
+        {
+          "title": "051, 051-1 sonli jurnallarni ko’rish",
+          "slug": "051-051-1-sonli-jurnallarni-korish-28b60b77fb-3"
+        },
+        {
+          "title": "Qandli diabet skriningi bo‘yicha hujjatlar",
+          "slug": "qandli-diabet-skriningi-bo-yicha-hujjatlar-28b60b77fb"
+        },
+        {
+          "title": "Nikohdan o‘tish uchun tibbiy ko‘rik ma’lumotnomasi",
+          "slug": "nikohdan-o-tish-uchun-tibbiy-ko-rik-malumotnomasi-2a060b77fb-2"
+        },
+        {
+          "title": "Ma’lumotnomani tasdiqlash va uni tuzatish uchun yuborish",
+          "slug": "malumotnomani-tasdiqlash-va-uni-tuzatish-uchun-yuborish-2a060b77fb"
+        },
+        {
+          "title": "058-shakl - Yuqumli kasallik haqida shoshilinch xabar",
+          "slug": "058-shakl-yuqumli-kasallik-haqida-shoshilinch-xabar-2cc60b77fb-3"
+        },
+        {
+          "title": "086-raqamli ma’lumotnomalar",
+          "slug": "dir-086-uz"
+        },
+        {
+          "title": "086-son tibbiy ma’lumotnomalarni tasdiqlash",
+          "slug": "086-aprove-uz"
+        },
+        {
+          "title": "Xavfsizlik kamarini taqmaslikka ruxsat beruvchi tibbiy ma’lumotnoma",
+          "slug": "xavfsizlik-kamarini-taqmaslikka-ruxsat-beruvchi-tibbiy--3b960b77fb"
+        },
+        {
+          "title": "Xavfsizlik kamarini taqmaslikka ruxsat beruvchi tibbiy ma’lumotnomani yaratish",
+          "slug": "xavfsizlik-kamarini-taqmaslikka-ruxsat-beruvchi-tibbiy--3b960b77fb-4"
+        },
+        {
+          "title": "Buhgalteriya",
+          "slug": "buhgalteriya-1d760b77fb"
+        },
+        {
+          "title": "\"Muolaja\" turidagi xizmatlarni sozlash",
+          "slug": "muolaja-turidagi-xizmatlarni-sozlash-1d760b77fb"
+        },
+        {
+          "title": "Ombordagi mahsulot narxini sozlash",
+          "slug": "ombordagi-mahsulot-narxini-sozlash-1d760b77fb"
+        },
+        {
+          "title": "Xodim to‘g‘risida ma’lumot kiritish",
+          "slug": "xodim-to-g-risida-malumot-kiritish-1f460b77fb"
+        },
+        {
+          "title": "Xodimni uchastka va xonaga (kabinetga) biriktirish",
+          "slug": "attachment-to-the-brigade-and-office-uz"
+        },
+        {
+          "title": "Xodimning ta'til jadvali to‘g‘risida ma’lumotlarni kiritish",
+          "slug": "absentee-schedule-uz"
+        },
+        {
+          "title": "Xodimning ish jadvali to‘g‘risida ma’lumotlarni kiritish",
+          "slug": "work-schedule-uz"
+        },
+        {
+          "title": "Xodimning lavozimi to‘g‘risida ma’lumotlarni kiritish",
+          "slug": "employee-position-uz"
+        },
+        {
+          "title": "Xodimning telefon raqamini kiritish",
+          "slug": "employee-phone-uz"
+        },
+        {
+          "title": "Imtiyozli yo'llanma asosida shifoxonaga yotqizish",
+          "slug": "imtiyozli-yollanma-asosida-shifoxonaga-yotqizish-27660b77fb-3"
+        },
+        {
+          "title": "D-ro’yxat",
+          "slug": "d-royxat-27d60b77fb-2"
+        },
+        {
+          "title": "Bemorning D-hisobi haqidagi ma’lumotlarni kiritish va ko‘rish",
+          "slug": "bemorning-d-hisobi-haqidagi-malumotlarni-kiritish-va-ko-27d60b77fb-2"
+        },
+        {
+          "title": "Dispanser hisobi jurnalini ko‘rish (030-sonli)",
+          "slug": "dispanser-hisobi-jurnalini-ko-rish-030-sonli-27d60b77fb-2"
+        },
+        {
+          "title": "MISda bemorlarni D-hisob ma’lumotlarini ko‘rish",
+          "slug": "misda-bemorlarni-d-hisob-malumotlarini-ko-rish-27d60b77fb-2"
+        },
+        {
+          "title": "Homiladorlik hisobini o’chirish",
+          "slug": "homiladorlik-hisobini-ochirish-3a060b77fb"
+        },
+        {
+          "title": "Yangi kassa",
+          "slug": "yangi-kassa-28d60b77fb-2"
+        },
+        {
+          "title": "\"Hisoblar\" bo‘limi funksionali",
+          "slug": "hisoblar-bo-limi-funksionali-28d60b77fb-2"
+        },
+        {
+          "title": "\"Depozitlar\" bo‘limi funksionali",
+          "slug": "depozitlar-bo-limi-funksionali-28d60b77fb-2"
+        },
+        {
+          "title": "Kassirlar smenalari bo‘limining funksional imkoniyatlari",
+          "slug": "kassirlar-smenalari-bo-limining-funksional-imkoniyatlar-28d60b77fb"
+        },
+        {
+          "title": "“Hisobotlar” bo‘limining funksional imkoniyatlari",
+          "slug": "hisobotlar-bo-limining-funksional-imkoniyatlari-28d60b77fb-2"
+        },
+        {
+          "title": "\"Shartnomalar\" bo‘limining funksionali",
+          "slug": "shartnomalar-bo-limining-funksionali-28d60b77fb-3"
+        },
+        {
+          "title": "Sug‘urta tashkilotlarini yaratish va sozlash",
+          "slug": "sug-urta-tashkilotlarini-yaratish-va-sozlash-33a60b77fb"
+        },
+        {
+          "title": "\"Imtiyozli yo’llanmalar\" bo‘limining umumiy funksionali",
+          "slug": "imtiyozli-yollanmalar-bo-limining-umumiy-funksionali-36360b77fb"
+        },
+        {
+          "title": "Birlamchi bo‘g‘inda yo‘llanma yaratish",
+          "slug": "birlamchi-bo-g-inda-yo-llanma-yaratish-41260b77fb"
+        },
+        {
+          "title": "Direktor",
+          "slug": "direktor"
+        },
+        {
+          "title": "Imtiyozli yo‘llanma bo‘yicha shifoxonaga rasmiylashtirish jarayoni",
+          "slug": "imtiyozli-yo-llanma-bo-yicha-shifoxonaga-rasmiylashtiri-bf060b77fb"
+        },
+        {
+          "title": "Ko‘p tarmoqli poliklinika tomonidan yo‘llanmani ko‘rib chiqish",
+          "slug": "ko-p-tarmoqli-poliklinika-tomonidan-yo-llanmani-ko-rib--5b460b77fb"
+        },
+        {
+          "title": "Oilaviy shifokor tomonidan gospitalizatsiya uchun tibbiyot muassasasini tanlash",
+          "slug": "oilaviy-shifokor-tomonidan-gospitalizatsiya-uchun-tibbi-1b160b77fb"
+        },
+        {
+          "title": "Respublika komissiyasi tomonidan yo‘llanmani ko‘rib chiqish",
+          "slug": "respublika-komissiyasi-tomonidan-yo-llanmani-ko-rib-chi-cb360b77fb"
+        },
+        {
+          "title": "Viloyat komissiyasi tomonidan yo‘llanmani ko‘rib chiqish",
+          "slug": "viloyat-komissiyasi-tomonidan-yo-llanmani-ko-rib-chiqis-51a60b77fb"
+        }
+      ]
+    },
+    {
+      "title": "Statist",
+      "slug": "statist",
+      "icon": "chart-column",
+      "children": [
+        {
+          "title": "SSV Hisobotlari",
+          "slug": "learning-materials-statist-ssv-reports-uzb"
+        }
+      ]
+    },
+    {
+      "title": "Farmasevt",
+      "slug": "farmasevt",
+      "icon": "pill",
+      "children": [
+        {
+          "title": "DMED EMIS orqali retsept bo‘yicha dori-vositasini berish",
+          "slug": "drug-release-mis-uz"
+        },
+        {
+          "title": "Dori-vositasini DMED Pro‘da berish",
+          "slug": "farmasevt-2"
+        }
+      ]
+    },
+    {
+      "title": "Ombor mudiri",
+      "slug": "ombor-mudiri",
+      "icon": "archive",
+      "children": [
+        {
+          "title": "Ta’minotchilar va shartnomalarni qo‘shish",
+          "slug": "ombor-mudiri-2"
+        },
+        {
+          "title": "Mahsulotlar qo‘shish",
+          "slug": "ombor-mudiri-3"
+        },
+        {
+          "title": "Omborlar qo‘shish",
+          "slug": "ombor-mudiri-4"
+        },
+        {
+          "title": "Hisob: Kirim, Chiqim, Qoldiq",
+          "slug": "ombor-mudiri-5"
+        }
+      ]
+    },
+    {
+      "title": "Buxgalter",
+      "slug": "buxgalter",
+      "icon": "wallet",
+      "children": [
+        {
+          "title": "\"Muolaja\" turidagi xizmatlarni sozlash",
+          "slug": "buxgalter-1"
+        },
+        {
+          "title": "Ombordagi mahsulot narxini sozlash",
+          "slug": "buxgalter-2"
+        },
+        {
+          "title": "Imtiyozli yo’llanma orqali yotqizish uchun nozologik guruhni yaratish va sozlash jarayoni",
+          "slug": "imtiyozli-yollanma-orqali-yotqizish-uchun-nozologik-gur-27660b77fb"
+        },
+        {
+          "title": "Yangi kassa",
+          "slug": "yangi-kassa-28d60b77fb-3"
+        },
+        {
+          "title": "\"Hisoblar\" bo‘limi funksionali",
+          "slug": "hisoblar-bo-limi-funksionali-28d60b77fb-3"
+        },
+        {
+          "title": "Hisob-fakturalar bilan bog’liq operatsiyalar",
+          "slug": "hisob-fakturalar-bilan-bogliq-operatsiyalar-28d60b77fb-3"
+        },
+        {
+          "title": "“Depozitlar” bo‘limi funksionali",
+          "slug": "depozitlar-bo-limi-funksionali-28d60b77fb-3"
+        },
+        {
+          "title": "“Kassirlar smenalari” bo‘limining funksional imkoniyatlari",
+          "slug": "kassirlar-smenalari-bo-limining-funksional-imkoniyatlar-28d60b77fb-2"
+        },
+        {
+          "title": "“Hisobotlar” bo‘limining funksional imkoniyatlari",
+          "slug": "hisobotlar-bo-limining-funksional-imkoniyatlari-28d60b77fb-3"
+        },
+        {
+          "title": "\"Shartnomalar\" bo‘limining funksionali",
+          "slug": "shartnomalar-bo-limining-funksionali-28d60b77fb-4"
+        },
+        {
+          "title": "Sug‘urta tashkilotlarini yaratish va sozlash",
+          "slug": "sug-urta-tashkilotlarini-yaratish-va-sozlash-33a60b77fb-2"
+        }
+      ]
+    },
+    {
+      "title": "Kassir",
+      "slug": "kassir",
+      "icon": "banknote",
+      "children": [
+        {
+          "title": "Smenani ochish va yopish",
+          "slug": "smenani-ochish-va-yopish-28d60b77fb"
+        },
+        {
+          "title": "\"Hisoblar\" bo‘limi funksionali",
+          "slug": "hisoblar-bo-limi-funksionali-28d60b77fb"
+        },
+        {
+          "title": "Hisob-fakturalar bilan bog’liq operatsiyalar",
+          "slug": "hisob-fakturalar-bilan-bogliq-operatsiyalar-28d60b77fb"
+        },
+        {
+          "title": "“Depozitlar” bo‘limi funksionali",
+          "slug": "depozitlar-bo-limi-funksionali-28d60b77fb"
+        },
+        {
+          "title": "“Mening smenalarim” bo‘limining funksional imkoniyatlari",
+          "slug": "mening-smenalarim-bo-limining-funksional-imkoniyatlari-28d60b77fb"
+        },
+        {
+          "title": "“Hisobotlar” bo‘limining funksional imkoniyatlari",
+          "slug": "hisobotlar-bo-limining-funksional-imkoniyatlari-28d60b77fb"
+        },
+        {
+          "title": "\"Shartnomalar\" bo‘limining funksionali",
+          "slug": "shartnomalar-bo-limining-funksionali-28d60b77fb"
+        },
+        {
+          "title": "Kassir",
+          "slug": "kassir-28d60b77fb"
+        }
+      ]
+    },
+    {
+      "title": "Bosh hamshira",
+      "slug": "bosh-hamshira",
+      "icon": "user-round",
+      "children": [
+        {
+          "title": "Davolash kursini o‘tkazish",
+          "slug": "bosh-hamshira-1"
+        },
+        {
+          "title": "Fizioterapiya kursini o‘tkazish",
+          "slug": "conducting-physiotherapybosh-hamshira-uz"
+        }
+      ]
+    },
+    {
+      "title": "Hamshira",
+      "slug": "hamshira",
+      "icon": "heart",
+      "children": [
+        {
+          "title": "Muolaja hamshirasi",
+          "slug": "muolaja-hamshirasi-1d760b77fb"
+        },
+        {
+          "title": "Davolash kursini o‘tkazish",
+          "slug": "davolash-kursini-o-tkazish-1d760b77fb-2"
+        },
+        {
+          "title": "Fizioterapiya hamshirasi",
+          "slug": "fizioterapiya-hamshirasi-20060b77fb"
+        },
+        {
+          "title": "Fizioterapiya kursini o‘tkazish",
+          "slug": "conducting-physiotherapy-uz"
+        }
+      ]
+    },
+    {
+      "title": "Bemor",
+      "slug": "bemor",
+      "icon": "user",
+      "children": [
+        {
+          "title": "DMED mobil ilovasi",
+          "slug": "dmed-mobil-ilovasi-30660b77fb"
+        },
+        {
+          "title": "DMED ilovasida avtorizatsiya",
+          "slug": "dmed-pacient-authorize-uz"
+        },
+        {
+          "title": "Bosh sahifa",
+          "slug": "bosh-sahifa-30660b77fb"
+        },
+        {
+          "title": "Mening qabullarim",
+          "slug": "mening-qabullarim-30660b77fb"
+        },
+        {
+          "title": "Tibbiy karta",
+          "slug": "tibbiy-karta-30660b77fb"
+        },
+        {
+          "title": "Akkaunt",
+          "slug": "akkaunt-30660b77fb"
+        },
+        {
+          "title": "Oilaviy akkaunt",
+          "slug": "oilaviy-akkaunt-30660b77fb"
+        },
+        {
+          "title": "DMED ilovasida imtiyozli yo‘llanma holatini kuzatish va klinikani tanlash",
+          "slug": "pacient-state-funded-hospitalization-uz"
+        },
+        {
+          "title": "Retsept haqida umumiy ma’lumot",
+          "slug": "retsept-haqida-umumiy-malumot-30660b77fb"
+        },
+        {
+          "title": "Retseptni ko’rish",
+          "slug": "retseptni-korish-30660b77fb"
+        },
+        {
+          "title": "Elektron retsept orqali dori-vositasini olish",
+          "slug": "elektron-retsept-orqali-dori-vositasini-olish-30660b77fb"
+        },
+        {
+          "title": "Muxlisa (infokiosk) yordamida bemorning o‘zini mustaqil ravishda qabulga yozdirib olishi",
+          "slug": "pacient-infokiosk-muxlisa-uz"
+        },
+        {
+          "title": "Bemor",
+          "slug": "bemor-1fd60b77fb"
+        }
+      ]
+    },
+    {
+      "title": "KPI (Asosiy samaradorlik ko’rsatkichlari)",
+      "slug": "kpi-asosiy-samaradorlik-korsatkichlari",
+      "icon": "chart-line",
+      "children": [
+        {
+          "title": "KPI moduli haqida umumiy ma’lumot",
+          "slug": "kpi-info-uz"
+        },
+        {
+          "title": "Oila shifokori KPI",
+          "slug": "kpi-family-doc-uz"
+        },
+        {
+          "title": "Amaliyotchi hamshira KPI",
+          "slug": "kpi-family-nurse-uz"
+        },
+        {
+          "title": "Patronaj hamshirasi KPI",
+          "slug": "kpi-patronaj-uz"
+        },
+        {
+          "title": "Ultratovushli diagnostika / Rentgen shifokori KPI",
+          "slug": "kpi-uzd-uz"
+        },
+        {
+          "title": "Bolalar shifokori KPI",
+          "slug": "kpi-pediatr-uz"
+        },
+        {
+          "title": "Akusher-ginekolog KPI",
+          "slug": "kpi-ginekolog-uz"
+        },
+        {
+          "title": "Direktor KPI",
+          "slug": "kpi-director-uz"
+        }
+      ]
+    },
+    {
+      "title": "Yangi Omborxona",
+      "slug": "yangi-omborxona",
+      "icon": "warehouse",
+      "children": [
+        {
+          "title": "Ombor mudiri",
+          "slug": "ombor-mudiri-39060b77fb"
+        },
+        {
+          "title": "Ma’lumotnomalar/Mahsulotlar",
+          "slug": "malumotnomalar-mahsulotlar-b5860b77fb"
+        },
+        {
+          "title": "Ma’lumotnomalar/Ta’minotchilar",
+          "slug": "malumotnomalar-taminotchilar-9bb60b77fb"
+        },
+        {
+          "title": "Ma’lumotnomalar/Hisob raqamlari",
+          "slug": "malumotnomalar-hisob-raqamlari-ed160b77fb"
+        },
+        {
+          "title": "Ma’lumotnomalar/Sub-markaziy omborlar",
+          "slug": "malumotnomalar-sub-markaziy-omborlar-9a260b77fb"
+        },
+        {
+          "title": "Ma’lumotnomalar/Bo’lim omborlari",
+          "slug": "malumotnomalar-bolim-omborlari-0a360b77fb"
+        },
+        {
+          "title": "Hujjatlar",
+          "slug": "hujjatlar-3d760b77fb"
+        },
+        {
+          "title": "Ehtiyohlar",
+          "slug": "ehtiyohlar-73760b77fb"
+        },
+        {
+          "title": "Kirimlar ",
+          "slug": "kirimlar-84260b77fb"
+        },
+        {
+          "title": "Talabnomalar ",
+          "slug": "talabnomalar-ec460b77fb"
+        },
+        {
+          "title": "Sarflar",
+          "slug": "sarflar-b3360b77fb"
+        },
+        {
+          "title": "Qaytarilganlar ",
+          "slug": "qaytarilganlar-48960b77fb"
+        },
+        {
+          "title": "Hisobdan chiqarish",
+          "slug": "hisobdan-chiqarish-c2160b77fb"
+        },
+        {
+          "title": "Qoldiqlar",
+          "slug": "qoldiqlar-dd660b77fb"
+        },
+        {
+          "title": "Katta hamshira",
+          "slug": "yangi-omborxona-3"
+        },
+        {
+          "title": "Ma’lumotnomalar",
+          "slug": "malumotnomalar-a5d60b77fb"
+        },
+        {
+          "title": "Hujjatlar ",
+          "slug": "hujjatlar-52c60b77fb"
+        },
+        {
+          "title": "Hisob/Ehtiyojlar",
+          "slug": "hisob-ehtiyojlar-85d60b77fb"
+        },
+        {
+          "title": "Hisob/Talabnomalar ",
+          "slug": "hisob-talabnomalar-b1860b77fb"
+        },
+        {
+          "title": "Hisob/Sarflar",
+          "slug": "hisob-sarflar-dd960b77fb"
+        },
+        {
+          "title": "Hisob/Qaytarilganlar ",
+          "slug": "hisob-qaytarilganlar-c6960b77fb"
+        },
+        {
+          "title": "Hisob/Qoldiqlar",
+          "slug": "hisob-qoldiqlar-ecf60b77fb"
+        },
+        {
+          "title": "Post omborlar/Talabnomalar ",
+          "slug": "post-omborlar-talabnomalar-72e60b77fb"
+        },
+        {
+          "title": "Post omborlar/Sarflar",
+          "slug": "post-omborlar-sarflar-f4960b77fb"
+        },
+        {
+          "title": "Post omborlar/Qaytarilganlar ",
+          "slug": "post-omborlar-qaytarilganlar-17960b77fb"
+        },
+        {
+          "title": "Post omborlar/Sterilizatsiya",
+          "slug": "post-omborlar-sterilizatsiya-de660b77fb"
+        },
+        {
+          "title": "Post omborlar/Qoldiqlar ",
+          "slug": "post-omborlar-qoldiqlar-48160b77fb"
+        },
+        {
+          "title": "Omborxona/Sterilizatsiya",
+          "slug": "omborxona-sterilizatsiya-7c560b77fb"
+        },
+        {
+          "title": "Hamshira",
+          "slug": "hamshira-39060b77fb"
+        },
+        {
+          "title": "Hisob/Talabnomalar ",
+          "slug": "hisob-talabnomalar-16660b77fb"
+        },
+        {
+          "title": "Hisob/Qaytarilganlar ",
+          "slug": "hisob-qaytarilganlar-5fc60b77fb"
+        },
+        {
+          "title": "Hisob/Sarflar",
+          "slug": "hisob-sarflar-09560b77fb"
+        },
+        {
+          "title": "Hisob/Qoldiqlar",
+          "slug": "hisob-qoldiqlar-05660b77fb"
+        },
+        {
+          "title": "Omborxona/Sterilizatsiya",
+          "slug": "omborxona-sterilizatsiya-3a960b77fb"
+        },
+        {
+          "title": "Omborxona/Markazlashtirilgan sterilizatsiya bo’limi",
+          "slug": "omborxona-markazlashtirilgan-sterilizatsiya-bolimi-edf60b77fb"
+        }
+      ]
+    },
+    {
+      "title": "Muxlisa ilovasini o‘rnatish",
+      "slug": "muxlisa-ilovasini-ornatish",
+      "icon": "sliders-horizontal",
+      "children": [
+        {
+          "title": "Muxlisa ilovasini o‘rnatish",
+          "slug": "muxlisa-setup-uz"
+        }
+      ]
+    }
+  ]
+}

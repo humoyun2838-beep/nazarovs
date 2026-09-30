@@ -1,0 +1,13 @@
+node_modules
+.next
+.tools
+.git
+.cursor
+*.zip
+data/chat-media/**
+data/*.db-shm
+data/*.db-wal
+npm-debug.log*
+.env
+.env.*
+!.env.example
