@@ -2,7 +2,11 @@
 const { spawn } = require("node:child_process");
 const path = require("node:path");
 
-const port = process.env.PORT || "3847";
+const port = String(process.env.PORT || "3847");
+if (!/^\d+$/.test(port) || Number(port)<1 || Number(port)>65535) {
+  console.error("Invalid PORT");
+  process.exit(1);
+}
 const nextBin = path.join(
   process.cwd(),
   "node_modules",

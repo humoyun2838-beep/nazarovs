@@ -25,7 +25,7 @@ npm run start
 Brauzer: [http://127.0.0.1:3847/nazarov](http://127.0.0.1:3847/nazarov)
 
 - Mijozlar: login yo‘q, manzil **`/nazarov`**
-- Admin: `/admin/login` — login **Nazarov**, parol **admin9915504** (ishlab chiqarishda parolni almashtiring)
+- Admin: `/admin/login` — login **Nazarov**, parol **YOUR_PRIVATE_ADMIN_PASSWORD** (ishlab chiqarishda parolni almashtiring)
 
 ## Ishlab chiqarish (domen)
 

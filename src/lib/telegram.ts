@@ -1,4 +1,5 @@
 import { getSetting } from "@/lib/settings";
+import { publicOrigin } from "@/lib/site";
 
 export const CALLMEBOT_START_URL = "https://t.me/CallMeBot_txtbot";
 export const CALLMEBOT_LOGIN_URL = "https://api2.callmebot.com/txt/login.php";
@@ -34,9 +35,7 @@ export function telegramTarget() {
 }
 
 export function publicSiteUrl() {
-  const host = (env("PUBLIC_HOST") || "nazarov.tunn3l.sh").replace(/\/$/, "");
-  if (host.startsWith("http")) return host;
-  return `https://${host}`;
+  return publicOrigin();
 }
 
 export function sessionTag(sessionId: string) {
@@ -59,13 +58,18 @@ export function formatVisitorTelegram(input: {
   ip?: string;
   text?: string;
 }) {
-  const lang = input.language === "ru" ? "Русский" : "O‘zbekcha";
+  const lang =
+    input.language === "ru"
+      ? "Русский"
+      : input.language === "en"
+        ? "English"
+        : "O‘zbekcha";
   const lines = [];
   if (input.sessionId) lines.push(sessionTag(input.sessionId));
   lines.push(
     input.kind === "start"
-      ? "Dmed chat — yangi suhbat"
-      : "Dmed chat — yangi xabar",
+      ? "DMED chat — yangi suhbat"
+      : "DMED chat — yangi xabar",
     "",
     `Ism: ${input.name}`,
     `Telefon: ${input.phone}`,

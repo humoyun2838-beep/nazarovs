@@ -1,11 +1,14 @@
 "use client";
+import { UiText } from "@/components/ui-locale";
+
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { withLang, type Locale } from "@/lib/locale";
 
-export function AdminChatNav() {
+export function AdminChatNav({ locale = "uz" }: { locale?: Locale }) {
   const pathname = usePathname() || "";
   const [unread, setUnread] = useState(0);
   const active = pathname === "/admin/chat" || pathname.startsWith("/admin/chat/");
@@ -37,9 +40,7 @@ export function AdminChatNav() {
       className={active ? "pointer-events-none" : undefined}
     >
       {active ? (
-        <span data-admin-nav="chat" className="relative">
-          Chat
-          {unread > 0 ? (
+        <span data-admin-nav="chat" className="relative"><UiText>{" Chat "}</UiText>{unread > 0 ? (
             <span
               data-admin-unread={unread}
               className="ml-1 inline-flex min-w-5 items-center justify-center rounded-full bg-[#1a6fd4] px-1.5 text-[10px] font-semibold tabular-nums text-white"
@@ -49,9 +50,7 @@ export function AdminChatNav() {
           ) : null}
         </span>
       ) : (
-        <Link href="/admin/chat" data-admin-nav="chat" className="relative">
-          Chat
-          {unread > 0 ? (
+        <Link href={withLang("/admin/chat", locale)} data-admin-nav="chat" className="relative"><UiText>{" Chat "}</UiText>{unread > 0 ? (
             <span
               data-admin-unread={unread}
               className="ml-1 inline-flex min-w-5 items-center justify-center rounded-full bg-[#1a6fd4] px-1.5 text-[10px] font-semibold tabular-nums text-white"

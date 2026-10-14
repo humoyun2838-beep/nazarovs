@@ -1,0 +1,21 @@
+{
+  "name": "DMED",
+  "short_name": "DMED",
+  "start_url": "/nazarov",
+  "display": "standalone",
+  "background_color": "#06245c",
+  "theme_color": "#06245c",
+  "icons": [
+    {
+      "src": "/dmed-favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/dmed-apple-touch.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

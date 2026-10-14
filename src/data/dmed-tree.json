@@ -1,21 +1,179 @@
 {
   "sections": [
     {
+      "title": "Top 20 ta savol",
+      "slug": "eng-kop-beriladigan-savollarga-qisqa-javoblar",
+      "icon": "stethoscope",
+      "children": [
+        {
+          "title": "Face-ID yoki OneID ishlamasa, nima qilaman?",
+          "slug": "faq-face-id-oneid"
+        },
+        {
+          "title": "Ilovani yangilagach kirmayapti. Nima qilaman?",
+          "slug": "faq-ilova-xato"
+        },
+        {
+          "title": "Chet el fuqarolari qanday ro‘yxatdan o‘tadi?",
+          "slug": "faq-chet-el-fuqarolari"
+        },
+        {
+          "title": "LOR yoki kardiologga to‘g‘ridan-to‘g‘ri yozilsam bo‘ladimi?",
+          "slug": "faq-tor-mutaxassis"
+        },
+        {
+          "title": "Nega shifokor jadvali doim “band”?",
+          "slug": "faq-jadval-band"
+        },
+        {
+          "title": "Dmed serveri ishlamasa, elektron navbatim kuyadimi?",
+          "slug": "faq-server-navbat"
+        },
+        {
+          "title": "Bormasam ham “Siz qabulda bo‘ldingiz” SMS keldi.",
+          "slug": "faq-sms-qabul"
+        },
+        {
+          "title": "Shifoxonaga elektron yo‘llanma bilan qanday yotaman?",
+          "slug": "faq-statsionar-yollanma"
+        },
+        {
+          "title": "Imtiyozli shaxslarga navbatda ustunlik bormi?",
+          "slug": "faq-imtiyozli-navbat"
+        },
+        {
+          "title": "Psixiatr, narkologga Dmed orqali yozilsam bo‘ladimi?",
+          "slug": "faq-dispanser"
+        },
+        {
+          "title": "“Siz hech qaysi poliklinikaga biriktirilmagansiz” chiqdi.",
+          "slug": "faq-poliklinikaga-biriktirilmagan"
+        },
+        {
+          "title": "Yangi tug‘ilgan chaqaloqni tizimga qanday qo‘shaman?",
+          "slug": "faq-chaqaloqni-qoshish"
+        },
+        {
+          "title": "Farzandimning emlash kalendarini ko‘ramanmi?",
+          "slug": "faq-emlash-kalendari"
+        },
+        {
+          "title": "Majburiy tibbiy sug‘urta (MTS) dan qanday foydalanaman?",
+          "slug": "faq-tibbiy-sugurta"
+        },
+        {
+          "title": "Bepul dori-darmonlarni qanday olaman?",
+          "slug": "faq-bepul-dori"
+        },
+        {
+          "title": "Tahlil javoblarini PDF qilib olsam bo‘ladimi?",
+          "slug": "faq-tahlil-pdf"
+        },
+        {
+          "title": "Eski qog‘oz tibbiy tariximni rasmga olib joylay olamanmi?",
+          "slug": "faq-qogoz-tarix"
+        },
+        {
+          "title": "Tez yordam (103) chaqiruvlari Dmedda ko‘rinadimi?",
+          "slug": "faq-tez-yordam-103"
+        },
+        {
+          "title": "Xususiy klinikalar Dmedga qachon to‘liq ulanadi?",
+          "slug": "faq-xususiy-klinika"
+        },
+        {
+          "title": "Shifokorga shikoyat yoki minnatdorchilik qoldira olamanmi?",
+          "slug": "faq-shifokor-baho"
+        }
+      ]
+    },
+    {
       "title": "Tizimga kirish",
       "slug": "tizimga-kirish",
       "icon": "key-round",
       "children": [
         {
+          "title": "Вход в систему · RU",
+          "slug": "notion-ru-e46d8ad3dc8544ebba801ca8efeb14ef"
+        },
+        {
           "title": "Tizimga kirish",
           "slug": "login-to-system-uz"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Ro‘yxatga oluvchi",
       "slug": "royxatga-oluvchi",
       "icon": "phone",
       "children": [
+        {
+          "title": "Регистратор · RU",
+          "slug": "notion-ru-16860b77fbf580239850f536a6115429",
+          "children": [
+            {
+              "title": "Бесплатная запись на прием ",
+              "slug": "notion-ru-26860b77fbf58009b408d7d846727e6b",
+              "children": [
+                {
+                  "title": "Бесплатная запись на время",
+                  "slug": "notion-ru-26860b77fbf580239610d978712e7353"
+                },
+                {
+                  "title": "Бесплатная запись в живую очередь",
+                  "slug": "notion-ru-26860b77fbf5801f82e8c819f7b08ab3"
+                }
+              ]
+            },
+            {
+              "title": "Платная запись на прием",
+              "slug": "notion-ru-26860b77fbf5801e912cdef406d76cce",
+              "children": [
+                {
+                  "title": "Платная запись на время",
+                  "slug": "notion-ru-26860b77fbf580f08530ca4d1bdd8c97"
+                },
+                {
+                  "title": "Платная запись в живую очередь",
+                  "slug": "notion-ru-26860b77fbf58047a413e8ae6cb5940d"
+                }
+              ]
+            },
+            {
+              "title": "Поиск пациента с неизвестной датой рождения",
+              "slug": "notion-ru-23f60b77fbf58077a07ed7550db6b476"
+            },
+            {
+              "title": "Профиль пациента",
+              "slug": "notion-ru-23f60b77fbf5809f895ee0ab7e764da4",
+              "children": [
+                {
+                  "title": "Обновление личных данных в профиле пациента",
+                  "slug": "notion-ru-23f60b77fbf58087928ac4aba5fc0a33"
+                },
+                {
+                  "title": "Прикрепление документа к профилю пациента",
+                  "slug": "notion-ru-23f60b77fbf580b491e9f518519123db"
+                }
+              ]
+            },
+            {
+              "title": "Новая касса",
+              "slug": "notion-ru-28c60b77fbf580d192b5f08111294bcc",
+              "children": [
+                {
+                  "title": "Операции со счетами",
+                  "slug": "notion-ru-28c60b77fbf580ad96eceb572cad2413"
+                },
+                {
+                  "title": "Функционал раздела “Договора”",
+                  "slug": "notion-ru-28c60b77fbf5801695c4dbfeed4c0752"
+                }
+              ]
+            }
+          ]
+        },
         {
           "title": "Bepul yozilish",
           "slug": "bepul-yozilish-26860b77fb"
@@ -68,13 +226,164 @@
           "title": "\"Shartnomalar\" bo‘limining funksionali",
           "slug": "shartnomalar-bo-limining-funksionali-28d60b77fb-2"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Amaliyotchi hamshira",
       "slug": "amaliyotchi-hamshira",
       "icon": "activity",
       "children": [
+        {
+          "title": "Практикующая медсестра · RU",
+          "slug": "notion-ru-16860b77fbf58014a6b2ca62516f73c0",
+          "children": [
+            {
+              "title": "Внесение антропометрии и направление пациента к врачу",
+              "slug": "notion-ru-16860b77fbf580628cc7fd3d7d21de5e"
+            },
+            {
+              "title": "Прикрепления пациентов к своему участку",
+              "slug": "notion-ru-16860b77fbf5804cb58cc7456bbda917"
+            },
+            {
+              "title": "Прикрепление пациента к семейному врачу через DMED Pro",
+              "slug": "notion-ru-24260b77fbf5805c8ab0e630dbb53bba"
+            },
+            {
+              "title": "Составление патронажного плана",
+              "slug": "notion-ru-16860b77fbf580b8bdefdf2a8bc5591e"
+            },
+            {
+              "title": "Профиль пациента",
+              "slug": "notion-ru-23f60b77fbf5809f895ee0ab7e764da4",
+              "children": [
+                {
+                  "title": "Обновление личных данных в профиле пациента",
+                  "slug": "notion-ru-23f60b77fbf58087928ac4aba5fc0a33"
+                },
+                {
+                  "title": "Прикрепление документа к профилю пациента",
+                  "slug": "notion-ru-23f60b77fbf580b491e9f518519123db"
+                }
+              ]
+            },
+            {
+              "title": "Поиск пациента с неизвестной датой рождения",
+              "slug": "notion-ru-23f60b77fbf58077a07ed7550db6b476"
+            },
+            {
+              "title": "Скрининги/Опросы",
+              "slug": "notion-ru-27d60b77fbf58069b2e9c0febdcea9af",
+              "children": [
+                {
+                  "title": "Оценка предтестовой вероятности ИБС",
+                  "slug": "notion-ru-2aa60b77fbf58070b32cd128b99413a7"
+                },
+                {
+                  "title": "Скрининг раннего выявления рисков сердечно-сосудистых заболеваний (ССЗ)",
+                  "slug": "notion-ru-28b60b77fbf5804197f7d8a3b9b95519",
+                  "children": [
+                    {
+                      "title": "Проведение скрининга раннего выявления рисков сердечно-сосудистых заболеваний (ССЗ)",
+                      "slug": "notion-ru-28b60b77fbf58054930bf3dfee79328d"
+                    },
+                    {
+                      "title": "Планирование и проведение патронажа с целью “Скрининг ССЗ”",
+                      "slug": "notion-ru-28b60b77fbf58002b97ed28769d0e456"
+                    },
+                    {
+                      "title": "Фильтрация пациентов по результатам скрининга ССЗ",
+                      "slug": "notion-ru-28b60b77fbf580c6a7e0ebb3e1ed72c6"
+                    },
+                    {
+                      "title": "Просмотр журналов 051 и 051-1",
+                      "slug": "notion-ru-28b60b77fbf5805d820befd5a944e1cb"
+                    }
+                  ]
+                },
+                {
+                  "title": "Скрининг на выявление риска Сахарного диабета (СД)",
+                  "slug": "notion-ru-27d60b77fbf580b49de0d67b8b2bde35",
+                  "children": [
+                    {
+                      "title": "Проведение скрининга на выявление риска сахарного диабета в МИС",
+                      "slug": "notion-ru-27d60b77fbf58064ac1fef6e18b0d638"
+                    },
+                    {
+                      "title": "Фильтрация списка пациентов по результатам скрининга",
+                      "slug": "notion-ru-27d60b77fbf58072af83f1c0c7c95391"
+                    },
+                    {
+                      "title": "Планирование и проведение патронажа с целью “Скрининг сахарного диабета”",
+                      "slug": "notion-ru-27d60b77fbf5804f854cf750ecb6291c"
+                    },
+                    {
+                      "title": "Документация по скринингу на сахарный диабет",
+                      "slug": "notion-ru-27d60b77fbf580b993f0e74e57a0160f"
+                    }
+                  ]
+                },
+                {
+                  "title": "Опросник по раннему выявлению цереброваскулярной патологии",
+                  "slug": "notion-ru-2aa60b77fbf580f19880caacccfafca8"
+                },
+                {
+                  "title": "Скрининг на выявление рака молочной железы",
+                  "slug": "notion-ru-27360b77fbf58028a64ac8ffc2960c49",
+                  "children": [
+                    {
+                      "title": "Проведение скрининга на раннее выявление рака молочной железы в МИС",
+                      "slug": "notion-ru-27360b77fbf5802e89e3c3a03f10aca1"
+                    }
+                  ]
+                },
+                {
+                  "title": "Скрининг раннего выявления гельминтозных заболеваний",
+                  "slug": "notion-ru-27360b77fbf5803a99f8ea8ccc85fcf6",
+                  "children": [
+                    {
+                      "title": "Проведение скрининга раннего выявления гельминтозных заболеваний в МИС",
+                      "slug": "notion-ru-27360b77fbf580d98043f3172050cbf3"
+                    }
+                  ]
+                },
+                {
+                  "title": "Опросник раннего выявления онкогематологических заболеваний",
+                  "slug": "notion-ru-26c60b77fbf58099bf56fb91f46e07b4",
+                  "children": [
+                    {
+                      "title": "Проведение опросника по онкогематологическим заболеваниям в МИС",
+                      "slug": "notion-ru-27160b77fbf5804ca39dc7b669dd1615"
+                    },
+                    {
+                      "title": "Планирование патронажа с целью “Скрининг раннего выявления онкогематологических заболеваний”",
+                      "slug": "notion-ru-26c60b77fbf58059abc6f41241797e5e"
+                    },
+                    {
+                      "title": "Фильтрация пациентов по результатам опросника на онкогематологические заболевания",
+                      "slug": "notion-ru-27160b77fbf5802ab9d7c594d06b17f3"
+                    }
+                  ]
+                },
+                {
+                  "title": "Опросник фертильности",
+                  "slug": "notion-ru-21160b77fbf5808ca064cbad8b1545f2",
+                  "children": [
+                    {
+                      "title": "Заполнение опросника фертильности",
+                      "slug": "notion-ru-21160b77fbf58046ab17d7fd6a5e8b66"
+                    },
+                    {
+                      "title": "Просмотр журнала ежедневного приема акушера-гинеколога (акушерки) №024-2",
+                      "slug": "notion-ru-21160b77fbf58027bcd8ebceefa23518"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
         {
           "title": "Bemorning antropometriya malumotlarini kiritish va shifokorga yuborish",
           "slug": "bemorning-antropometriya-malumotlarini-kiritish-va-shif-16860b77fb"
@@ -187,13 +496,36 @@
           "title": "Akusher-ginekologning (doyaning) №024-2 kundalik qabul jurnalini ko‘rib chiqish",
           "slug": "akusher-ginekologning-doyaning-024-2-kundalik-qabul-jur-21160b77fb"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Patronaj hamshirasi",
       "slug": "patronaj-hamshirasi",
       "icon": "home",
       "children": [
+        {
+          "title": "Патронажная медсестра · RU",
+          "slug": "notion-ru-19760b77fbf5809e8108c891a442d9e0",
+          "children": [
+            {
+              "title": "Планирование и проведение патронажа с целью “Скрининг ССЗ”",
+              "slug": "notion-ru-28b60b77fbf58092b0a0e03e6a2e1206"
+            },
+            {
+              "title": "Планирование и проведение патронажа с целью “Скрининг сахарного диабета”",
+              "slug": "notion-ru-28b60b77fbf580beaf0ce99311b80c3b"
+            },
+            {
+              "title": "Проведение патронажа с целью “Скрининг раннего выявления онкогематологических заболеваний”",
+              "slug": "notion-ru-26c60b77fbf580f3ba37e94cd38ba4f3"
+            },
+            {
+              "title": "Проведение патронажа с целью “Скрининг раннего выявления рака молочной железы”",
+              "slug": "notion-ru-30b60b77fbf58037b555dab51a85a5f0"
+            }
+          ]
+        },
         {
           "title": "\"Yurak-qon tomir kasalliklari skriningi\" maqsadida patronajni rejalashtirish va amalga oshirish",
           "slug": "yurak-qon-tomir-kasalliklari-skriningi-maqsadida-patron-28b60b77fb"
@@ -210,13 +542,454 @@
           "title": "Ko‘krak bezi saratonini erta aniqlash skriningini o‘tkazish",
           "slug": "ko-krak-bezi-saratonini-erta-aniqlash-skriningini-o-tka-30b60b77fb"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Shifokor",
       "slug": "shifokor",
       "icon": "stethoscope",
       "children": [
+        {
+          "title": "Врач · RU",
+          "slug": "notion-ru-16860b77fbf580638ccfe2a46acc0eae",
+          "children": [
+            {
+              "title": "Приглашение пациента на прием и создание нового эпизода",
+              "slug": "notion-ru-16860b77fbf580eb8f35ca46b9e368b9"
+            },
+            {
+              "title": "Продолжение эпизода обращения пациента",
+              "slug": "notion-ru-16860b77fbf58077b39fc4591af30e5b"
+            },
+            {
+              "title": "Дополнительный талон",
+              "slug": "notion-ru-16860b77fbf580e29154d98cdcefad57"
+            },
+            {
+              "title": "Назначение анализов",
+              "slug": "notion-ru-16860b77fbf580cbb413e07d97209fa3"
+            },
+            {
+              "title": "Направление пациента к другому специалисту",
+              "slug": "notion-ru-16860b77fbf580039b39d4f5d8673c79"
+            },
+            {
+              "title": "Госпитализация через «Эпизод обращения»",
+              "slug": "notion-ru-16860b77fbf580a5a82cea251bb6bb57"
+            },
+            {
+              "title": "Учет беременности",
+              "slug": "notion-ru-1ce60b77fbf580418b73c5b652a7211e",
+              "children": [
+                {
+                  "title": "Постановка на учет по беременности",
+                  "slug": "notion-ru-1ce60b77fbf58012bc34f1d08a5b0f80"
+                },
+                {
+                  "title": "Удаление учета по беременности",
+                  "slug": "notion-ru-3a060b77fbf5809cbbb7ee11413cd9bc"
+                },
+                {
+                  "title": "Заполнение 111 формы (Индивидуальная карта беременной)",
+                  "slug": "notion-ru-3a060b77fbf580c885b1e1b3e7c7c371"
+                },
+                {
+                  "title": "Заполнение 113 формы (Обменная карта беременной)",
+                  "slug": "notion-ru-1ce60b77fbf580a382d8c0f3985ba4e8"
+                },
+                {
+                  "title": "Направление на госпитализацию с целью “Родоразрешение”",
+                  "slug": "notion-ru-1ce60b77fbf580f5aae8d8ded683d554"
+                }
+              ]
+            },
+            {
+              "title": "Электронный документооборот",
+              "slug": "notion-ru-1cf60b77fbf5800abdfbf0d1f3ee77c3",
+              "children": [
+                {
+                  "title": "Больничный лист",
+                  "slug": "notion-ru-1cf60b77fbf5804896fbe6e0b7e964e4",
+                  "children": [
+                    {
+                      "title": "Создание, продление, отмена, закрытие больничного листа",
+                      "slug": "notion-ru-1cf60b77fbf58060a55bd3e971a03243"
+                    },
+                    {
+                      "title": "Создание, продление, отмена, закрытие листа нетрудоспособности по беременности и родам",
+                      "slug": "notion-ru-39c60b77fbf5805586fbf52888f11192"
+                    },
+                    {
+                      "title": "Подтверждение, возврат для исправления, печать больничного листа",
+                      "slug": "notion-ru-1cf60b77fbf5802a9977e8dd0dc95315"
+                    },
+                    {
+                      "title": "Продолжение ранее закрытого больничного листа",
+                      "slug": "notion-ru-1cf60b77fbf580e585d5fd9a4b513fa1"
+                    },
+                    {
+                      "title": "Печать больничного листа",
+                      "slug": "notion-ru-1cf60b77fbf5803ca24af22e3b006df5"
+                    }
+                  ]
+                },
+                {
+                  "title": "Создание справок",
+                  "slug": "notion-ru-1cf60b77fbf58074acdee54b1806582d"
+                },
+                {
+                  "title": "Проверка подлинности электронных документов",
+                  "slug": "notion-ru-1cf60b77fbf5805b95d7d57a64786760"
+                },
+                {
+                  "title": "Заполнение журналов ручного ввода",
+                  "slug": "notion-ru-1cf60b77fbf58095a48dc966ecf2dfd6"
+                },
+                {
+                  "title": "Просмотр журналов в BI",
+                  "slug": "notion-ru-1cf60b77fbf580f3946dea9adc3de290"
+                },
+                {
+                  "title": "Скачивание формы 039",
+                  "slug": "notion-ru-1cf60b77fbf5804aa645c6479ae50dd6"
+                },
+                {
+                  "title": "Справка о медосмотре для вступления в брак",
+                  "slug": "notion-ru-2a060b77fbf580b2a405ca0557fde7de",
+                  "children": [
+                    {
+                      "title": "Создание, редактирование и просмотр справки",
+                      "slug": "notion-ru-2a060b77fbf580539a6cf5549d8059f2"
+                    },
+                    {
+                      "title": "Функционал подраздела “Справки для брака”",
+                      "slug": "notion-ru-2a060b77fbf58024ac68ed0083225943"
+                    }
+                  ]
+                },
+                {
+                  "title": "Форма 058 - Экстренное извещение об инфекционном заболевании",
+                  "slug": "notion-ru-2cc60b77fbf580dca2b6ecd42f1d668f"
+                },
+                {
+                  "title": "Справки 086",
+                  "slug": "notion-ru-35a60b77fbf580fbb083e8b07623279d",
+                  "children": [
+                    {
+                      "title": "Справка 086",
+                      "slug": "notion-ru-35a60b77fbf5804498b0c011e4b79d4a"
+                    },
+                    {
+                      "title": "Справка 086-1",
+                      "slug": "notion-ru-35a60b77fbf58052ba84fda45d6fb9f4"
+                    },
+                    {
+                      "title": "Справка 086-2",
+                      "slug": "notion-ru-35a60b77fbf580b2856be1f64ac389be"
+                    }
+                  ]
+                },
+                {
+                  "title": "Cправка о прохождении медосмотра для паломников, совершающих Хадж / Умру",
+                  "slug": "notion-ru-35f60b77fbf580389e8cd90cacd725cb",
+                  "children": [
+                    {
+                      "title": "Создание справки о прохождении медосмотра для паломников, совершающих Хадж / Умру",
+                      "slug": "notion-ru-35f60b77fbf58041b0d5f02a1825c9d9"
+                    },
+                    {
+                      "title": "Проведение осмотра во время паломничества",
+                      "slug": "notion-ru-35f60b77fbf5805794c2f9f7019ff625"
+                    }
+                  ]
+                },
+                {
+                  "title": "Медицинская справка об освобождении от ремня безопасности",
+                  "slug": "notion-ru-3b960b77fbf5807989a9f7c151b86493",
+                  "children": [
+                    {
+                      "title": "Создание справки об освобождении от ремня безопасности",
+                      "slug": "notion-ru-3b960b77fbf58017a3c3f97e7b1e522a"
+                    },
+                    {
+                      "title": "Подтверждение справки об освобождении от ремня безопасности",
+                      "slug": "notion-ru-3b960b77fbf580029eccf054c0510034"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Электронный рецепт",
+              "slug": "notion-ru-2c760b77fbf580ffb9b2fc9a221c3fc4",
+              "children": [
+                {
+                  "title": "Выписка реимбурсационного рецепта в МИС",
+                  "slug": "notion-ru-32f60b77fbf580abb079f35c455f59c8"
+                },
+                {
+                  "title": "Выписка обычного рецепта в МИС",
+                  "slug": "notion-ru-2c760b77fbf58017a2f7e77eb5a50300"
+                },
+                {
+                  "title": "Выписка обычного рецепта в DMED Pro",
+                  "slug": "notion-ru-32f60b77fbf580d4a4d7ec766504eb58"
+                }
+              ]
+            },
+            {
+              "title": "Создание курса лечения",
+              "slug": "notion-ru-1d660b77fbf580058f06d175407edefa"
+            },
+            {
+              "title": "Вакцинация",
+              "slug": "notion-ru-1d960b77fbf580f698ffd4e16bdd37c8"
+            },
+            {
+              "title": "Профиль / Статистика",
+              "slug": "notion-ru-348cb45834c64f8a9c9d8494a6c85b42",
+              "children": [
+                {
+                  "title": "Просмотр начислений по реферальной программе",
+                  "slug": "notion-ru-f3f18bd2ac8e44cb9cf0e74c51729cb9"
+                }
+              ]
+            },
+            {
+              "title": "Добавление шапок и шаблонов осмотров",
+              "slug": "notion-ru-da87b1c097994d6fa97445d063b674cd"
+            },
+            {
+              "title": "Физиотерапия",
+              "slug": "notion-ru-20060b77fbf580c38febd568ccf381f3",
+              "children": [
+                {
+                  "title": "Назначение физиотерапевтической процедуры",
+                  "slug": "notion-ru-20060b77fbf58064b1cce7ae430b001c"
+                },
+                {
+                  "title": "Отслеживание процесса проведения курса физиотерапии. Просмотр журнала №031",
+                  "slug": "notion-ru-20060b77fbf58073977feb778722a340"
+                }
+              ]
+            },
+            {
+              "title": "Профиль пациента",
+              "slug": "notion-ru-23f60b77fbf5809f895ee0ab7e764da4",
+              "children": [
+                {
+                  "title": "Обновление личных данных в профиле пациента",
+                  "slug": "notion-ru-23f60b77fbf58087928ac4aba5fc0a33"
+                },
+                {
+                  "title": "Прикрепление документа к профилю пациента",
+                  "slug": "notion-ru-23f60b77fbf580b491e9f518519123db"
+                }
+              ]
+            },
+            {
+              "title": "Прикрепление пациента к семейному врачу через DMED Pro",
+              "slug": "notion-ru-24260b77fbf5805c8ab0e630dbb53bba"
+            },
+            {
+              "title": "Амбулаторная операция",
+              "slug": "notion-ru-26560b77fbf5806c8a1df5a943967db1",
+              "children": [
+                {
+                  "title": "Проведение амбулаторной операции",
+                  "slug": "notion-ru-26560b77fbf58175ace9c6aef778e44f"
+                },
+                {
+                  "title": "Просмотр журнала регистрации амбулаторных операций",
+                  "slug": "notion-ru-26560b77fbf581e48df8d4e70c897dba"
+                }
+              ]
+            },
+            {
+              "title": "Заседание врачебно-консультационной комиссии",
+              "slug": "notion-ru-26560b77fbf580b2a693c445b758e312",
+              "children": [
+                {
+                  "title": "Проведение заседания ВКК",
+                  "slug": "notion-ru-26560b77fbf581179398fc2c9f74af2a"
+                },
+                {
+                  "title": "Просмотр отчёта в журнале ВКК",
+                  "slug": "notion-ru-26560b77fbf581ceab47f77efb3f1687"
+                }
+              ]
+            },
+            {
+              "title": "Льготная госпитализация",
+              "slug": "notion-ru-27660b77fbf580b9996be12f38b50c62",
+              "children": [
+                {
+                  "title": "Общий функционал раздела \"Льготные направления\"",
+                  "slug": "notion-ru-39560b77fbf580ccaba0f24080f9e49c"
+                },
+                {
+                  "title": "Создание направления в первичном звене",
+                  "slug": "notion-ru-39560b77fbf580a7bbe7fd3f37c1f766"
+                },
+                {
+                  "title": "Рассмотрение направления многопрофильной поликлиникой",
+                  "slug": "notion-ru-39560b77fbf5803ab5d8c351e7374cc7"
+                },
+                {
+                  "title": "Рассмотрение направления областной комиссией",
+                  "slug": "notion-ru-39560b77fbf580a0a6ecfd1f4337bef5"
+                },
+                {
+                  "title": "Рассмотрение направления республиканской комиссией",
+                  "slug": "notion-ru-39560b77fbf580c89caccfe723d2555f"
+                },
+                {
+                  "title": "Выбор учреждения для госпитализации семейным врачом",
+                  "slug": "notion-ru-39560b77fbf5807d89d1c4071d363394"
+                },
+                {
+                  "title": "Оформление пациента в стационар по льготному направлению",
+                  "slug": "notion-ru-39560b77fbf580d0a405c6d9a4024124"
+                }
+              ]
+            },
+            {
+              "title": "Д-учет",
+              "slug": "notion-ru-27d60b77fbf58026b2d3de2c95625f8d",
+              "children": [
+                {
+                  "title": "Внесение и просмотр информации о Д-учете пациента",
+                  "slug": "notion-ru-27d60b77fbf5806bb5ced6a7e0d15ba7"
+                },
+                {
+                  "title": "Просмотр журнала диспансерного учета (№030)",
+                  "slug": "notion-ru-27d60b77fbf580a7b0a3d5abce91c432"
+                },
+                {
+                  "title": "Просмотр информации о Д-учете пациентов в МИС",
+                  "slug": "notion-ru-27d60b77fbf580c88e0df0f7d382cbc4"
+                }
+              ]
+            },
+            {
+              "title": "Скрининги/Опросы",
+              "slug": "notion-ru-28b60b77fbf5802396e2ffc848b65f27",
+              "children": [
+                {
+                  "title": "Перечень скринингов/опросников",
+                  "slug": "notion-ru-38960b77fbf580d1b5caf96c1aafad52"
+                },
+                {
+                  "title": "Скрининг сердечно-сосудистых заболеваний",
+                  "slug": "notion-ru-21160b77fbf580ed8b19e3b0acef1272",
+                  "children": [
+                    {
+                      "title": "Проведение скрининга раннего выявления рисков сердечно-сосудистых заболеваний (ССЗ)",
+                      "slug": "notion-ru-28b60b77fbf580d0a307cdf248ca0b40"
+                    },
+                    {
+                      "title": "Фильтрация пациентов по результатам скрининга ССЗ",
+                      "slug": "notion-ru-28b60b77fbf580b3a000c2fd57f38efb"
+                    },
+                    {
+                      "title": "Просмотр журналов 051 и 051-1",
+                      "slug": "notion-ru-28b60b77fbf580ffa0a6f8f5af071668"
+                    }
+                  ]
+                },
+                {
+                  "title": "Скрининг на выявление риска Сахарного диабета (СД)",
+                  "slug": "notion-ru-28b60b77fbf580998621ffd26034c3c7",
+                  "children": [
+                    {
+                      "title": "Проведение скрининга на выявление риска сахарного диабета в МИС",
+                      "slug": "notion-ru-28b60b77fbf5810c889dec5afd74e2f8"
+                    },
+                    {
+                      "title": "Фильтрация списка пациентов по результатам скрининга",
+                      "slug": "notion-ru-28b60b77fbf5813a8dbef18b6e0b13be"
+                    },
+                    {
+                      "title": "Документация по скринингу на сахарный диабет",
+                      "slug": "notion-ru-28b60b77fbf58184b11cc8da97dc9f84"
+                    }
+                  ]
+                },
+                {
+                  "title": "Скрининг на выявление рака молочной железы",
+                  "slug": "notion-ru-27360b77fbf58038b7c1c806561a3d33",
+                  "children": [
+                    {
+                      "title": "Проведение скрининга на раннее выявление рака молочной железы в МИС",
+                      "slug": "notion-ru-27360b77fbf580638c51ca10c15c9b45"
+                    }
+                  ]
+                },
+                {
+                  "title": "Опросник фертильности",
+                  "slug": "notion-ru-21160b77fbf580c18f18c0e920071612",
+                  "children": [
+                    {
+                      "title": "Заполнение опросника фертильности",
+                      "slug": "notion-ru-21160b77fbf580a38e00c92349f69b87"
+                    },
+                    {
+                      "title": "Просмотр журнала ежедневного приема акушера-гинеколога (акушерки) №024-2",
+                      "slug": "notion-ru-21160b77fbf58088af3ef8d154885cd8"
+                    }
+                  ]
+                },
+                {
+                  "title": "Скрининг раннего выявления гельминтозных заболеваний",
+                  "slug": "notion-ru-27360b77fbf5804ebac3c10ca65d358e",
+                  "children": [
+                    {
+                      "title": "Проведение скрининга раннего выявления гельминтозных заболеваний в МИС",
+                      "slug": "notion-ru-27360b77fbf5801a96eecf3aea6d6694"
+                    }
+                  ]
+                },
+                {
+                  "title": "Опросник раннего выявления онкогематологических заболеваний",
+                  "slug": "notion-ru-26a60b77fbf580299685d7d15c5cdf00",
+                  "children": [
+                    {
+                      "title": "Проведение опросника по онкогематологическим заболеваниям в МИС",
+                      "slug": "notion-ru-26a60b77fbf5802e9cd7e7d3c8baea79"
+                    },
+                    {
+                      "title": "Фильтрация пациентов по результатам опросника на онкогематологические заболевания",
+                      "slug": "notion-ru-26a60b77fbf5801e8e3bf58eab231c3b"
+                    }
+                  ]
+                },
+                {
+                  "title": "Скрининг слуха у новорожденных",
+                  "slug": "notion-ru-3b260b77fbf58088996bee474e08ee95"
+                },
+                {
+                  "title": "Скрининг по выявлению нарушений развития у детей от 0 до 3 лет",
+                  "slug": "notion-ru-3e360b77fbf58070bab8c13162245736"
+                }
+              ]
+            },
+            {
+              "title": "Маршрутный лист (бегунок)",
+              "slug": "notion-ru-32f60b77fbf580dfabb2d7f7df148435"
+            },
+            {
+              "title": "Служба 112 в амбулатории: Оповещение о происшествиях",
+              "slug": "notion-ru-35660b77fbf58060b9fdc7115efcc053",
+              "children": [
+                {
+                  "title": "Служба 112 в амбулатории: короткая инструкция",
+                  "slug": "notion-ru-35f60b77fbf580bea56ed843a5e2351d"
+                }
+              ]
+            }
+          ]
+        },
         {
           "title": "Bemorni qabulga taklif qilish va yangi epizod yaratish",
           "slug": "bemorni-qabulga-taklif-qilish-va-yangi-epizod-yaratish-16860b77fb"
@@ -581,13 +1354,68 @@
           "title": "Viloyat komissiyasi tomonidan yo‘llanmani ko‘rib chiqish",
           "slug": "viloyat-komissiyasi-tomonidan-yo-llanmani-ko-rib-chiqis-3cf60b77fb"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Qabul bo‘limining navbatchi shifokor/Hamshirasi",
       "slug": "qabul-bolimining-navbatchi-shifokorhamshirasi",
       "icon": "ambulance",
       "children": [
+        {
+          "title": "Дежурный врач/Медсестра приемного покоя · RU",
+          "slug": "notion-ru-16860b77fbf58040af73c60582a0c3b4",
+          "children": [
+            {
+              "title": "Оформление пациента по направлению",
+              "slug": "notion-ru-16860b77fbf58062a9f7dfe8257b641d"
+            },
+            {
+              "title": "Оформление пациента без направления",
+              "slug": "notion-ru-16860b77fbf5803daf7bcdb6369cba30"
+            },
+            {
+              "title": "Оформление неизвестного пациента",
+              "slug": "notion-ru-39f60b77fbf58057b2befb1c9d0cb825"
+            },
+            {
+              "title": "Оформление в стационар с целью “Родоразрешение” планово и экстренно",
+              "slug": "notion-ru-1ce60b77fbf580ef98cbe0eec84fd635"
+            },
+            {
+              "title": "Поиск пациента с неизвестной датой рождения",
+              "slug": "notion-ru-23f60b77fbf58077a07ed7550db6b476"
+            },
+            {
+              "title": "Профиль пациента",
+              "slug": "notion-ru-23f60b77fbf5809f895ee0ab7e764da4",
+              "children": [
+                {
+                  "title": "Обновление личных данных в профиле пациента",
+                  "slug": "notion-ru-23f60b77fbf58087928ac4aba5fc0a33"
+                },
+                {
+                  "title": "Прикрепление документа к профилю пациента",
+                  "slug": "notion-ru-23f60b77fbf580b491e9f518519123db"
+                }
+              ]
+            },
+            {
+              "title": "Льготная госпитализация",
+              "slug": "notion-ru-27660b77fbf580b49476fa8278d66d46",
+              "children": [
+                {
+                  "title": "Оформление пациента в стационар по льготному направлению",
+                  "slug": "notion-ru-27660b77fbf580aea666e6773ad35b02"
+                }
+              ]
+            },
+            {
+              "title": "Форма 058 - Экстренное извещение об инфекционном заболевании",
+              "slug": "notion-ru-3ad60b77fbf5802a92b1e60fc78249d9"
+            }
+          ]
+        },
         {
           "title": "Bemorni joylashtirish. Kasalxonaga qabul qilish",
           "slug": "bemorni-joylashtirish-kasalxonaga-qabul-qilish-16860b77fb"
@@ -616,13 +1444,148 @@
           "title": "058-shakl - Yuqumli kasallik haqida shoshilinch xabar",
           "slug": "058-shakl-yuqumli-kasallik-haqida-shoshilinch-xabar-3ad60b77fb"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Shifoxonaning davolovchi shifokor",
       "slug": "shifoxonaning-davolovchi-shifokor",
       "icon": "briefcase-medical",
       "children": [
+        {
+          "title": "Лечащий врач стационара · RU",
+          "slug": "notion-ru-16860b77fbf580fb9e0ed4a4a3fb75c0",
+          "children": [
+            {
+              "title": "Проведение первичного осмотра",
+              "slug": "notion-ru-16860b77fbf580ef849bfcc6a437755c"
+            },
+            {
+              "title": "Создание/редактирование и распечатка формы 003",
+              "slug": "notion-ru-16860b77fbf580a0b4fac3d09da740a8"
+            },
+            {
+              "title": "Перевод пациента",
+              "slug": "notion-ru-16860b77fbf580e6964bd5b5911c80fd"
+            },
+            {
+              "title": "Направление на анализы",
+              "slug": "notion-ru-16860b77fbf58020a247f6863981e4bc"
+            },
+            {
+              "title": "Направление к узкому специалисту",
+              "slug": "notion-ru-16960b77fbf580e1b25ce930a8e886ad"
+            },
+            {
+              "title": "Создание/редактирование записей в дневнике осмотра",
+              "slug": "notion-ru-16860b77fbf580e38274dd47f762e8bb"
+            },
+            {
+              "title": "Проведение осмотра в отделении",
+              "slug": "notion-ru-16860b77fbf5805ca0aaf651cdc6ac2a"
+            },
+            {
+              "title": "Создание курса лечения",
+              "slug": "notion-ru-1d660b77fbf580b48759c668d2e65188"
+            },
+            {
+              "title": "Физиотерапия",
+              "slug": "notion-ru-20060b77fbf580c39676e12982b8f43a",
+              "children": [
+                {
+                  "title": "Назначение физиотерапевтической процедуры",
+                  "slug": "notion-ru-20060b77fbf581bbb674c303551f7604"
+                },
+                {
+                  "title": "Отслеживание процесса проведения курса физиотерапии. Просмотр журнала №031",
+                  "slug": "notion-ru-20060b77fbf581649755c86e9682d999"
+                }
+              ]
+            },
+            {
+              "title": "Обоснование клинического диагноза",
+              "slug": "notion-ru-16860b77fbf580f58ae0edbee782dc51"
+            },
+            {
+              "title": "Предоперационный эпикриз",
+              "slug": "notion-ru-38260b77fbf5807bb0dfe30966f39b19"
+            },
+            {
+              "title": "Создание этапного эпикриза",
+              "slug": "notion-ru-16860b77fbf5807eb837c290dbd56702"
+            },
+            {
+              "title": "Выписной эпикриз: создание и печать",
+              "slug": "notion-ru-16860b77fbf58060b513c6af403ca544"
+            },
+            {
+              "title": "Заполнение формы 066",
+              "slug": "notion-ru-16860b77fbf5801c8b2eddb50136f6c1"
+            },
+            {
+              "title": "Беременность и роды",
+              "slug": "notion-ru-1ce60b77fbf58001985cfb3dbb39d6eb",
+              "children": [
+                {
+                  "title": "Заполнение протокола родов",
+                  "slug": "notion-ru-1ce60b77fbf580b7aef4f25848f722fa"
+                },
+                {
+                  "title": "Заполнение формы 096 (Карта по беременности и родам)",
+                  "slug": "notion-ru-1ce60b77fbf5803f9b31f398e537715b"
+                },
+                {
+                  "title": "Заполнение формы 097 (Карта развития новорожденного)",
+                  "slug": "notion-ru-1ce60b77fbf58056ae10e65a5eb4dff7"
+                }
+              ]
+            },
+            {
+              "title": "Льготная госпитализация",
+              "slug": "notion-ru-27660b77fbf5806abed3cbe11c66cac5"
+            },
+            {
+              "title": "Форма 058 - Экстренное извещение об инфекционном заболевании",
+              "slug": "notion-ru-2cc60b77fbf580da9c54fb651920fd14"
+            },
+            {
+              "title": "Служба 112 в стационаре: Оповещение о происшествиях",
+              "slug": "notion-ru-35060b77fbf5807eab88cb29a0e82b15",
+              "children": [
+                {
+                  "title": "Служба 112 в стационаре:  короткая инструкция",
+                  "slug": "notion-ru-35f60b77fbf580679d41eeed4df3a6e0"
+                }
+              ]
+            },
+            {
+              "title": "Больничный лист",
+              "slug": "notion-ru-39c60b77fbf580809528ed92054775e6",
+              "children": [
+                {
+                  "title": "Создание, продление, отмена, закрытие больничного листа",
+                  "slug": "notion-ru-39c60b77fbf580b4ba33da08da967ec0"
+                },
+                {
+                  "title": "Создание, продление, отмена, закрытие листа нетрудоспособности по беременности и родам",
+                  "slug": "notion-ru-39c60b77fbf5809980afe51da26b040c"
+                },
+                {
+                  "title": "Подтверждение, возврат для исправления, печать больничного листа",
+                  "slug": "notion-ru-39c60b77fbf58000b079f9d2bd358f95"
+                },
+                {
+                  "title": "Продолжение ранее закрытого больничного листа",
+                  "slug": "notion-ru-39c60b77fbf58053b679c57d02b76593"
+                },
+                {
+                  "title": "Печать больничного листа",
+                  "slug": "notion-ru-39c60b77fbf580749483ec114b1f65d3"
+                }
+              ]
+            }
+          ]
+        },
         {
           "title": "Boshlangich tekshiruvni otkazish",
           "slug": "boshlangich-tekshiruvni-otkazish-16860b77fb"
@@ -743,7 +1706,8 @@
           "title": "Mehnatga layoqatsizlik varaqasini chop etish",
           "slug": "mehnatga-layoqatsizlik-varaqasini-chop-etish-3ac60b77fb"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Shifoxona. Tor mutaxassis korik tartibi",
@@ -751,16 +1715,65 @@
       "icon": "heart-pulse",
       "children": [
         {
+          "title": "Стационар. Осмотр узкого специалиста · RU",
+          "slug": "notion-ru-16860b77fbf580a0a434c14e65544446"
+        },
+        {
           "title": "Shifoxona. Tor mutaxassis korik tartibi",
           "slug": "tor-mutaxassis"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Laborant",
       "slug": "laborant",
       "icon": "microscope",
       "children": [
+        {
+          "title": "Лаборант · RU",
+          "slug": "notion-ru-16860b77fbf580b2a59feda3aa85b3e5",
+          "children": [
+            {
+              "title": "Забор биоматериала",
+              "slug": "notion-ru-16860b77fbf5802eb846c6a7e0a4f77f"
+            },
+            {
+              "title": "Ввод результатов анализа",
+              "slug": "notion-ru-16860b77fbf580e6bb92ccdf89e7a98c"
+            },
+            {
+              "title": "Новый ЛИС",
+              "slug": "notion-ru-1f160b77fbf5804aa728c412b8e6972a",
+              "children": [
+                {
+                  "title": "Функционал раздела “Заказы”",
+                  "slug": "notion-ru-1f160b77fbf58081a0c7ffaa1f5bdd79"
+                },
+                {
+                  "title": "\nЗабор биоматериала, добавление анализа, печать штрих-кода и чек-листа заказов, перенаправление заказа в другую лабораторию, отклонение заказа, обнуление заказа",
+                  "slug": "notion-ru-1f160b77fbf5801b976dc9eea7113f85"
+                },
+                {
+                  "title": "\nПоиск анализа для ввода результата",
+                  "slug": "notion-ru-1f160b77fbf580ff898ffdea6137a271"
+                },
+                {
+                  "title": "\nВвод результата анализа и подтверждение. Распечатка анализа",
+                  "slug": "notion-ru-1f160b77fbf5809a8e60e5856ddabcf1"
+                },
+                {
+                  "title": "\nСоздание заказа из лаборатории",
+                  "slug": "notion-ru-1f160b77fbf580559daeeece04e75741"
+                },
+                {
+                  "title": "\nУправление доступностью анализов. Настройка порядка отображения параметров внутри составного анализа",
+                  "slug": "notion-ru-1f160b77fbf5804f918cfa8753c04449"
+                }
+              ]
+            }
+          ]
+        },
         {
           "title": "Biomaterialni olish",
           "slug": "biomaterialni-olish-16860b77fb"
@@ -797,7 +1810,8 @@
           "title": "\nTahlillardan foydalanish imkoniyatini boshqarish Tarkibiy tahlil ichida parametrlarni ko‘rsatish tartibini sozlash",
           "slug": "configuration-of-analyses-uz"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Taqrizchi (qayta ko'rib chiquvchi)",
@@ -805,16 +1819,243 @@
       "icon": "badge-check",
       "children": [
         {
+          "title": "Рецензент электронных рецептов · RU",
+          "slug": "notion-ru-1ab60b77fbf580eeb914c3610cb6309d"
+        },
+        {
           "title": "Reimbursatsiya retseptini tasdiqlash/qayta ishlashga yuborish",
           "slug": "taqrizchi-1"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Direktor",
       "slug": "direktor",
       "icon": "briefcase",
       "children": [
+        {
+          "title": "Директор · RU",
+          "slug": "notion-ru-16860b77fbf58053bcdcf7581030bdad",
+          "children": [
+            {
+              "title": "Одобрение статуса госпитализации через директорский аккаунт",
+              "slug": "notion-ru-16860b77fbf5801ab1d7fa7d87901e25"
+            },
+            {
+              "title": "Льготная госпитализация",
+              "slug": "notion-ru-27660b77fbf5805a8a86e0df55432eb5",
+              "children": [
+                {
+                  "title": "Общий функционал раздела \"Льготные направления\"",
+                  "slug": "notion-ru-9f360b77fbf58296bcaa81b2e56ba517"
+                },
+                {
+                  "title": "Создание направления в первичном звене",
+                  "slug": "notion-ru-8ff60b77fbf583fe97d4814c47dbaa03"
+                },
+                {
+                  "title": "Рассмотрение направления многопрофильной поликлиникой",
+                  "slug": "notion-ru-08860b77fbf582c6983d010c9313f79c"
+                },
+                {
+                  "title": "Рассмотрение направления областной комиссией",
+                  "slug": "notion-ru-7fd60b77fbf5839fbb4d01c8ac0f5e59"
+                },
+                {
+                  "title": "Рассмотрение направления республиканской комиссией",
+                  "slug": "notion-ru-22160b77fbf582a3a3868127323b5579"
+                },
+                {
+                  "title": "Выбор учреждения для госпитализации семейным врачом",
+                  "slug": "notion-ru-cb960b77fbf582728e9481fcbdc7d29d"
+                },
+                {
+                  "title": "Оформление пациента в стационар по льготному направлению",
+                  "slug": "notion-ru-02660b77fbf583d2a5aa011c47254492"
+                }
+              ]
+            },
+            {
+              "title": "Создание аккаунта",
+              "slug": "notion-ru-16860b77fbf5801f8b97db73fe12fb00"
+            },
+            {
+              "title": " Деактивация аккаунта",
+              "slug": "notion-ru-33d60b77fbf580dea16ef4aea9771951"
+            },
+            {
+              "title": "Электронный документооборот",
+              "slug": "notion-ru-1cf60b77fbf5809ebe90c2db91ea3190",
+              "children": [
+                {
+                  "title": "Подтверждениеи возвращение для исправления больничного листа",
+                  "slug": "notion-ru-1cf60b77fbf58054bed9efc3789165f1"
+                },
+                {
+                  "title": "Печать больничного листа",
+                  "slug": "notion-ru-1cf60b77fbf5808db6c3ce8cae1df4f9"
+                },
+                {
+                  "title": "Создание справок",
+                  "slug": "notion-ru-1cf60b77fbf580309d13eddddc2cdef2"
+                },
+                {
+                  "title": "Проверка подлинности электронных документов",
+                  "slug": "notion-ru-1cf60b77fbf580508414d2feadb64af3"
+                },
+                {
+                  "title": "Заполнение журналов ручного ввода",
+                  "slug": "notion-ru-1cf60b77fbf5807591cddb754fd07aa4"
+                },
+                {
+                  "title": "Просмотр журналов в BI",
+                  "slug": "notion-ru-1cf60b77fbf58073abb1e517851f2197"
+                },
+                {
+                  "title": "Документация по скринингу на сахарный диабет",
+                  "slug": "notion-ru-28b60b77fbf5801bbd98ed508f8cd096"
+                },
+                {
+                  "title": "Документация по скринингу на сердечно-сосудистые заболевания",
+                  "slug": "notion-ru-28b60b77fbf580668d98c63ee08d2c5e",
+                  "children": [
+                    {
+                      "title": "Просмотр журналов 051 и 051-1",
+                      "slug": "notion-ru-28b60b77fbf580f28827c057286303a4"
+                    }
+                  ]
+                },
+                {
+                  "title": "Справка о медосмотре для вступления в брак",
+                  "slug": "notion-ru-28b60b77fbf5801aaaa8c9f79e7f03f6",
+                  "children": [
+                    {
+                      "title": "Подтверждение справки и отправка ее на исправление",
+                      "slug": "notion-ru-2a060b77fbf580379074d043f5ba8c63"
+                    }
+                  ]
+                },
+                {
+                  "title": "Форма 058 - Экстренное извещение об инфекционном заболевании",
+                  "slug": "notion-ru-2cc60b77fbf5804e962dfe6ef20ea2e1"
+                },
+                {
+                  "title": "Справки 086",
+                  "slug": "notion-ru-35b60b77fbf580b8ad8bc129168f22ef",
+                  "children": [
+                    {
+                      "title": "Подтверждение справок 086",
+                      "slug": "notion-ru-35b60b77fbf5800e9660daca39588b94"
+                    }
+                  ]
+                },
+                {
+                  "title": "Медицинская справка об освобождении от ремня безопасности",
+                  "slug": "notion-ru-3b960b77fbf580529cfac443826ea13b",
+                  "children": [
+                    {
+                      "title": "Подтверждение справки об освобождении от ремня безопасности",
+                      "slug": "notion-ru-3b960b77fbf58056b054f9ff3d502186"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Бухгалтерия",
+              "slug": "notion-ru-1d660b77fbf5805c8bacf868c6ac3827",
+              "children": [
+                {
+                  "title": "Настройка услуг с типом “Процедура”",
+                  "slug": "notion-ru-1d660b77fbf580f38ca4f4e0b0e18671"
+                },
+                {
+                  "title": "Настройка цен на товары со склада",
+                  "slug": "notion-ru-1d660b77fbf58074a195d5b451bc7feb"
+                }
+              ]
+            },
+            {
+              "title": "Внесение информации о сотруднике",
+              "slug": "notion-ru-1f460b77fbf5805a9a32e355e6c96ab7",
+              "children": [
+                {
+                  "title": "Прикрепление сотрудника к участку и кабинету",
+                  "slug": "notion-ru-1f460b77fbf580fd91ebdeb366bc06f0"
+                },
+                {
+                  "title": "Внесение информации о графике отсутствия сотрудника",
+                  "slug": "notion-ru-1f460b77fbf5807bb803db19641739b5"
+                },
+                {
+                  "title": "Внесение информации о графике работы сотрудника",
+                  "slug": "notion-ru-1f460b77fbf58082bcfafcf338252171"
+                },
+                {
+                  "title": "Внесение информации о должности сотрудника",
+                  "slug": "notion-ru-1f460b77fbf58070a507e8104a790a0a"
+                },
+                {
+                  "title": "Внесение информации о номере телефона сотрудника",
+                  "slug": "notion-ru-1f460b77fbf580dda78bd174e90425e5"
+                }
+              ]
+            },
+            {
+              "title": "Д-учет",
+              "slug": "notion-ru-27d60b77fbf5805a9a16f7863ec32df6",
+              "children": [
+                {
+                  "title": "Внесение и просмотр информации о Д-учете пациента",
+                  "slug": "notion-ru-27d60b77fbf58015b970cf0a4e8dd2ea"
+                },
+                {
+                  "title": "Просмотр журнала диспансерного учета (№030)",
+                  "slug": "notion-ru-27d60b77fbf580a09ae8faa6d3d30e80"
+                },
+                {
+                  "title": "Просмотр информации о Д-учете пациентов в МИС",
+                  "slug": "notion-ru-27d60b77fbf580b2b444d59ee6d0b40a"
+                }
+              ]
+            },
+            {
+              "title": "Удаление учета по беременности",
+              "slug": "notion-ru-3a060b77fbf580179b09d2b189c86f31"
+            },
+            {
+              "title": "Новая касса",
+              "slug": "notion-ru-28c60b77fbf580ce944be2ba0badc19a",
+              "children": [
+                {
+                  "title": "Функционал раздела “Счета”",
+                  "slug": "notion-ru-28c60b77fbf5805a8678e95885bd904b"
+                },
+                {
+                  "title": "Функционал раздела “Депозиты”",
+                  "slug": "notion-ru-28c60b77fbf580fd8270f7b78194f276"
+                },
+                {
+                  "title": "Функционал раздела “Смены кассиров”",
+                  "slug": "notion-ru-28c60b77fbf580728ec1d5c3a7252d19"
+                },
+                {
+                  "title": "Функционал раздела “Отчеты”",
+                  "slug": "notion-ru-28c60b77fbf58099a5ecda4107b75568"
+                },
+                {
+                  "title": "Функционал раздела “Договора”",
+                  "slug": "notion-ru-28c60b77fbf580ba9b36ff497c0f84c9"
+                },
+                {
+                  "title": "Создание и настройка страховых организаций",
+                  "slug": "notion-ru-33a60b77fbf5806983bfd4e080da9766"
+                }
+              ]
+            }
+          ]
+        },
         {
           "title": "Akkaunt yaratish",
           "slug": "akkaunt-yaratish-16860b77fb"
@@ -1015,7 +2256,8 @@
           "title": "Viloyat komissiyasi tomonidan yo‘llanmani ko‘rib chiqish",
           "slug": "viloyat-komissiyasi-tomonidan-yo-llanmani-ko-rib-chiqis-51a60b77fb"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Statist",
@@ -1023,16 +2265,41 @@
       "icon": "chart-column",
       "children": [
         {
+          "title": "Статист · RU",
+          "slug": "notion-ru-17460b77fbf580f594c0df3f0c1c8d83",
+          "children": [
+            {
+              "title": "Отчеты SSV",
+              "slug": "notion-ru-17460b77fbf580b891e3fc237333a9fc"
+            }
+          ]
+        },
+        {
           "title": "SSV Hisobotlari",
           "slug": "learning-materials-statist-ssv-reports-uzb"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Farmasevt",
       "slug": "farmasevt",
       "icon": "pill",
       "children": [
+        {
+          "title": "Фармацевт · RU",
+          "slug": "notion-ru-1ab60b77fbf580aeb67fcad192b702f2",
+          "children": [
+            {
+              "title": "Выдача препарата в ЕМИС DMED",
+              "slug": "notion-ru-1fb60b77fbf5800aa4bdccaedcfaa40c"
+            },
+            {
+              "title": "Выдача препарата в DMED Pro",
+              "slug": "notion-ru-2c760b77fbf580d39aeee4546db4036b"
+            }
+          ]
+        },
         {
           "title": "DMED EMIS orqali retsept bo‘yicha dori-vositasini berish",
           "slug": "drug-release-mis-uz"
@@ -1041,13 +2308,42 @@
           "title": "Dori-vositasini DMED Pro‘da berish",
           "slug": "farmasevt-2"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Ombor mudiri",
       "slug": "ombor-mudiri",
       "icon": "archive",
       "children": [
+        {
+          "title": "Старый склад (warehouse.dmed.uz) · RU",
+          "slug": "notion-ru-3f260b77fbf5807b96add8f718aec43e",
+          "children": [
+            {
+              "title": "Заведующий складом",
+              "slug": "notion-ru-1cf60b77fbf580549039eb7b1727b32a",
+              "children": [
+                {
+                  "title": "Добавление поставщиков и договоров",
+                  "slug": "notion-ru-1cf60b77fbf5806c84dfeff41195cd2b"
+                },
+                {
+                  "title": "Добавление товаров",
+                  "slug": "notion-ru-1cf60b77fbf58080934adbfeb9c815b4"
+                },
+                {
+                  "title": "Добавление складов",
+                  "slug": "notion-ru-1cf60b77fbf5801888bbd701b88f1899"
+                },
+                {
+                  "title": "Учет: Приходы, Расходы, Остаток",
+                  "slug": "notion-ru-1cf60b77fbf580ec86aef100e080a69a"
+                }
+              ]
+            }
+          ]
+        },
         {
           "title": "Ta’minotchilar va shartnomalarni qo‘shish",
           "slug": "ombor-mudiri-2"
@@ -1064,13 +2360,66 @@
           "title": "Hisob: Kirim, Chiqim, Qoldiq",
           "slug": "ombor-mudiri-5"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Buxgalter",
       "slug": "buxgalter",
       "icon": "wallet",
       "children": [
+        {
+          "title": "Бухгалтер · RU",
+          "slug": "notion-ru-1d660b77fbf5806fb7c2d632a73c32c8",
+          "children": [
+            {
+              "title": "Настройка услуг с типом “Процедура”",
+              "slug": "notion-ru-1d660b77fbf580d8ab68fc9184df3c3b"
+            },
+            {
+              "title": "Настройка цен на товары со склада",
+              "slug": "notion-ru-1d660b77fbf58081a7c6d5440e9a2fc2"
+            },
+            {
+              "title": "Создание нозологической группы для льготной госпитализации",
+              "slug": "notion-ru-27660b77fbf5809e9fd9fc1d62238dea"
+            },
+            {
+              "title": "Новая касса",
+              "slug": "notion-ru-28c60b77fbf580bfafc9d636ae5e486f",
+              "children": [
+                {
+                  "title": "Функционал раздела “Счета”",
+                  "slug": "notion-ru-28c60b77fbf5805da836e66d5f507bd8"
+                },
+                {
+                  "title": "Операции со счетами",
+                  "slug": "notion-ru-28c60b77fbf580e4a606d369ba73b734"
+                },
+                {
+                  "title": "Функционал раздела “Депозиты”",
+                  "slug": "notion-ru-28c60b77fbf580d8830ef94bc5649608"
+                },
+                {
+                  "title": "Функционал раздела “Смены кассиров”",
+                  "slug": "notion-ru-28c60b77fbf580edaed8c1fd1f08c2b2"
+                },
+                {
+                  "title": "Функционал раздела “Отчеты”",
+                  "slug": "notion-ru-28c60b77fbf580f982a4fadcccf79c24"
+                },
+                {
+                  "title": "Функционал раздела “Договора”",
+                  "slug": "notion-ru-28c60b77fbf5801a8b11c3c7af728755"
+                },
+                {
+                  "title": "Создание и настройка страховых организаций",
+                  "slug": "notion-ru-33a60b77fbf5803aa025eee0cb1b9434"
+                }
+              ]
+            }
+          ]
+        },
         {
           "title": "\"Muolaja\" turidagi xizmatlarni sozlash",
           "slug": "buxgalter-1"
@@ -1115,13 +2464,48 @@
           "title": "Sug‘urta tashkilotlarini yaratish va sozlash",
           "slug": "sug-urta-tashkilotlarini-yaratish-va-sozlash-33a60b77fb-2"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Kassir",
       "slug": "kassir",
       "icon": "banknote",
       "children": [
+        {
+          "title": "Кассир · RU",
+          "slug": "notion-ru-28c60b77fbf580eea113c951792fb9b3",
+          "children": [
+            {
+              "title": "Открытие и закрытие смены",
+              "slug": "notion-ru-28c60b77fbf580df826cf1a21d9d9d59"
+            },
+            {
+              "title": "Функционал раздела “Счета”",
+              "slug": "notion-ru-28c60b77fbf580928632fff21ebded4f"
+            },
+            {
+              "title": "Операции со счетами",
+              "slug": "notion-ru-28c60b77fbf58023afb5f0cd1cc0b7ba"
+            },
+            {
+              "title": "Функционал раздела “Депозиты”",
+              "slug": "notion-ru-28c60b77fbf58006834fc9e03caaefa9"
+            },
+            {
+              "title": "Функционал раздела “Мои смены”",
+              "slug": "notion-ru-28c60b77fbf580ec8500def3b8853967"
+            },
+            {
+              "title": "Функционал раздела “Отчеты”",
+              "slug": "notion-ru-28c60b77fbf580bab7abdc77a2d7b35d"
+            },
+            {
+              "title": "Функционал раздела “Договора”",
+              "slug": "notion-ru-28c60b77fbf5801987dafca887a7e3ea"
+            }
+          ]
+        },
         {
           "title": "Smenani ochish va yopish",
           "slug": "smenani-ochish-va-yopish-28d60b77fb"
@@ -1154,13 +2538,82 @@
           "title": "Kassir",
           "slug": "kassir-28d60b77fb"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Bosh hamshira",
       "slug": "bosh-hamshira",
       "icon": "user-round",
       "children": [
+        {
+          "title": "Старшая медсестра · RU",
+          "slug": "notion-ru-1d660b77fbf580cf9800c23678129c68",
+          "children": [
+            {
+              "title": "Проведение курса лечения",
+              "slug": "notion-ru-1d660b77fbf5804da6e5f636ba9d7c68"
+            },
+            {
+              "title": "Новый склад (wh.dmed.uz)",
+              "slug": "notion-ru-3f260b77fbf580ae93d7eb4b0cd810d9",
+              "children": [
+                {
+                  "title": "Справочники",
+                  "slug": "notion-ru-f2860b77fbf58356a4b901af3b667876"
+                },
+                {
+                  "title": "Документы ",
+                  "slug": "notion-ru-17c60b77fbf58298bf9881d410505d04"
+                },
+                {
+                  "title": "Учеты/Потребности ",
+                  "slug": "notion-ru-6e460b77fbf5822595f4018196a58ae8"
+                },
+                {
+                  "title": "Учеты/Требования ",
+                  "slug": "notion-ru-36760b77fbf582b59c3f0167db1a6d19"
+                },
+                {
+                  "title": "Учеты/Расходы",
+                  "slug": "notion-ru-64260b77fbf58253a365017c1b401b7a"
+                },
+                {
+                  "title": "Учеты/Возвраты ",
+                  "slug": "notion-ru-5b760b77fbf58385940a813b582e9cfc"
+                },
+                {
+                  "title": "Учеты/Остатки ",
+                  "slug": "notion-ru-04360b77fbf583bba145810cb35ade5f"
+                },
+                {
+                  "title": "Постовые склады/Требования",
+                  "slug": "notion-ru-52f60b77fbf5825b97b4816cdafdafd9"
+                },
+                {
+                  "title": "Постовые склады/Расходы ",
+                  "slug": "notion-ru-d4560b77fbf582d39b35814bd76b7e4d"
+                },
+                {
+                  "title": "Постовые склады/Возвраты",
+                  "slug": "notion-ru-c8260b77fbf58397ade68182ef563764"
+                },
+                {
+                  "title": "Постовые склады/Стерилизация",
+                  "slug": "notion-ru-07c60b77fbf58330874c016483a449e3"
+                },
+                {
+                  "title": "Постовой склад/Остатки ",
+                  "slug": "notion-ru-5e860b77fbf5824fb595815eb1754d6d"
+                },
+                {
+                  "title": "Склад/Стерилизация",
+                  "slug": "notion-ru-6d360b77fbf58249b86d81576c5e9eea"
+                }
+              ]
+            }
+          ]
+        },
         {
           "title": "Davolash kursini o‘tkazish",
           "slug": "bosh-hamshira-1"
@@ -1169,13 +2622,40 @@
           "title": "Fizioterapiya kursini o‘tkazish",
           "slug": "conducting-physiotherapybosh-hamshira-uz"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Hamshira",
       "slug": "hamshira",
       "icon": "heart",
       "children": [
+        {
+          "title": "Медсестра · RU",
+          "slug": "notion-ru-20060b77fbf5800b918fdb6de91aa35c",
+          "children": [
+            {
+              "title": "Процедурная медсестра",
+              "slug": "notion-ru-1d660b77fbf58074ac27d380993e5e14",
+              "children": [
+                {
+                  "title": "Проведение курса лечения",
+                  "slug": "notion-ru-1d660b77fbf5804c969ae301df1938e3"
+                }
+              ]
+            },
+            {
+              "title": "Физиотерапевтическая медсестра",
+              "slug": "notion-ru-20060b77fbf5808f9943ef218160f083",
+              "children": [
+                {
+                  "title": "Проведение физиотерапии",
+                  "slug": "notion-ru-20060b77fbf580bdaf86e5ae1b8e532e"
+                }
+              ]
+            }
+          ]
+        },
         {
           "title": "Muolaja hamshirasi",
           "slug": "muolaja-hamshirasi-1d760b77fb"
@@ -1192,13 +2672,94 @@
           "title": "Fizioterapiya kursini o‘tkazish",
           "slug": "conducting-physiotherapy-uz"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Bemor",
       "slug": "bemor",
       "icon": "user",
       "children": [
+        {
+          "title": "Пациент · RU",
+          "slug": "notion-ru-1fb60b77fbf58020b3f3de1bb978d5e8",
+          "children": [
+            {
+              "title": "Мобильное приложение DMED",
+              "slug": "notion-ru-30660b77fbf580f18fc4d0ab43f56716",
+              "children": [
+                {
+                  "title": "Авторизация в приложении DMED",
+                  "slug": "notion-ru-30660b77fbf580ac81bbfe90ce46756c"
+                },
+                {
+                  "title": "Главная страница",
+                  "slug": "notion-ru-30660b77fbf5805099aef2c5758c9959"
+                },
+                {
+                  "title": "Мои приемы",
+                  "slug": "notion-ru-30660b77fbf580beb727cb87cf93ef63"
+                },
+                {
+                  "title": "Медкарта",
+                  "slug": "notion-ru-30660b77fbf58095a279cfb205fdbe66"
+                },
+                {
+                  "title": "Аккаунт",
+                  "slug": "notion-ru-30660b77fbf5803993e1f364402a8ea0"
+                },
+                {
+                  "title": "Семейный аккаунт",
+                  "slug": "notion-ru-30660b77fbf58070b011d1a8322eee0f"
+                },
+                {
+                  "title": "Электронный рецепт",
+                  "slug": "notion-ru-30660b77fbf5803f9a8deccfd99bb58c",
+                  "children": [
+                    {
+                      "title": "Общая информация о рецептах",
+                      "slug": "notion-ru-30660b77fbf5802c9235c2c49c1e0bce"
+                    },
+                    {
+                      "title": "Просмотр рецепта",
+                      "slug": "notion-ru-30660b77fbf580eca460da634c7b66d0"
+                    },
+                    {
+                      "title": "Получение препарата по электронному рецепту",
+                      "slug": "notion-ru-30660b77fbf5808284dce9d238d589a3"
+                    }
+                  ]
+                },
+                {
+                  "title": "Как отслеживать и выбирать клинику по льготному направлению в приложении DMED",
+                  "slug": "notion-ru-3b760b77fbf580cca767d114a88b199e"
+                }
+              ]
+            },
+            {
+              "title": "Электронный рецепт",
+              "slug": "notion-ru-30660b77fbf580659913d1282196c717",
+              "children": [
+                {
+                  "title": "Общая информация о рецептах",
+                  "slug": "notion-ru-30660b77fbf580068378cd8bb58c7eb4"
+                },
+                {
+                  "title": "Просмотр рецепта",
+                  "slug": "notion-ru-30660b77fbf580a3b2d9d372798e687b"
+                },
+                {
+                  "title": "Получение препарата по электронному рецепту",
+                  "slug": "notion-ru-30660b77fbf580bfa9e6faac7716e23e"
+                }
+              ]
+            },
+            {
+              "title": "Самостоятельная запись на прием с помощью Muxlisa (инфокиоск)",
+              "slug": "notion-ru-24060b77fbf58076b66edbce7573497b"
+            }
+          ]
+        },
         {
           "title": "DMED mobil ilovasi",
           "slug": "dmed-mobil-ilovasi-30660b77fb"
@@ -1251,13 +2812,52 @@
           "title": "Bemor",
           "slug": "bemor-1fd60b77fb"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "KPI (Asosiy samaradorlik ko’rsatkichlari)",
       "slug": "kpi-asosiy-samaradorlik-korsatkichlari",
       "icon": "chart-line",
       "children": [
+        {
+          "title": "KPI (ключевые показатели эффективности) · RU",
+          "slug": "notion-ru-2e160b77fbf5800ea483d0f1563418d2",
+          "children": [
+            {
+              "title": "Общая информация о модуле KPI",
+              "slug": "notion-ru-2e160b77fbf580b3a0a1c119416a3247"
+            },
+            {
+              "title": "KPI Семейного врача",
+              "slug": "notion-ru-2e260b77fbf5800c971ef11334fe0652"
+            },
+            {
+              "title": "KPI Практикующей медсестры",
+              "slug": "notion-ru-2e360b77fbf580f08816f88120600e31"
+            },
+            {
+              "title": "KPI Патронажной медсестры",
+              "slug": "notion-ru-2e360b77fbf5803eac47c8eee0d016a5"
+            },
+            {
+              "title": "KPI Врача ультразвуковой диагностики / Рентгенолога",
+              "slug": "notion-ru-2e760b77fbf5802985a2fbb866fdc1ea"
+            },
+            {
+              "title": "KPI Врача-педиатра",
+              "slug": "notion-ru-2e760b77fbf580d0b2d0c25bbe978931"
+            },
+            {
+              "title": "KPI Врача акушера-гинеколога",
+              "slug": "notion-ru-2e960b77fbf580a5b0d6ca5001442ed9"
+            },
+            {
+              "title": "KPI Директора",
+              "slug": "notion-ru-2eb60b77fbf5805d9be8c7bcd6ad8dcc"
+            }
+          ]
+        },
         {
           "title": "KPI moduli haqida umumiy ma’lumot",
           "slug": "kpi-info-uz"
@@ -1290,13 +2890,170 @@
           "title": "Direktor KPI",
           "slug": "kpi-director-uz"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Yangi Omborxona",
       "slug": "yangi-omborxona",
       "icon": "warehouse",
       "children": [
+        {
+          "title": "Новый склад (wh.dmed.uz) · RU",
+          "slug": "notion-ru-30960b77fbf580958da0c8705febd905",
+          "children": [
+            {
+              "title": "Заведующий складом",
+              "slug": "notion-ru-39060b77fbf580e0861df9f794a0bf42",
+              "children": [
+                {
+                  "title": "Справочники/Товары",
+                  "slug": "notion-ru-39060b77fbf580d5acd2f0702e2aa58c"
+                },
+                {
+                  "title": "Изготовление товаров и заготовок",
+                  "slug": "notion-ru-3f160b77fbf580e796b1fdb72fa2c108"
+                },
+                {
+                  "title": "Справочники/Поставщики",
+                  "slug": "notion-ru-39060b77fbf580468b74d28096ce9242"
+                },
+                {
+                  "title": "Справочники/Расчетные счета",
+                  "slug": "notion-ru-39060b77fbf58076bc02c742e8abf023"
+                },
+                {
+                  "title": "Справочники/Суб-центральные склады",
+                  "slug": "notion-ru-39060b77fbf580aba5b3dbcd60f682fb"
+                },
+                {
+                  "title": "Справочники/Склады отделения",
+                  "slug": "notion-ru-39060b77fbf580e08d6ec8859ea10e83"
+                },
+                {
+                  "title": "Документы",
+                  "slug": "notion-ru-39060b77fbf580d6aa2efac1ca030253"
+                },
+                {
+                  "title": "Потребности",
+                  "slug": "notion-ru-39060b77fbf580aab9f5e7a6ead86099"
+                },
+                {
+                  "title": "Приходы",
+                  "slug": "notion-ru-39060b77fbf580e08675e29646491c53"
+                },
+                {
+                  "title": "Требования",
+                  "slug": "notion-ru-39060b77fbf580979caed178069bb305"
+                },
+                {
+                  "title": "Расходы",
+                  "slug": "notion-ru-39060b77fbf5804883afe47a919708f8"
+                },
+                {
+                  "title": "Возвраты",
+                  "slug": "notion-ru-39060b77fbf580b09baeffec30070b34"
+                },
+                {
+                  "title": "Списание",
+                  "slug": "notion-ru-39060b77fbf580779f29ec7f8c420e55"
+                },
+                {
+                  "title": "Остатки",
+                  "slug": "notion-ru-39060b77fbf58097a482ee59b721760e"
+                }
+              ]
+            },
+            {
+              "title": "Старшая медсестра",
+              "slug": "notion-ru-39060b77fbf580f09ca0ef3c090c4e3a",
+              "children": [
+                {
+                  "title": "Справочники",
+                  "slug": "notion-ru-f6960b77fbf583fcaf2c0137bcceac53"
+                },
+                {
+                  "title": "Документы ",
+                  "slug": "notion-ru-a9a60b77fbf5831692de813f3b3b48ab"
+                },
+                {
+                  "title": "Учеты/Потребности ",
+                  "slug": "notion-ru-fa660b77fbf58238a5f381b122143f96"
+                },
+                {
+                  "title": "Учеты/Требования ",
+                  "slug": "notion-ru-3b060b77fbf583c4b0d001491fe40671"
+                },
+                {
+                  "title": "Учеты/Расходы",
+                  "slug": "notion-ru-74260b77fbf5824ebbba81094d97de20"
+                },
+                {
+                  "title": "Учеты/Возвраты ",
+                  "slug": "notion-ru-a6d60b77fbf582e184fa01bfd1e63a44"
+                },
+                {
+                  "title": "Учеты/Остатки ",
+                  "slug": "notion-ru-ced60b77fbf583258dbf81a7375bc78a"
+                },
+                {
+                  "title": "Постовые склады/Требования",
+                  "slug": "notion-ru-d4860b77fbf5822788fa016a3d2c14b5"
+                },
+                {
+                  "title": "Постовые склады/Расходы ",
+                  "slug": "notion-ru-9d360b77fbf582e6a95481f3a8cf727e"
+                },
+                {
+                  "title": "Постовые склады/Возвраты",
+                  "slug": "notion-ru-a9d60b77fbf583cbbd7b8151836d9f47"
+                },
+                {
+                  "title": "Постовые склады/Стерилизация",
+                  "slug": "notion-ru-b0f60b77fbf583ab99af810a0f7efbc6"
+                },
+                {
+                  "title": "Постовой склад/Остатки ",
+                  "slug": "notion-ru-12160b77fbf58247a29a81a80d21f440"
+                },
+                {
+                  "title": "Склад/Стерилизация",
+                  "slug": "notion-ru-dce60b77fbf5833e80b38107c63bb85b"
+                }
+              ]
+            },
+            {
+              "title": "Медсестра",
+              "slug": "notion-ru-39060b77fbf5807b939dcb50577e08c3",
+              "children": [
+                {
+                  "title": "Учеты/Требования ",
+                  "slug": "notion-ru-a7060b77fbf583228af5810fe9fb369a"
+                },
+                {
+                  "title": "Учеты/Возвраты",
+                  "slug": "notion-ru-d5a60b77fbf582f4ad5281e3146e26d1"
+                },
+                {
+                  "title": "Учеты/Расходы",
+                  "slug": "notion-ru-cac60b77fbf582a6ba88818e6659fa7f"
+                },
+                {
+                  "title": "Учеты/Остатки ",
+                  "slug": "notion-ru-3d960b77fbf58204983d814d2b98be19"
+                },
+                {
+                  "title": "Склад/Стерилизация",
+                  "slug": "notion-ru-34160b77fbf5833abd438118d78a01d7"
+                },
+                {
+                  "title": "Склад/Отдел централизованной стерилизации",
+                  "slug": "notion-ru-ccf60b77fbf583c1af3e01d88242eaae"
+                }
+              ]
+            }
+          ]
+        },
         {
           "title": "Ombor mudiri",
           "slug": "ombor-mudiri-39060b77fb"
@@ -1437,7 +3194,8 @@
           "title": "Omborxona/Markazlashtirilgan sterilizatsiya bo’limi",
           "slug": "omborxona-markazlashtirilgan-sterilizatsiya-bolimi-edf60b77fb"
         }
-      ]
+      ],
+      "leaf": false
     },
     {
       "title": "Muxlisa ilovasini o‘rnatish",
@@ -1449,6 +3207,62 @@
           "slug": "muxlisa-setup-uz"
         }
       ]
+    },
+    {
+      "title": "Sog‘liqni saqlashdagi qoidabuzarliklar haqida murojaat",
+      "slug": "violation-report",
+      "icon": "book-open",
+      "children": [
+        {
+          "title": "Подача обращения о нарушениях в сфере здравоохранения · RU",
+          "slug": "notion-ru-3e360b77fbf580f79b77e62e7ffdb90b"
+        }
+      ],
+      "leaf": false
+    },
+    {
+      "title": "Elektron navbatni sozlash",
+      "slug": "electron-queue",
+      "icon": "book-open",
+      "children": [
+        {
+          "title": "Настройка электронной очереди · RU",
+          "slug": "notion-ru-3dc60b77fbf5801da2cdc90a3b9fec60",
+          "children": [
+            {
+              "title": "Установка приложения Muxlisa",
+              "slug": "notion-ru-35260b77fbf580e689e8faa67ea6b7cf"
+            },
+            {
+              "title": "Установка и настройка DMED Monitors",
+              "slug": "notion-ru-3dc60b77fbf58012a48fd38c6e30b768"
+            }
+          ]
+        }
+      ],
+      "leaf": false
+    },
+    {
+      "title": "Texnikani sozlash",
+      "slug": "tech-settings",
+      "icon": "book-open",
+      "children": [
+        {
+          "title": "Настройка техники · RU",
+          "slug": "notion-ru-3dc60b77fbf5806e9331d893c6ab2bf6",
+          "children": [
+            {
+              "title": "Настройка чек-принтеров",
+              "slug": "notion-ru-3dc60b77fbf580868bb6c526fb6e2c04"
+            },
+            {
+              "title": "Использование камер и сканеров",
+              "slug": "notion-ru-3dc60b77fbf580a5b5e8d1fcd79cb1f4"
+            }
+          ]
+        }
+      ],
+      "leaf": false
     }
   ]
 }

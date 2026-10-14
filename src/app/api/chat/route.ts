@@ -189,6 +189,7 @@ export async function POST(request: NextRequest) {
       sessionId: sid,
       text: body.text,
       page: body.page,
+      language: body.language,
       ip: visitorIp(request),
       skipTelegram,
     });

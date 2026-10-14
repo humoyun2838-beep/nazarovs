@@ -3,6 +3,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+node "$ROOT/scripts/preflight.cjs"
 STAMP="$(date -u +%Y%m%d)"
 NAME="nazarov-uz"
 STAGE="/tmp/${NAME}-pack-$$"
@@ -17,6 +18,7 @@ tar -C "$ROOT" \
   --exclude=.git \
   --exclude=data \
   --exclude=artifacts \
+  --exclude=qa-data \
   --exclude='*.zip' \
   --exclude=.env \
   --exclude=.DS_Store \

@@ -1,5 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { parseVisitorIp } from "@/lib/visitor-ip";
+import {
+  isLocale,
+  LOCALE_COOKIE,
+  localeCookieOptions,
+  parseLocale,
+} from "@/lib/locale";
 
 function firstHeader(request: NextRequest, name: string) {
   return (request.headers.get(name) || "").split(",")[0].trim();
@@ -14,12 +20,19 @@ export function visitorIp(request: NextRequest) {
   return parseVisitorIp((name) => request.headers.get(name), platformIp(request));
 }
 
-/** Copy the connecting IP onto the App Router request when proxies omit XFF. */
-export function nextWithClientIp(request: NextRequest) {
+function requestLocale(request: NextRequest) {
+  const q = (request.nextUrl.searchParams.get("lang") || "").trim().toLowerCase();
+  const locale = isLocale(q)
+    ? q
+    : parseLocale(request.cookies.get(LOCALE_COOKIE)?.value);
+  return { q, locale };
+}
+
+function headersWithClientIpAndLocale(request: NextRequest) {
   const ip = visitorIp(request);
-  if (!ip) return NextResponse.next();
   const headers = new Headers(request.headers);
   if (
+    ip &&
     !headers.get("cf-connecting-ip") &&
     !headers.get("true-client-ip") &&
     !headers.get("x-real-ip") &&
@@ -27,7 +40,30 @@ export function nextWithClientIp(request: NextRequest) {
   ) {
     headers.set("x-real-ip", ip);
   }
-  return NextResponse.next({ request: { headers } });
+  const { q, locale } = requestLocale(request);
+  headers.set("x-nazarov-lang", locale);
+  return { headers, q, locale };
+}
+
+function persistLocaleCookie(
+  res: NextResponse,
+  q: string,
+  locale: string,
+) {
+  if (isLocale(q)) {
+    res.cookies.set(LOCALE_COOKIE, locale, localeCookieOptions());
+  }
+  return res;
+}
+
+/** Copy the connecting IP onto the App Router request when proxies omit XFF. */
+export function nextWithClientIp(request: NextRequest) {
+  const { headers, q, locale } = headersWithClientIpAndLocale(request);
+  return persistLocaleCookie(
+    NextResponse.next({ request: { headers } }),
+    q,
+    locale,
+  );
 }
 
 function hostnameOnly(host: string) {
@@ -91,7 +127,8 @@ function asPath(path: string) {
 }
 
 function configuredPublicHost() {
-  return (process.env.PUBLIC_HOST || "nazarov.tunn3l.sh")
+  if (process.env.SITE_PUBLIC_READY !== "1") return "";
+  return (process.env.PUBLIC_HOST || "")
     .trim()
     .replace(/^https?:\/\//i, "")
     .replace(/\/$/, "");
@@ -115,8 +152,9 @@ export function publicHost(request: NextRequest) {
   }
   // tunn3l connects to Next as http://localhost:3847 (Host=localhost, proto=http).
   // Direct local checks use 127.0.0.1 and must keep the landing page.
-  if (hostIsTunnelLocalhost(request)) {
-    return configuredPublicHost();
+  const published = configuredPublicHost();
+  if (published && hostIsTunnelLocalhost(request)) {
+    return published;
   }
   const host = firstHeader(request, "host") || "127.0.0.1:3847";
   if (host.toLowerCase().startsWith("0.0.0.0")) {
@@ -173,23 +211,27 @@ export function requestOrigin(request: NextRequest) {
 export function redirectTo(request: NextRequest, path: string, status = 307) {
   const destPath = asPath(path);
   if (hostUsesDirectHttp(publicHost(request))) {
-    return new NextResponse(null, {
-      status,
-      headers: { Location: destPath },
-    });
+    return NextResponse.redirect(new URL(destPath, requestOrigin(request)), status);
   }
   return NextResponse.redirect(new URL(destPath, requestOrigin(request)), status);
 }
 
 export function rewriteTo(request: NextRequest, path: string) {
-  return NextResponse.rewrite(new URL(asPath(path), request.url));
+  const url = new URL(asPath(path), request.url);
+  const lang = request.nextUrl.searchParams.get("lang");
+  if (lang && !url.searchParams.has("lang")) {
+    url.searchParams.set("lang", lang);
+  }
+  const { headers, q, locale } = headersWithClientIpAndLocale(request);
+  return persistLocaleCookie(
+    NextResponse.rewrite(url, { request: { headers } }),
+    q,
+    locale,
+  );
 }
 
-/** Same-host navigation: rewrite when the public host is unknown/private. */
+/** Same-host navigation. Local hosts use a relative Location so the port stays put. */
 export function sendTo(request: NextRequest, path: string, status = 307) {
-  if (hostUsesDirectHttp(publicHost(request))) {
-    return rewriteTo(request, path);
-  }
   return redirectTo(request, path, status);
 }
 
@@ -203,7 +245,7 @@ export function stayOnHost(request: NextRequest, path: string, status = 307) {
     return rewriteTo(request, path);
   }
   if (hostUsesDirectHttp(host)) {
-    return NextResponse.redirect(new URL(asPath(path), request.url), status);
+    return NextResponse.redirect(new URL(asPath(path), requestOrigin(request)), status);
   }
   return redirectTo(request, path, status);
 }

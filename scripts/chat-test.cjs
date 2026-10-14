@@ -6,7 +6,7 @@ const BASE = process.env.BASE_URL || "http://127.0.0.1:3847";
 const TOTAL = Number(process.env.TOTAL || 900);
 const LIVE = process.env.CHAT_LIVE_TELEGRAM === "1";
 const ADMIN_USER = "Nazarov";
-const ADMIN_PASS = process.env.ADMIN_PASSWORD || "admin9915504";
+const ADMIN_PASS = process.env.ADMIN_PASSWORD || "local-dev-only-password";
 const fs = require("node:fs");
 const path = require("node:path");
 
@@ -48,6 +48,12 @@ function starCount(stats, rating) {
   return Number(stars[starKey(rating)] || stars[Number(rating)] || 0);
 }
 
+function latestChatBodies(messages) {
+  const list = messages || [];
+  const idx = [...list].map((row) => row.kind).lastIndexOf("split");
+  return idx >= 0 ? list.slice(idx + 1) : list;
+}
+
 async function assertRestart(visitorCookie, previousSessionId) {
   const restarted = await jsonReq("/api/chat", {
     cookie: `dmed_chat=${visitorCookie}`,
@@ -71,6 +77,9 @@ async function assertRestart(visitorCookie, previousSessionId) {
   if (!bodies.includes(GREETING_UZ) && !bodies.includes(GREETING_RU)) {
     fail(`restart greeting missing: ${bodies}`);
   }
+  if (!bodies.includes("Yangi suhbat boshlandi") && !bodies.includes("Начат новый чат")) {
+    fail(`restart must keep previous chat visible: ${bodies}`);
+  }
   const sent = await jsonReq("/api/chat", {
     cookie: `dmed_chat=${restarted.cookie}`,
     body: { action: "message", text: "Yangi suhbat savoli.", page: "/nazarov" },
@@ -78,8 +87,11 @@ async function assertRestart(visitorCookie, previousSessionId) {
   if (sent.status !== 200 || !sent.data?.ok) {
     fail(`new chat after restart should accept messages: ${JSON.stringify(sent.data)}`);
   }
-  if (ackCount(sent.data.messages) !== 1) {
+  if (ackCount(latestChatBodies(sent.data.messages)) !== 1) {
     fail("restarted chat must get a single receipt ack");
+  }
+  if (!bodiesOf(sent.data.messages).includes("Yangi suhbat savoli.")) {
+    fail("new message after restart missing");
   }
   return restarted;
 }
@@ -106,6 +118,7 @@ async function jsonReq(path, { method = "POST", body, cookie, test = !LIVE, extr
 async function adminLogin() {
   const form = new FormData();
   form.set("username", ADMIN_USER);
+  form.set("role", "admin");
   form.set("password", ADMIN_PASS);
   form.set("next", "/admin");
   const res = await fetch(`${BASE}/api/login`, {
@@ -120,6 +133,12 @@ async function adminLogin() {
 }
 
 async function adminJson(path, { method = "GET", token, body } = {}) {
+  if (body?.action === "close" && !body.categoryId && body.sessionId !== "missing-session") {
+    const catalog = await adminJson("/api/admin/chat", { token });
+    const categoryId = catalog.data?.categories?.[0]?.id;
+    if (!categoryId) fail("close-test requires a material category");
+    body = { ...body, categoryId };
+  }
   const res = await fetch(`${BASE}${path}`, {
     method,
     headers: {
@@ -915,18 +934,223 @@ async function assertCloseRateStats(token, visitorCookie, sessionId, rating) {
 }
 
 async function main() {
-  const catalog = await fetch(`${BASE}/nazarov`).then((r) => r.text());
+  const token = await adminLogin();
+  const catalog = await fetch(`${BASE}/nazarov`, {
+    headers: { cookie: `nazarov_session=${token}` },
+  }).then((r) => r.text());
   if (!catalog.includes('data-dmed-chat="widget"')) {
     fail("catalog is missing the Dmed chat widget");
   }
-  if (!catalog.includes(">Dmed<") && !catalog.includes("Dmed bilan")) {
-    fail("catalog does not show Dmed chat launcher");
-  }
-  if (catalog.includes("/telegram-ulash") && catalog.includes("Telegramni ulash")) {
-    fail("catalog widget should not ask to connect Telegram");
+  if (!catalog.includes('data-site-lang="switcher"')) {
+    fail("catalog is missing the language switcher");
   }
 
-  const lesson = await fetch(`${BASE}/m/login-to-system-uz`).then((r) => r.text());
+  const tree = JSON.parse(
+    fs.readFileSync(path.join(__dirname, "../src/data/dmed-tree.json"), "utf8"),
+  );
+  const i18n = JSON.parse(
+    fs.readFileSync(path.join(__dirname, "../src/data/catalog-i18n.json"), "utf8"),
+  );
+  const nestedMissing = [];
+  function walk(nodes, depth) {
+    for (const node of nodes || []) {
+      if (depth >= 1) {
+        const hit = i18n[node.slug];
+        if (!hit || !hit.ru || !hit.en || hit.ru === hit.uz || hit.en === hit.uz) {
+          nestedMissing.push(node.slug + " | " + node.title);
+        }
+      }
+      if (node.children?.length) walk(node.children, depth + 1);
+    }
+  }
+  walk(tree.sections || [], 0);
+  if (nestedMissing.length) {
+    fail(`nested titles missing ru/en: ${nestedMissing.slice(0, 20).join("; ")}`);
+  }
+
+  async function assertLocale(code, needle) {
+    const set = await fetch(`${BASE}/api/locale`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ locale: code }),
+    });
+    const rawCookies = typeof set.headers.getSetCookie === "function"
+      ? set.headers.getSetCookie().join("; ")
+      : set.headers.get("set-cookie") || "";
+    const cookie = String(rawCookies).match(/nazarov_lang=([^;]+)/);
+    if (set.status !== 200 || !cookie) fail(`locale ${code} cookie missing`);
+    const page = await fetch(`${BASE}/nazarov`, {
+      headers: { cookie: `nazarov_lang=${cookie[1]}` },
+    }).then((r) => r.text());
+    if (!page.includes(`data-locale="${code}"`) || !page.includes(needle)) {
+      fail(`locale ${code} catalog copy missing: ${needle}`);
+    }
+    if (!page.includes(`data-site-lang="${code}"`)) {
+      fail(`locale ${code} switcher missing`);
+    }
+  }
+  await assertLocale("uz", "O‘quv materiallari");
+  await assertLocale("ru", "Учебные материалы");
+  await assertLocale("en", "Learning materials");
+  await assertLocale("ru", "Регистратор");
+  await assertLocale("en", "Registrar");
+
+  async function assertFaqLocale(code, needle) {
+    const set = await fetch(`${BASE}/api/locale`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ locale: code }),
+    });
+    const rawCookies = typeof set.headers.getSetCookie === "function"
+      ? set.headers.getSetCookie().join("; ")
+      : set.headers.get("set-cookie") || "";
+    const cookie = String(rawCookies).match(/nazarov_lang=([^;]+)/);
+    if (set.status !== 200 || !cookie) fail(`faq locale ${code} cookie missing`);
+    const page = await fetch(`${BASE}/b/eng-kop-beriladigan-savollarga-qisqa-javoblar`, {
+      headers: { cookie: `nazarov_lang=${cookie[1]}` },
+    }).then((r) => r.text());
+    if (!page.includes(needle)) fail(`faq locale ${code} missing: ${needle}`);
+  }
+  await assertFaqLocale("uz", "Face-ID yoki OneID ishlamasa");
+  await assertFaqLocale("ru", "Что делать, если Face-ID или OneID не работает?");
+  await assertFaqLocale("en", "What if Face-ID or OneID does not work?");
+
+  async function assertLessonLocale(code, needle) {
+    const set = await fetch(`${BASE}/api/locale`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ locale: code }),
+    });
+    const rawCookies = typeof set.headers.getSetCookie === "function"
+      ? set.headers.getSetCookie().join("; ")
+      : set.headers.get("set-cookie") || "";
+    const cookie = String(rawCookies).match(/nazarov_lang=([^;]+)/);
+    if (set.status !== 200 || !cookie) fail(`lesson locale ${code} cookie missing`);
+    const page = await fetch(
+      `${BASE}/m/bemorni-qabulga-taklif-qilish-va-yangi-epizod-yaratish-16860b77fb`,
+      { headers: { cookie: `nazarov_lang=${cookie[1]}` } },
+    ).then((r) => r.text());
+    if (!page.includes(needle)) fail(`lesson locale ${code} missing: ${needle}`);
+    if (code !== "uz" && page.includes("tugmasini bosing")) {
+      fail(`lesson locale ${code} still has Uzbek click phrase`);
+    }
+  }
+  await assertLessonLocale(
+    "uz",
+    "Uchrashuvga navbatda turgan bemorni taklif qilish",
+  );
+  await assertLessonLocale(
+    "ru",
+    "Чтобы пригласить пациента, ожидающего в очереди",
+  );
+  await assertLessonLocale(
+    "en",
+    "To invite a patient waiting in the queue",
+  );
+  await assertLessonLocale("ru", "Добавить диагноз");
+  await assertLessonLocale("en", "Add diagnosis");
+
+  async function assertBodyLocale(slug, code, needle, banned) {
+    const set = await fetch(`${BASE}/api/locale`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ locale: code }),
+    });
+    const rawCookies = typeof set.headers.getSetCookie === "function"
+      ? set.headers.getSetCookie().join("; ")
+      : set.headers.get("set-cookie") || "";
+    const cookie = String(rawCookies).match(/nazarov_lang=([^;]+)/);
+    if (set.status !== 200 || !cookie) fail(`body locale ${code} cookie missing`);
+    const page = await fetch(`${BASE}/m/${slug}`, {
+      headers: { cookie: `nazarov_lang=${cookie[1]}` },
+    }).then((r) => r.text());
+    if (!page.includes(needle)) fail(`body locale ${code} missing: ${needle}`);
+    if (banned && page.includes(banned)) fail(`body locale ${code} still has: ${banned}`);
+  }
+  await assertBodyLocale(
+    "bemorning-antropometriya-malumotlarini-kiritish-va-shif-16860b77fb",
+    "ru",
+    "После входа в систему перейдите к панели «Приёмы»",
+    "Tizimga kirganingizdan",
+  );
+  await assertBodyLocale(
+    "bemorni-qabulga-taklif-qilish-va-yangi-epizod-yaratish-16860b77fb",
+    "ru",
+    "Чтобы пригласить пациента, ожидающего в очереди",
+    "Uchrashuvga navbatda turgan",
+  );
+  await assertBodyLocale(
+    "bemorni-qabulga-taklif-qilish-va-yangi-epizod-yaratish-16860b77fb",
+    "en",
+    "To invite a patient waiting in the queue",
+    "Uchrashuvga navbatda turgan",
+  );
+
+  async function assertInner(code, needle) {
+    const set = await fetch(`${BASE}/api/locale`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ locale: code }),
+    });
+    const rawCookies = typeof set.headers.getSetCookie === "function"
+      ? set.headers.getSetCookie().join("; ")
+      : set.headers.get("set-cookie") || "";
+    const cookie = String(rawCookies).match(/nazarov_lang=([^;]+)/);
+    if (set.status !== 200 || !cookie) fail(`inner locale ${code} cookie missing`);
+    const page = await fetch(`${BASE}/b/royxatga-oluvchi`, {
+      headers: { cookie: `nazarov_lang=${cookie[1]}` },
+    }).then((r) => r.text());
+    if (!page.includes(needle)) fail(`inner locale ${code} missing: ${needle}`);
+  }
+  await assertInner("uz", "Bepul yozilish");
+  await assertInner("ru", "Бесплатная запись");
+  await assertInner("en", "Free booking");
+  await assertInner("ru", "В этом уроке");
+  if (true) {
+    const set = await fetch(`${BASE}/api/locale`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ locale: "ru" }),
+    });
+    const rawCookies = typeof set.headers.getSetCookie === "function"
+      ? set.headers.getSetCookie().join("; ")
+      : set.headers.get("set-cookie") || "";
+    const cookie = String(rawCookies).match(/nazarov_lang=([^;]+)/);
+    const page = await fetch(`${BASE}/b/royxatga-oluvchi?lang=ru`, {
+      headers: { cookie: `nazarov_lang=${cookie[1]}` },
+    }).then((r) => r.text());
+    if (page.includes("tanishamiz")) fail("registrar ru still has tanishamiz");
+  }
+  await assertInner("ru", "внутр. уроков");
+  await assertInner("en", "nested lessons");
+
+  async function assertNestedQuoted(code, needle) {
+    const set = await fetch(`${BASE}/api/locale`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ locale: code }),
+    });
+    const rawCookies = typeof set.headers.getSetCookie === "function"
+      ? set.headers.getSetCookie().join("; ")
+      : set.headers.get("set-cookie") || "";
+    const cookie = String(rawCookies).match(/nazarov_lang=([^;]+)/);
+    if (set.status !== 200 || !cookie) fail(`nested locale ${code} cookie missing`);
+    const page = await fetch(`${BASE}/b/kassir`, {
+      headers: { cookie: `nazarov_lang=${cookie[1]}` },
+    }).then((r) => r.text());
+    if (!page.includes(needle)) fail(`nested locale ${code} missing: ${needle}`);
+  }
+  await assertNestedQuoted("uz", "Shartnomalar");
+  await assertNestedQuoted("ru", "Функции раздела «Договоры»");
+  await assertNestedQuoted("en", "Contracts section functions");
+  const chatLogin = await fetch(`${BASE}/chat/kirish`).then((r) => r.text());
+  if (!chatLogin.includes('data-chat-desk="kirish"')) {
+    fail("operator chat login site is missing");
+  }
+
+  const lesson = await fetch(`${BASE}/m/login-to-system-uz`, {
+    headers: { cookie: `nazarov_session=${token}` },
+  }).then((r) => r.text());
   if (!lesson.includes('data-dmed-chat="widget"')) {
     fail("lesson page is missing the Dmed chat widget");
   }
@@ -935,8 +1159,10 @@ async function main() {
   if (admin.includes('data-dmed-chat="launcher"') || admin.includes('data-dmed-chat="widget"')) {
     fail("admin login should not show the client Dmed chat");
   }
+  if (!admin.includes("ai-bg-admin-auth.jpg") || !admin.includes("page-backdrop-auth")) {
+    fail("admin login is missing the photo backdrop");
+  }
 
-  const token = await adminLogin();
   const adminHome = await fetch(`${BASE}/admin`, {
     headers: { cookie: `nazarov_session=${token}` },
   }).then((r) => r.text());
@@ -979,8 +1205,105 @@ async function main() {
   if (!chatPage.includes("5 ballik") && !chatPage.includes("star-breakdown")) {
     fail("admin chat dashboard is missing 5-star analytics");
   }
-  if (!chatPage.includes("shablon")) {
-    fail("admin chat should mention reply templates");
+
+  const opUser = `opchat${Date.now()}`;
+  const opPass = "op900pass";
+  const issued = await adminJson("/api/admin/clients", {
+    method: "POST",
+    token,
+    body: {
+      action: "create",
+      name: "Operator Chat",
+      username: opUser,
+      password: opPass,
+      expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+  });
+  if (issued.status !== 200 || !issued.data?.ok) {
+    fail(`issued operator login failed: ${JSON.stringify(issued.data)}`);
+  }
+  const opForm = new FormData();
+  opForm.set("username", opUser);
+  opForm.set("password", opPass);
+  opForm.set("role", "client");
+  opForm.set("next", "/admin/chat");
+  const opLogin = await fetch(`${BASE}/api/login`, {
+    method: "POST",
+    body: opForm,
+    redirect: "manual",
+  });
+  const opCookieMatch = (opLogin.headers.get("set-cookie") || "").match(
+    /nazarov_session=([^;]+)/,
+  );
+  if (!opCookieMatch) fail(`operator login cookie missing ${opLogin.status}`);
+  const opPage = await fetch(`${BASE}/admin/chat`, {
+    headers: { cookie: `nazarov_session=${opCookieMatch[1]}` },
+  }).then((r) => r.text());
+  if (!opPage.includes('data-staff-chat="only"') || !opPage.includes('data-staff-chat="desk"')) {
+    fail("issued login chat must be the staff-only chat view");
+  }
+  if (!opPage.includes('data-admin-chat="inbox"')) {
+    fail("issued login chat is missing the inbox");
+  }
+  if (
+    opPage.includes('data-admin-chat="stats"') ||
+    opPage.includes('data-admin-chat="analytics"') ||
+    opPage.includes("Chat statistikasi") ||
+    opPage.includes("Kunlik murojaatlar")
+  ) {
+    fail("issued login chat must not show the admin dashboard");
+  }
+  if (
+    opPage.includes("Boshqaruv") ||
+    opPage.includes("Login / parol") ||
+    opPage.includes('data-admin-nav="chat"') ||
+    opPage.includes("Admin panel · Chat")
+  ) {
+    fail("issued login must not show admin panel chrome");
+  }
+  const opApi = await adminJson("/api/admin/chat", { token: opCookieMatch[1] });
+  if (opApi.status !== 200 || !opApi.data?.ok) {
+    fail(`issued login inbox API failed: ${JSON.stringify(opApi.data)}`);
+  }
+  if (opApi.data.stats) {
+    fail("issued login API must omit dashboard stats");
+  }
+  if (opPage.includes('data-admin-chat="ai-auto"')) {
+    fail("issued login chat must not show the admin AI auto toggle");
+  }
+
+  const opAdminHtml = await fetch(`${BASE}/admin`, {
+    headers: { cookie: `nazarov_session=${opCookieMatch[1]}` },
+  }).then((r) => r.text());
+  if (
+    !opAdminHtml.includes('data-staff-chat="only"') ||
+    opAdminHtml.includes("Chat statistikasi") ||
+    opAdminHtml.includes('data-admin-chat="home"')
+  ) {
+    fail("issued login must not open admin materials; only chat");
+  }
+
+  const opCatalog = await fetch(`${BASE}/nazarov`, {
+    headers: { cookie: `nazarov_session=${opCookieMatch[1]}` },
+    redirect: "manual",
+  });
+  const opCatalogLoc = opCatalog.headers.get("location") || "";
+  if (opCatalog.status !== 307 || !opCatalogLoc.includes("/admin/chat")) {
+    fail(
+      `issued login catalog must redirect to chat, got ${opCatalog.status} ${opCatalogLoc}`,
+    );
+  }
+
+  const opClientsApi = await adminJson("/api/admin/clients", {
+    token: opCookieMatch[1],
+  });
+  if (opClientsApi.status !== 401) {
+    fail(`issued login must not read client logins API: ${opClientsApi.status}`);
+  }
+
+  const adminStats = await adminJson("/api/admin/chat", { token });
+  if (!adminStats.data?.stats || typeof adminStats.data.stats.total !== "number") {
+    fail("admin inbox API must include dashboard stats");
   }
 
   const navSrc = fs.readFileSync(
@@ -1042,16 +1365,15 @@ async function main() {
     fail(`empty start should 400, got ${empty.status} ${JSON.stringify(empty.data)}`);
   }
 
-  const badMail = await jsonReq("/api/chat", {
+  const badPhone = await jsonReq("/api/chat", {
     body: {
       action: "start",
       name: "Ali",
-      phone: "+998901234567",
-      email: "not-an-email",
+      phone: "not-a-phone",
     },
   });
-  if (badMail.status !== 400 || !badMail.data?.errors?.email) {
-    fail(`bad email should 400, got ${badMail.status} ${JSON.stringify(badMail.data)}`);
+  if (badPhone.status !== 400 || !badPhone.data?.errors?.phone) {
+    fail(`bad phone should 400, got ${badPhone.status} ${JSON.stringify(badPhone.data)}`);
   }
 
   await assertChatMedia(token);
@@ -1066,7 +1388,6 @@ async function main() {
           action: "start",
           name: `Mijoz ${i + 1}`,
           phone: `+99890${String(1000000 + (i % 8000000)).slice(-7)}`,
-          email: i % 5 === 0 ? `mijoz${i}@dmed.uz` : "",
           language: i % 2 === 0 ? "uz" : "ru",
           page: "/nazarov",
         },

@@ -1,0 +1,69 @@
+{
+  "Mijoz nima masalada murojaat qildi?": {
+    "kaa": "Klient qanday másele boyınsha múrájat etti?"
+  },
+  "Murojaat bo‘limini qidirish": {
+    "kaa": "Múrájat bólimin izlew"
+  },
+  "Tanlangan bo‘lim:": {
+    "kaa": "Tańlanǵan bólim:"
+  },
+  "Barcha bo‘limlar:": {
+    "kaa": "Barlıq bólimler:"
+  },
+  "Topildi:": {
+    "kaa": "Tabıldı:"
+  },
+  "Yuborilmagan javob matni mijozga yuborilmaydi.": {
+    "kaa": "Jiberilmegen juwap teksti klientke jiberilmeydi."
+  },
+  "Suhbatni yakunlash": {
+    "kaa": "Sáwbetti juwmaqlaw"
+  },
+  "Bo‘lim nomini qidiring…": {
+    "kaa": "Bólim atın izleń…"
+  },
+  "Murojaatlar": {
+    "kaa": "Múrájatlar"
+  },
+  "Qaysi modul bo‘yicha murojaat qilishmoqda?": {
+    "kaa": "Qaysı modul boyınsha múrájat etpekte?"
+  },
+  "Mijoz xabarlari": {
+    "kaa": "Klient xabarları"
+  },
+  "Chat statistikasi": {
+    "kaa": "Sáwbet statistikası"
+  },
+  "Suhbatlar": {
+    "kaa": "Sáwbetler"
+  },
+  "Настройка чек-принтеров": {
+    "uz": "Chek printerlarini sozlash",
+    "kaa": "Chek-printerlerdi sazlaw"
+  },
+  "Texnikani sozlash": {
+    "kaa": "Texnikanı sazlaw"
+  },
+  "murojaat": {
+    "uz": "murojaat",
+    "ru": "обращение",
+    "en": "request",
+    "kaa": "múrájat"
+  },
+  "xabar": {
+    "uz": "xabar",
+    "ru": "сообщение",
+    "en": "message",
+    "kaa": "xabar"
+  },
+  "Mijoz murojaatlari": {
+    "kaa": "Klientlerdiń múrájatları"
+  },
+  "Mijoz katalogdagi chatdan yozadi. Siz shu yerda javob berasiz. AI javob yoniq bo‘lsa, ChatGPT o‘zi ham yozadi.": {
+    "kaa": "Klient katalogtaǵı sáwbetke jazadı. Siz usı jerde juwap beresiz. AI juwabı qosılǵan bolsa, ChatGPT de juwap beredi."
+  },
+  "Mijoz savollari shu yerga tushadi. Javobni shu yerdan yozasiz — mijoz katalogdagi chatda ko‘radi.": {
+    "kaa": "Klientlerdiń sorawları usı jerge túsedi. Juwaptı usı jerde jazasıńız — klient onı katalogtaǵı sáwbette kóredi."
+  }
+}

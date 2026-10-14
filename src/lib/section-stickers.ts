@@ -1,4 +1,7 @@
 export const SECTION_STICKERS: Record<string, string> = {
+  "violation-report": "/art/ai-notion-v6/violation-report.webp",
+  "electron-queue": "/art/ai-notion-v6/electron-queue.webp",
+  "tech-settings": "/art/ai-notion-v6/tech-settings.webp",
   "tizimga-kirish": "/stickers/tizimga-kirish.webp",
   "royxatga-oluvchi": "/stickers/royxatga-oluvchi.webp",
   "amaliyotchi-hamshira": "/stickers/amaliyotchi-hamshira.webp",
@@ -29,5 +32,10 @@ export const SECTION_STICKERS: Record<string, string> = {
 };
 
 export function sectionSticker(slug: string) {
-  return SECTION_STICKERS[slug] || "";
+  const src = SECTION_STICKERS[slug];
+  return src ? `${src}?v=c3` : "";
+}
+
+export function allSectionStickerUrls() {
+  return Object.keys(SECTION_STICKERS).map((slug) => sectionSticker(slug));
 }

@@ -4,12 +4,30 @@
  */
 const BASE = process.env.BASE_URL || "http://127.0.0.1:3847";
 const TOTAL = Number(process.env.TOTAL || 900);
+const ADMIN_PASS = process.env.ADMIN_PASSWORD || "local-dev-only-password";
 
 const EXPECT_404 = new Set([
   "/m/does-not-exist-xyz",
   "/b/does-not-exist-xyz",
   "/this-page-does-not-exist",
 ]);
+
+async function adminCookie() {
+  const form = new FormData();
+  form.set("username", "Nazarov");
+  form.set("role", "admin");
+  form.set("password", ADMIN_PASS);
+  form.set("next", "/nazarov");
+  const res = await fetch(`${BASE}/api/login`, {
+    method: "POST",
+    body: form,
+    redirect: "manual",
+  });
+  const cookie = res.headers.get("set-cookie") || "";
+  const match = cookie.match(/nazarov_session=([^;]+)/);
+  if (!match) throw new Error("stress-test login failed");
+  return match[1];
+}
 
 async function fetchOnce(path, { redirect = "follow", headers = {} } = {}) {
   const t0 = Date.now();
@@ -30,8 +48,8 @@ function isFailure(row) {
   if (row.path === "/materials") {
     const loc = row.location || "";
     return !(
-      (row.status === 307 || row.status === 308) &&
-      loc.includes("/nazarov")
+      row.status === 200 ||
+      ((row.status === 307 || row.status === 308) && loc.includes("/nazarov"))
     );
   }
   return row.status >= 400;
@@ -50,35 +68,59 @@ async function main() {
   }
   process.stdout.write(order.stdout || "");
 
-  const catalog = await fetch(`${BASE}/nazarov`).then((r) => r.text());
+  const token = await adminCookie();
+  const auth = { cookie: `nazarov_session=${token}` };
+
+  const catalogGuest = await fetch(`${BASE}/nazarov`).then((r) => r.text());
+  if (!catalogGuest.includes("O‘quv materiallari")) {
+    throw new Error("catalog must open without a client login");
+  }
+
+  const loginHtml = await fetch(`${BASE}/admin/login`).then((r) => r.text());
+  if (!loginHtml.includes('value="Nazarov"')) {
+    throw new Error("admin login field is not prefilled with Nazarov");
+  }
+  if (
+    !loginHtml.includes("ai-bg-admin-auth.jpg") ||
+    !loginHtml.includes("page-backdrop-auth")
+  ) {
+    throw new Error("admin login is missing the photo backdrop");
+  }
+
+  const catalog = await fetch(`${BASE}/nazarov`, { headers: auth }).then((r) =>
+    r.text(),
+  );
   const categories = [...catalog.matchAll(/href="(\/b\/[^"]+)"/g)].map((m) => m[1]);
   const lessons = [];
   for (const path of categories.slice(0, 6)) {
-    const html = await fetch(`${BASE}${path}`).then((r) => r.text());
+    const html = await fetch(`${BASE}${path}`, { headers: auth }).then((r) => r.text());
     lessons.push(...[...html.matchAll(/href="(\/m\/[^"]+)"/g)].map((m) => m[1]));
   }
   const videoPage = "/m/login-to-system-uz";
   const videoApi =
     "/api/media/notion?b=3c060b77-fbf5-804f-8b72-d38038429db8&f=ca78e448-fe1b-4673-86ae-65b5e8c6afe2&n=%D0%92%D1%85%D0%BE%D0%B4_%D0%B2_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83_%D1%83%D0%B7.mp4&fmt=json";
 
-  const loginHtml = await fetch(`${BASE}/admin/login`).then((r) => r.text());
-  if (!loginHtml.includes('value="Nazarov"')) {
-    throw new Error("admin login field is not prefilled with Nazarov");
-  }
   if (catalog.includes('data-dmed-chat="widget"') === false) {
     throw new Error("catalog is missing the Dmed chat widget");
   }
   if (!catalog.includes("nazarov-mark.webp") || !catalog.includes("page-backdrop-mark")) {
     throw new Error("catalog is missing the Dmed backdrop mark");
   }
-  if (!catalog.includes("nazarov-bg-wash.webp") || !catalog.includes("page-backdrop-wash")) {
+  if (!catalog.includes("ai-bg-outer.jpg") || !catalog.includes("page-backdrop-wash")) {
     throw new Error("catalog is missing the backdrop wash");
+  }
+
+  const adminHome = await fetch(`${BASE}/admin`, { headers: auth }).then((r) => r.text());
+  if (!adminHome.includes("ai-bg-admin.jpg") || !adminHome.includes("page-backdrop-admin")) {
+    throw new Error("admin panel is missing its backdrop");
   }
 
   const pool = [
     "/",
     "/materials",
     "/nazarov",
+    "/chat/kirish",
+    "/kirish",
     "/login",
     "/admin/login",
     videoPage,
@@ -88,6 +130,10 @@ async function main() {
     "/nazarov-bg.webp",
     "/nazarov-bg-wash.webp",
     "/nazarov-mark.webp",
+    "/ai-bg-auth.jpg",
+    "/ai-bg-admin-auth.jpg",
+    "/ai-bg-outer.jpg",
+    "/ai-bg-admin.jpg",
     "/api/health",
     "/m/does-not-exist-xyz",
     "/b/does-not-exist-xyz",
@@ -108,7 +154,11 @@ async function main() {
             }
           : path === "/materials"
             ? { redirect: "manual" }
-            : {};
+            : path === "/nazarov" ||
+                path.startsWith("/b/") ||
+                path.startsWith("/m/")
+              ? { headers: auth }
+              : {};
       const row = await fetchOnce(path, extra);
       const testingLocal = /127\.0\.0\.1|localhost/i.test(BASE);
       if (

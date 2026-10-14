@@ -6,8 +6,10 @@
     "node": ">=22"
   },
   "scripts": {
-    "dev": "next dev --hostname 0.0.0.0 --port 3847",
-    "build": "next build",
+    "dev": "node scripts/dev-server.cjs",
+    "build": "node scripts/preflight.cjs && next build --webpack",
+    "test:preflight": "node scripts/preflight.cjs",
+    "test:phone": "node scripts/phone-validation-test.mjs",
     "start": "node scripts/start-server.cjs",
     "lint": "eslint",
     "seed:dmed": "node scripts/reset-dmed.cjs",
@@ -17,7 +19,7 @@
     "order:notion": "node scripts/rebuild-notion-order.mjs",
     "test:order": "node scripts/order-test.cjs",
     "test:711": "TOTAL=711 node scripts/stress-test.cjs && TOTAL=711 node scripts/admin-test.cjs",
-    "test:900": "node scripts/order-test.cjs && TOTAL=900 node scripts/stress-test.cjs && TOTAL=900 node scripts/admin-test.cjs && TOTAL=900 node scripts/chat-test.cjs",
+    "test:900": "node scripts/order-test.cjs && node scripts/stress-test.cjs && node scripts/admin-test.cjs && node scripts/chat-test.cjs",
     "test:chat": "node scripts/chat-test.cjs",
     "test:ip": "node scripts/visitor-ip-unit.cjs",
     "test:chat:live": "CHAT_LIVE_TELEGRAM=1 node scripts/chat-test.cjs",
@@ -25,7 +27,10 @@
     "keep": "bash scripts/keep-nazarov-url.sh",
     "ensure": "bash scripts/ensure-nazarov-up.sh",
     "test:tunnel": "node scripts/tunnel-test.cjs",
-    "pack": "bash scripts/pack-production.sh"
+    "pack": "bash scripts/pack-production.sh",
+    "test:chat:workspace": "node scripts/chat-workspace-test.cjs",
+    "start:codex": "node scripts/serve-sites.cjs",
+    "test:routes": "node scripts/route-smoke-test.mjs"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4",

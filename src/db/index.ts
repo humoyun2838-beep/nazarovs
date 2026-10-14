@@ -59,6 +59,112 @@ function createDb() {
   if (!cols.some((c) => c.name === "role")) {
     sqlite.exec(`ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'client'`);
   }
+  if (!cols.some((c) => c.name === "full_name")) {
+    try {
+      sqlite.exec(`ALTER TABLE users ADD COLUMN full_name TEXT NOT NULL DEFAULT ''`);
+    } catch (error) {
+      if (!String(error).includes("duplicate column")) throw error;
+    }
+  }
+  if (!cols.some((c) => c.name === "phone")) {
+    try {
+      sqlite.exec(`ALTER TABLE users ADD COLUMN phone TEXT NOT NULL DEFAULT ''`);
+    } catch (error) {
+      if (!String(error).includes("duplicate column")) throw error;
+    }
+  }
+  if (!cols.some((c) => c.name === "status")) {
+    try {
+      sqlite.exec(
+        `ALTER TABLE users ADD COLUMN status TEXT NOT NULL DEFAULT 'active'`,
+      );
+    } catch (error) {
+      if (!String(error).includes("duplicate column")) throw error;
+    }
+  }
+
+  sqlite.exec(`
+    CREATE TABLE IF NOT EXISTS client_requests (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      phone TEXT NOT NULL,
+      workplace TEXT NOT NULL DEFAULT '',
+      status TEXT NOT NULL DEFAULT 'pending',
+      user_id INTEGER NOT NULL DEFAULT 0,
+      username TEXT NOT NULL DEFAULT '',
+      created_at TEXT NOT NULL,
+      decided_at TEXT NOT NULL DEFAULT '',
+      issued_password TEXT NOT NULL DEFAULT '',
+      expires_at TEXT NOT NULL DEFAULT ''
+    );
+    CREATE INDEX IF NOT EXISTS idx_client_requests_status ON client_requests(status, created_at);
+    CREATE INDEX IF NOT EXISTS idx_client_requests_phone ON client_requests(phone);
+  `);
+
+  const requestCols = sqlite.prepare(`PRAGMA table_info(client_requests)`).all() as {
+    name: string;
+  }[];
+  if (!requestCols.some((c) => c.name === "issued_password")) {
+    try {
+      sqlite.exec(
+        `ALTER TABLE client_requests ADD COLUMN issued_password TEXT NOT NULL DEFAULT ''`,
+      );
+    } catch (error) {
+      if (!String(error).includes("duplicate column")) throw error;
+    }
+  }
+  if (!requestCols.some((c) => c.name === "expires_at")) {
+    try {
+      sqlite.exec(
+        `ALTER TABLE client_requests ADD COLUMN expires_at TEXT NOT NULL DEFAULT ''`,
+      );
+    } catch (error) {
+      if (!String(error).includes("duplicate column")) throw error;
+    }
+  }
+
+  sqlite.exec(`
+
+    CREATE TABLE IF NOT EXISTS client_visits (
+      id TEXT PRIMARY KEY,
+      user_id INTEGER NOT NULL,
+      username TEXT NOT NULL,
+      full_name TEXT NOT NULL DEFAULT '',
+      ip TEXT NOT NULL DEFAULT '',
+      user_agent TEXT NOT NULL DEFAULT '',
+      device TEXT NOT NULL DEFAULT '',
+      browser TEXT NOT NULL DEFAULT '',
+      os TEXT NOT NULL DEFAULT '',
+      page TEXT NOT NULL DEFAULT '',
+      started_at TEXT NOT NULL,
+      last_seen_at TEXT NOT NULL,
+      ended_at TEXT NOT NULL DEFAULT '',
+      country TEXT NOT NULL DEFAULT '',
+      region TEXT NOT NULL DEFAULT '',
+      city TEXT NOT NULL DEFAULT '',
+      lat TEXT NOT NULL DEFAULT '',
+      lon TEXT NOT NULL DEFAULT '',
+      address TEXT NOT NULL DEFAULT ''
+    );
+    CREATE INDEX IF NOT EXISTS idx_client_visits_seen ON client_visits(last_seen_at);
+    CREATE INDEX IF NOT EXISTS idx_client_visits_started ON client_visits(started_at);
+    CREATE INDEX IF NOT EXISTS idx_client_visits_user ON client_visits(user_id, started_at);
+  `);
+
+  const visitCols = sqlite.prepare(`PRAGMA table_info(client_visits)`).all() as {
+    name: string;
+  }[];
+  for (const col of ["country", "region", "city", "lat", "lon", "address"]) {
+    if (!visitCols.some((c) => c.name === col)) {
+      try {
+        sqlite.exec(
+          `ALTER TABLE client_visits ADD COLUMN ${col} TEXT NOT NULL DEFAULT ''`,
+        );
+      } catch (error) {
+        if (!String(error).includes("duplicate column")) throw error;
+      }
+    }
+  }
 
   const materialCols = sqlite.prepare(`PRAGMA table_info(materials)`).all() as {
     name: string;
@@ -176,11 +282,68 @@ function createDb() {
       `ALTER TABLE chat_sessions ADD COLUMN visitor_ip TEXT NOT NULL DEFAULT ''`,
     );
   }
+  if (!sessionCols.some((c) => c.name === "thread_id")) {
+    try {
+      sqlite.exec(
+        `ALTER TABLE chat_sessions ADD COLUMN thread_id TEXT NOT NULL DEFAULT ''`,
+      );
+    } catch (error) {
+      const message = String(error);
+      if (!message.includes("duplicate column")) throw error;
+    }
+  }
+  if (!sessionCols.some((c) => c.name === "client_user_id")) {
+    try {
+      sqlite.exec(
+        `ALTER TABLE chat_sessions ADD COLUMN client_user_id INTEGER NOT NULL DEFAULT 0`,
+      );
+    } catch (error) {
+      const message = String(error);
+      if (!message.includes("duplicate column")) throw error;
+    }
+  }
+  for (const [name, definition] of [
+    ["inquiry_category_id", "INTEGER NOT NULL DEFAULT 0"],
+    ["inquiry_category_title", "TEXT NOT NULL DEFAULT ''"],
+    ["closed_by_user_id", "INTEGER NOT NULL DEFAULT 0"],
+  ]) {
+    if (!sessionCols.some((c) => c.name === name)) {
+      sqlite.exec(`ALTER TABLE chat_sessions ADD COLUMN ${name} ${definition}`);
+    }
+  }
+
+  if (!sessionCols.some((c) => c.name === "assigned_user_id")) {
+    sqlite.exec(
+      `ALTER TABLE chat_sessions ADD COLUMN assigned_user_id INTEGER NOT NULL DEFAULT 0`,
+    );
+  }
+  if (!sessionCols.some((c) => c.name === "assigned_at")) {
+    sqlite.exec(
+      `ALTER TABLE chat_sessions ADD COLUMN assigned_at TEXT NOT NULL DEFAULT ''`,
+    );
+  }
 
   sqlite.exec(`
     CREATE INDEX IF NOT EXISTS idx_chat_sessions_status ON chat_sessions(status);
     CREATE INDEX IF NOT EXISTS idx_chat_sessions_operator ON chat_sessions(status, last_operator_at);
+    CREATE INDEX IF NOT EXISTS idx_chat_sessions_thread ON chat_sessions(thread_id);
+    CREATE INDEX IF NOT EXISTS idx_chat_sessions_client ON chat_sessions(client_user_id, status);
+    CREATE INDEX IF NOT EXISTS idx_chat_sessions_assigned ON chat_sessions(assigned_user_id, status);
   `);
+
+  sqlite.exec(`
+    CREATE TABLE IF NOT EXISTS lesson_progress (
+      user_id INTEGER NOT NULL,
+      slug TEXT NOT NULL,
+      seen_at TEXT NOT NULL DEFAULT '',
+      done_at TEXT NOT NULL DEFAULT '',
+      saved_at TEXT NOT NULL DEFAULT '',
+      PRIMARY KEY (user_id, slug)
+    );
+  `);
+  sqlite.exec(
+    `UPDATE client_requests SET issued_password = '' WHERE issued_password != ''`,
+  );
 
   sqlite.exec(`
     CREATE TABLE IF NOT EXISTS app_settings (
@@ -214,12 +377,6 @@ function ensurePortalUser(
     | { id: number; role: string; password_hash: string }
     | undefined;
 
-  const hashCost = (hash: string) => {
-    const part = hash.split("$")[2];
-    const n = Number(part);
-    return Number.isFinite(n) ? n : 10;
-  };
-
   // Never bcrypt on the hot path — only when missing or hash is too expensive.
   if (!existing) {
     try {
@@ -237,13 +394,6 @@ function ensurePortalUser(
           : "";
       if (!code.includes("CONSTRAINT")) throw error;
     }
-    return;
-  }
-
-  if (hashCost(existing.password_hash) > 6) {
-    sqlite
-      .prepare(`UPDATE users SET password_hash = ?, role = ? WHERE id = ?`)
-      .run(hashSync(password, 4), role, existing.id);
     return;
   }
 
@@ -274,18 +424,9 @@ function seedIfEmpty(
 }
 
 function seedPortalAndCatalog(sqlite: Database.Database) {
-  const clientUser = process.env.CLIENT_USERNAME || process.env.AUTH_USERNAME || "akbar";
-  const clientPass = process.env.CLIENT_PASSWORD || process.env.AUTH_PASSWORD || "9915504";
   const adminUser = process.env.ADMIN_USERNAME || "Nazarov";
-  const adminPass = process.env.ADMIN_PASSWORD || "admin9915504";
-
-  ensurePortalUser(sqlite, clientUser, clientPass, "client");
+  const adminPass = process.env.ADMIN_PASSWORD || "local-dev-only-password";
   ensurePortalUser(sqlite, adminUser, adminPass, "admin");
-
-  // keep only the two portal accounts
-  sqlite
-    .prepare(`DELETE FROM users WHERE username NOT IN (?, ?)`)
-    .run(clientUser, adminUser);
 
   const categoryCount = sqlite
     .prepare(`SELECT COUNT(*) AS count FROM categories`)

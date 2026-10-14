@@ -49,24 +49,28 @@
 }
 
 :root {
-  --background: #f6fbff;
-  --foreground: #071a38;
+  --background: #f3f7ff;
+  --foreground: #071428;
   --card: #ffffff;
-  --card-foreground: #071a38;
+  --card-foreground: #071428;
   --popover: #ffffff;
-  --popover-foreground: #071a38;
-  --primary: #0b4fa8;
+  --popover-foreground: #071428;
+  --primary: #0a5ad4;
   --primary-foreground: #f7fbff;
-  --secondary: #eef5ff;
-  --secondary-foreground: #071a38;
-  --muted: #eef5ff;
-  --muted-foreground: #4a6288;
-  --accent: #e8f1fb;
-  --accent-foreground: #0b4fa8;
+  --secondary: #e8f1ff;
+  --secondary-foreground: #071428;
+  --muted: #e8f1ff;
+  --ink: #071428;
+  --ink-soft: #163056;
+  --on-dark: #f4fbff;
+  --on-dark-soft: #d6e8f8;
+  --muted-foreground: #1e3a5f;
+  --accent: #dff0ff;
+  --accent-foreground: #0a5ad4;
   --destructive: #b42318;
-  --border: #d7e4fb;
-  --input: #d7e4fb;
-  --ring: #1a6fd4;
+  --border: #c9dcf7;
+  --input: #c9dcf7;
+  --ring: #3cc5ff;
   --chart-1: #1a6fd4;
   --chart-2: #071a38;
   --chart-3: #4a6288;
@@ -93,6 +97,8 @@
   }
   body {
     @apply text-foreground;
+    font-size: 16px;
+    line-height: 1.65;
   }
   html {
     @apply font-sans;
@@ -130,8 +136,21 @@
 
 .prose-material {
   white-space: pre-wrap;
-  line-height: 1.75;
-  color: #24385c;
+  overflow-wrap: anywhere;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: #10243f;
+  font-weight: 500;
+}
+
+.prose-material > span,
+.prose-material > p,
+.prose-material > h2,
+.prose-material > h3,
+.prose-material > h4,
+.prose-material > h5 {
+  display: block;
+  max-width: 68ch;
 }
 
 .page-backdrop {
@@ -144,8 +163,7 @@
   height: 100%;
   min-width: 100vw;
   min-height: 100dvh;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 42%, #e7f3ff 0%, #f7fbff 46%, #ffffff 100%);
+  background: #d7ecff;
 }
 
 .page-shell {
@@ -165,7 +183,121 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  opacity: 0.92;
+  transform: scale(1.05);
+  filter: saturate(1.14) contrast(1.08) brightness(1.02);
+}
+
+.page-backdrop-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(105deg, rgba(247, 252, 255, 0.55) 0%, rgba(247, 252, 255, 0.08) 46%, rgba(10, 40, 90, 0.08) 100%),
+    radial-gradient(ellipse 80% 55% at 12% 0%, rgba(255, 255, 255, 0.55), transparent 58%);
+}
+
+.page-backdrop-section .page-backdrop-veil {
+  background:
+    linear-gradient(108deg, rgba(236, 250, 255, 0.5) 0%, rgba(10, 50, 90, 0.08) 52%, rgba(4, 28, 56, 0.18) 100%),
+    radial-gradient(ellipse 70% 50% at 88% 12%, rgba(80, 220, 255, 0.18), transparent 60%);
+}
+
+.page-backdrop-lesson .page-backdrop-veil {
+  background:
+    linear-gradient(112deg, rgba(244, 240, 255, 0.52) 0%, rgba(40, 20, 80, 0.1) 50%, rgba(12, 8, 40, 0.22) 100%),
+    radial-gradient(ellipse 60% 46% at 82% 80%, rgba(180, 140, 255, 0.16), transparent 62%);
+}
+
+.page-backdrop-admin .page-backdrop-wash {
+  transform: none;
+  object-position: 72% center;
+  filter: saturate(1.16) contrast(1.08) brightness(1.04);
+}
+
+.page-backdrop-admin .page-backdrop-grain {
+  opacity: 0.04;
+}
+
+.page-backdrop-admin .page-backdrop-veil {
+  background: linear-gradient(
+    180deg,
+    rgba(4, 10, 28, 0.2) 0%,
+    rgba(6, 18, 42, 0.02) 46%,
+    rgba(4, 12, 30, 0.16) 100%
+  );
+}
+
+.page-backdrop-admin .page-backdrop-mark {
+  left: 4vw;
+  right: auto;
+  top: auto;
+  bottom: 10vh;
+  width: min(16vw, 180px);
+  height: min(16vw, 180px);
+  transform: none;
+  opacity: 0.42;
+  filter: none;
+}
+
+.page-backdrop-auth {
+  background: #1a2430;
+}
+
+.page-backdrop-auth .page-backdrop-wash {
+  object-position: 18% 42%;
+  transform: scale(1.08);
+  filter: saturate(1.08) contrast(1.1) brightness(1.04);
+}
+
+.page-backdrop-auth .page-backdrop-veil {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(8, 16, 28, 0.02) 0%,
+      rgba(8, 16, 28, 0.06) 36%,
+      rgba(10, 22, 42, 0.28) 62%,
+      rgba(6, 14, 32, 0.52) 100%
+    ),
+    linear-gradient(180deg, rgba(6, 14, 28, 0.1) 0%, transparent 32%, rgba(6, 14, 28, 0.22) 100%);
+}
+
+.page-backdrop-auth .page-backdrop-grain {
+  opacity: 0.12;
+}
+
+.page-backdrop-auth .page-backdrop-glow {
+  left: auto;
+  right: -8%;
+  top: 42%;
+  width: min(48vw, 560px);
+  height: min(48vw, 560px);
+  transform: none;
+  background: radial-gradient(
+    circle,
+    rgba(180, 220, 255, 0.22) 0%,
+    rgba(40, 90, 160, 0.1) 46%,
+    transparent 74%
+  );
+}
+
+@media (max-width: 900px) {
+  .page-backdrop-auth .page-backdrop-wash {
+    object-position: 22% 28%;
+    transform: scale(1.16);
+  }
+
+  .page-backdrop-auth .page-backdrop-veil {
+    background:
+      linear-gradient(180deg, rgba(6, 14, 28, 0.22) 0%, rgba(6, 14, 28, 0.18) 28%, rgba(6, 14, 28, 0.58) 100%);
+  }
+}
+
+.page-backdrop-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.35) 0.6px, transparent 0.7px);
+  background-size: 3px 3px;
 }
 
 .page-backdrop-glow {
@@ -178,54 +310,261 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(255, 255, 255, 0.7) 0%,
-    rgba(232, 243, 255, 0.26) 48%,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(120, 210, 255, 0.16) 48%,
     transparent 74%
   );
 }
 
 .page-backdrop-mark {
   position: absolute;
-  left: calc(50% + 22rem);
-  top: 50%;
-  width: min(48vw, 620px);
-  height: min(48vw, 620px);
-  transform: translate(-22%, -50%);
+  left: auto;
+  right: 0;
+  top: 42%;
+  width: min(18vw, 220px);
+  height: min(18vw, 220px);
+  transform: none;
   object-fit: contain;
   object-position: center;
-  filter: drop-shadow(0 22px 46px rgba(12, 68, 160, 0.18));
+  opacity: 0.22;
+  filter: none;
+}
+
+.page-backdrop-lesson .page-backdrop-mark {
+  opacity: 0.22;
+  filter: none;
 }
 
 .catalog-panel {
+  position: relative;
+  z-index: 1;
   overflow: hidden;
-  border: 1px solid rgba(11, 79, 168, 0.12);
-  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(210, 226, 246, 0.95);
+  background: #ffffff;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.8) inset,
-    0 18px 40px -28px rgba(11, 42, 85, 0.45);
+    0 1px 0 rgba(255, 255, 255, 0.92) inset,
+    0 0 0 1px rgba(80, 140, 210, 0.06),
+    0 22px 48px -30px rgba(8, 32, 72, 0.45);
 }
 
 .catalog-hero {
   position: relative;
+  z-index: 1;
   overflow: hidden;
-  border: 1px solid rgba(11, 79, 168, 0.14);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(240, 247, 255, 0.9) 100%);
-  box-shadow: 0 18px 40px -28px rgba(11, 42, 85, 0.5);
+  border: 1px solid rgba(210, 226, 246, 0.95);
+  background: linear-gradient(155deg, #ffffff 0%, #f3f8ff 58%, #ffffff 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 24px 54px -32px rgba(8, 32, 72, 0.4);
+}
+
+.catalog-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 42%;
+  height: 3px;
+  background: linear-gradient(90deg, #3cc5ff, #0a5ad4, transparent);
+  opacity: 0.85;
 }
 
 .catalog-hero::after {
   content: "";
   position: absolute;
-  inset: auto -20% -60% 40%;
-  height: 180px;
-  background: radial-gradient(circle, rgba(26, 111, 212, 0.16), transparent 70%);
+  inset: auto -18% -58% 38%;
+  height: 200px;
+  background: radial-gradient(circle, rgba(60, 197, 255, 0.22), transparent 70%);
   pointer-events: none;
 }
 
+.catalog-hero-art {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  z-index: 1;
+  width: 84px;
+  height: 84px;
+  transform: translateY(-50%);
+  object-fit: cover;
+  opacity: 1;
+  pointer-events: none;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 10px 24px -16px rgba(8, 32, 72, 0.55);
+}
+
+.lesson-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.85rem;
+  border: 1px solid #d7e4f6;
+  background: #fff;
+  object-fit: contain;
+  box-shadow: 0 10px 28px -18px rgba(8, 32, 72, 0.45);
+  filter: contrast(1.06) saturate(1.04);
+}
+
+.lesson-video {
+  display: block;
+  width: 100%;
+  background: #000;
+  object-fit: contain;
+}
+
+.topic-scene {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.topic-scene-silk {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
+  transform: none;
+  filter: none;
+}
+
+.topic-scene-mark {
+  position: absolute;
+  right: 3vw;
+  bottom: 8vh;
+  width: min(22vw, 220px);
+  height: min(22vw, 220px);
+  object-fit: contain;
+  opacity: 1;
+  filter: none;
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: 0 16px 36px -22px rgba(8, 32, 72, 0.45);
+}
+
+.topic-scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(247, 251, 255, 0.78) 0%,
+    rgba(247, 251, 255, 0.42) 46%,
+    rgba(247, 251, 255, 0.08) 72%
+  );
+  pointer-events: none;
+}
+
+body:has(.topic-scene) .page-backdrop-wash,
+body:has(.topic-scene) .page-backdrop-veil,
+body:has(.topic-scene) .page-backdrop-grain,
+body:has(.topic-scene) .page-backdrop-glow,
+body:has(.topic-scene) .page-backdrop-mark {
+  opacity: 0;
+}
+
+@media (max-width: 900px) {
+  .topic-scene-mark {
+    right: 0.8rem;
+    bottom: 5.6rem;
+    width: 96px;
+    height: 96px;
+  }
+}
+
+.site-header {
+  border-bottom: 1px solid #d5e4f7;
+  background: #f7fbff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 8px 24px -20px rgba(8, 32, 72, 0.35);
+}
+
+.page-backdrop-admin ~ .page-shell .site-header {
+  border-bottom-color: rgba(255, 255, 255, 0.14);
+  background: #071428;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.page-backdrop-admin ~ .page-shell .site-header .brand-title {
+  color: #f4fbff;
+}
+
+.page-backdrop-admin ~ .page-shell .site-header .brand-mark-base {
+  fill: #9cc4ff;
+}
+
+.page-backdrop-admin ~ .page-shell .site-header .brand-mark-accent {
+  stroke: #7af8ff;
+}
+
+.page-backdrop-admin ~ .page-shell .brand-sub {
+  color: #9ec9ef;
+}
+
+.page-backdrop-admin ~ .page-shell .site-header [data-variant="ghost"] {
+  color: #e7f3ff;
+}
+
+.page-backdrop-admin ~ .page-shell .site-header [data-variant="ghost"]:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.page-backdrop-admin ~ .page-shell .site-header [data-variant="outline"] {
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #f4fbff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 900px) {
+  .catalog-hero-art {
+    right: 12px;
+    width: 64px;
+    height: 64px;
+    opacity: 1;
+  }
+}
+
 .catalog-list > li {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 72px;
+  contain-intrinsic-size: 0 88px;
+}
+
+.catalog-search {
+  height: 3rem;
+  border-radius: 1.15rem;
+  border-color: #c5d8f2;
+  background: #ffffff;
+  color: #071428;
+  box-shadow: 0 12px 30px -22px rgba(8, 32, 72, 0.28);
+}
+
+.gate-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px;
+  border-radius: 1.15rem;
+  background: rgba(10, 50, 110, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+}
+
+.gate-tab {
+  height: 2.55rem;
+  border-radius: 0.95rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.gate-tab-on {
+  background: rgba(255, 255, 255, 0.92);
+  font-weight: 600;
+  color: #0a5ad4;
+  box-shadow: 0 8px 20px -12px rgba(10, 50, 140, 0.55);
 }
 
 @media (max-width: 900px) {
@@ -240,12 +579,123 @@
   }
 
   .page-backdrop-mark {
-    left: auto;
-    right: 0.1rem;
+    right: 0.25rem;
     top: auto;
     bottom: 5.5rem;
-    width: 196px;
-    height: 196px;
+    width: 96px;
+    height: 96px;
+    opacity: 0.14;
     transform: none;
   }
+}
+
+.page-shell :is(
+  .text-\[\#4a6288\],
+  .text-\[\#3d5a84\],
+  .text-\[\#5b6b7c\],
+  .text-\[\#7a7166\],
+  .text-\[\#8a97a6\],
+  .text-\[\#6b7280\],
+  .text-\[\#6b7c99\]
+) {
+  color: var(--ink-soft);
+}
+
+.site-header .header-user {
+  color: var(--ink-soft);
+}
+
+.page-backdrop-admin ~ .page-shell .site-header .header-user {
+  color: var(--on-dark-soft);
+}
+
+[data-slot="input"],
+textarea,
+select {
+  background-color: #ffffff;
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+[data-slot="input"]::placeholder,
+textarea::placeholder {
+  color: #3d5274;
+  opacity: 1;
+}
+
+label {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.catalog-panel,
+.catalog-hero {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+@media (hover: hover) {
+  .catalog-panel:hover {
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.92) inset,
+      0 28px 56px -28px rgba(8, 32, 72, 0.55);
+  }
+}
+
+.lesson-shot {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #0b4fa8 !important;
+  outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+  .site-header .brand-title {
+    font-size: 1.05rem;
+  }
+}
+
+/* AI backgrounds: calm surfaces, no oversized watermark behind content. */
+.page-backdrop-wash,
+.page-backdrop-admin .page-backdrop-wash {
+  transform: none;
+  filter: none;
+  object-position: center;
+}
+.page-backdrop-veil,
+.page-backdrop-admin .page-backdrop-veil {
+  background: rgba(255, 255, 255, 0.12);
+}
+.operator-workspace {
+  background: #f3fafc url("/art/dmed-operator-color-v5.webp") center / cover no-repeat;
+}
+
+/* Quiet glass surfaces keep the AI artwork visible without reducing text contrast. */
+body:has(.page-backdrop-admin) .site-header {
+  background: linear-gradient(110deg, rgba(245, 243, 255, .97), rgba(239, 246, 255, .95));
+  border-bottom-color: #c7d2fe;
+  box-shadow: 0 8px 30px -20px #4338ca;
+}
+body:has(.page-backdrop-admin) main > section {
+  box-shadow: 0 18px 48px -32px #4338ca;
+}
+@media (min-width: 768px) {
+  .operator-workspace { padding: 16px; }
+  [data-operator-desk="chat"] {
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.9);
+    border-radius: 24px;
+    box-shadow: 0 24px 64px -28px rgba(15, 77, 96, .35);
+  }
+}
+[data-operator-desk="chat"] > aside {
+  background: linear-gradient(155deg, rgba(255,255,255,.98), rgba(236,253,250,.96));
 }

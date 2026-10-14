@@ -129,7 +129,7 @@ async function main() {
   if (root.body.includes("1-sayt") || root.body.includes("Admin uchun")) {
     fail("public / showed the local landing chooser instead of the catalog");
   }
-  if (!root.body.includes("O‘quv materiallari") && !root.body.includes('data-dmed-chat="widget"')) {
+  if (!root.body.includes("O‘quv materiallari")) {
     fail("public / did not open the client catalog");
   }
 

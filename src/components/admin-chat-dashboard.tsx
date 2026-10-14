@@ -1,9 +1,15 @@
 "use client";
+import { UiText } from "@/components/ui-locale";
+
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { ChatModuleAnalytics, type ModuleStat } from "@/components/chat-module-analytics";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import type { Locale } from "@/lib/locale";
+import { uiCopy } from "@/lib/ui-copy";
 import { Button } from "@/components/ui/button";
+import { CalendarDays, RefreshCw, ShieldCheck } from "lucide-react";
 
 type ChatDay = {
   day: string;
@@ -31,6 +37,7 @@ type ChatStats = {
   avg: number | null;
   stars?: ChatStarCounts;
   daily?: ChatDay[];
+  modules?: ModuleStat[];
 };
 
 const UZ_MONTHS = [
@@ -158,7 +165,7 @@ function DailyChart({ days }: { days: ChatDay[] }) {
               textAnchor="middle"
               className="fill-[#14325c] text-[10px] font-semibold"
             >
-              {formatDay(row.day)}
+              <UiText>{formatDay(row.day)}</UiText>
             </text>
           ) : null,
         )}
@@ -171,13 +178,12 @@ function DailyChart({ days }: { days: ChatDay[] }) {
       </svg>
       {hover ? (
         <div className="pointer-events-none absolute top-1 right-1 rounded-xl bg-[#051530] px-3 py-2 text-white shadow-lg">
-          <p className="text-xs font-semibold">{formatDay(hover.day)}</p>
-          <p className="text-sm font-bold">{hover.total} murojaat</p>
-          <p className="text-[11px] text-white/90">
-            Yopilgan {hover.closed}
-            {hover.rated
+          <p className="text-xs font-semibold"><UiText>{formatDay(hover.day)}</UiText></p>
+          <p className="text-sm font-bold">{hover.total}<UiText>{" murojaat"}</UiText></p>
+          <p className="text-[11px] text-white/90"><UiText>{" Yopilgan "}</UiText>{hover.closed}
+            <UiText>{hover.rated
               ? ` · O‘rtacha ${hover.avg != null ? hover.avg.toFixed(1) : "—"}/5`
-              : " · Baholar yo‘q"}
+              : " · Baholar yo‘q"}</UiText>
           </p>
         </div>
       ) : null}
@@ -185,51 +191,67 @@ function DailyChart({ days }: { days: ChatDay[] }) {
   );
 }
 
-export function AdminChatDashboard() {
-  const initial = useMemo(defaultRange, []);
+export function AdminChatDashboard({ locale = "uz" }: { locale?: Locale }) {
+  const copy = uiCopy(locale);
+  const initial = useMemo(() => defaultRange(), []);
   const [from, setFrom] = useState(initial.from);
   const [to, setTo] = useState(initial.to);
   const [stats, setStats] = useState<ChatStats | null>(null);
   const [error, setError] = useState("");
+  const [filterError, setFilterError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [updatedAt, setUpdatedAt] = useState("");
+  const requestId = useRef(0);
   const applied = useRef({ from: initial.from, to: initial.to });
 
   async function load(nextFrom = applied.current.from, nextTo = applied.current.to) {
+    const currentRequest = ++requestId.current;
     applied.current = { from: nextFrom, to: nextTo };
     const params = new URLSearchParams();
     if (nextFrom) params.set("from", nextFrom);
     if (nextTo) params.set("to", nextTo);
     try {
-      const res = await fetch(`/api/admin/chat?${params.toString()}`, {
+      const res = await fetch(`/api/admin/chat-statistics?${params.toString()}`, {
         credentials: "same-origin",
+        cache: "no-store",
       });
       const data = (await res.json().catch(() => null)) as {
         stats?: ChatStats;
         error?: string;
+        updatedAt?: string;
       } | null;
+      if (currentRequest !== requestId.current) return;
       if (!res.ok || !data?.stats) {
         setError(data?.error || "Statistika yuklanmadi.");
         return;
       }
       setError("");
       setStats(data.stats);
+      setUpdatedAt(data.updatedAt || "");
     } catch {
+      if (currentRequest !== requestId.current) return;
       setError("Statistika yuklanmadi.");
     } finally {
-      setLoading(false);
+      if (currentRequest === requestId.current) setLoading(false);
     }
   }
 
   useEffect(() => {
     void load();
+    const onClosed = () => { void load(); };
+    window.addEventListener("chat-closed", onClosed);
     const id = window.setInterval(() => {
       void load();
     }, 8000);
-    return () => window.clearInterval(id);
+    const invalidate = () => { ++requestId.current; };
+    return () => { invalidate(); window.clearInterval(id); window.removeEventListener("chat-closed", onClosed); };
   }, []);
 
   function applyFilter(event: React.FormEvent) {
     event.preventDefault();
+    if (!from || !to) { setFilterError("Boshlanish va tugash sanalarini tanlang."); return; }
+    if (from && to && from > to) { setFilterError("Boshlanish sanasi tugash sanasidan keyin bo‘lishi mumkin emas."); return; }
+    setFilterError("");
     setLoading(true);
     void load(from, to);
   }
@@ -272,19 +294,17 @@ export function AdminChatDashboard() {
   return (
     <section
       data-admin-chat="stats"
-      className="mb-5 space-y-5 rounded-2xl border border-white/70 bg-white p-4 shadow-sm sm:p-5"
+      aria-busy={loading}
+      className="mb-5 space-y-5 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6"
     >
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-xs font-semibold tracking-[0.22em] text-[#1a6fd4] uppercase">
-            Dashboard
-          </p>
+          <p className="text-xs font-semibold tracking-[0.22em] text-[#1a6fd4] uppercase"><UiText>{" Admin · Analitika "}</UiText></p>
           <h2 className="font-heading text-2xl font-semibold tracking-tight text-[#051530]">
-            Chat statistikasi
+            <UiText>{copy.dashTitle}</UiText>
           </h2>
           <p className="mt-1 max-w-xl text-[15px] leading-relaxed text-[#1c3358]">
-            Sana oralig‘ida nechta murojaat kelgani, nechtasi yopilgani va
-            operatorning 1–5 ballik baholari.
+            <UiText>{copy.dashLead}</UiText>
           </p>
         </div>
         <form
@@ -293,7 +313,7 @@ export function AdminChatDashboard() {
         >
           <div className="space-y-1">
             <Label htmlFor="chat-from" className="text-xs font-semibold text-[#1a3a66]">
-              Dan
+              <UiText>{copy.from}</UiText>
             </Label>
             <Input
               id="chat-from"
@@ -305,7 +325,7 @@ export function AdminChatDashboard() {
           </div>
           <div className="space-y-1">
             <Label htmlFor="chat-to" className="text-xs font-semibold text-[#1a3a66]">
-              Gacha
+              <UiText>{copy.to}</UiText>
             </Label>
             <Input
               id="chat-to"
@@ -320,24 +340,32 @@ export function AdminChatDashboard() {
             size="sm"
             className="h-10 rounded-full bg-[#1a6fd4] px-4 text-white hover:bg-[#155bb0]"
           >
-            Filtrlash
+            <UiText>{copy.filter}</UiText>
           </Button>
         </form>
       </div>
-      {error ? (
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-blue-100 bg-blue-50/60 px-4 py-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <CalendarDays className="mr-1 size-4 text-blue-600" />
+          {[7, 30, 90].map(days => <button key={days} type="button" onClick={() => { const end = new Date(); const start = new Date(); start.setDate(end.getDate() - days + 1); const f = isoDay(start); const t = isoDay(end); setFrom(f); setTo(t); setFilterError(""); setLoading(true); void load(f, t); }} className="rounded-lg border border-blue-100 bg-white px-3 py-1.5 text-xs font-semibold text-blue-700 hover:border-blue-400">{days}<UiText>{" kun"}</UiText></button>)}
+        </div>
+        <p role="status" className="flex items-center gap-2 text-xs text-slate-500"><ShieldCheck className="size-3.5 text-blue-600" /><UiText>{"Faqat admin"}</UiText>{loading ? <RefreshCw className="size-3.5 animate-spin" /> : updatedAt ? <span>· <UiText>{new Date(updatedAt).toLocaleTimeString("uz-UZ", { hour: "2-digit", minute: "2-digit" })}</UiText><UiText>{" yangilandi"}</UiText></span> : null}</p>
+      </div>
+      {error || filterError ? (
         <p className="text-sm font-medium text-[#b42318]" role="alert">
-          {error}
+          {filterError || error}
         </p>
       ) : null}
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+      {(!error || stats) ? <>
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {cards.map((card) => (
           <div
             key={card.key}
             data-stat={card.key}
-            className="rounded-xl bg-[#eef5ff] px-3 py-3"
+            className="rounded-2xl border border-slate-100 bg-slate-50 px-4 py-4"
           >
             <p className="text-[11px] font-semibold tracking-wide text-[#1a3a66] uppercase">
-              {card.label}
+              <UiText>{card.label}</UiText>
             </p>
             <p className={`text-3xl font-semibold tracking-tight ${card.color}`}>
               {loading && !stats ? "…" : card.value}
@@ -346,30 +374,21 @@ export function AdminChatDashboard() {
         ))}
       </div>
 
+      <ChatModuleAnalytics rows={stats?.modules || []} loading={loading && !stats} />
+
       <div
         data-admin-chat="star-breakdown"
         className="space-y-2 rounded-2xl border border-[#f3e4b8] bg-[#fffbeb] p-3 sm:p-4"
       >
         <div>
-          <p className="text-xs font-semibold tracking-[0.22em] text-[#b45309] uppercase">
-            5 ballik tizim
-          </p>
-          <h3 className="font-heading text-lg font-semibold text-[#051530]">
-            Operator baholari
-          </h3>
-          <p className="mt-0.5 text-sm font-medium text-[#1c3358]">
-            Har bir yulduz — 1 dan 5 gacha. O‘rtacha baho shu taqsimotdan
-            hisoblanadi.
-          </p>
+          <p className="text-xs font-semibold tracking-[0.22em] text-[#b45309] uppercase"><UiText>{" 5 ballik tizim "}</UiText></p>
+          <h3 className="font-heading text-lg font-semibold text-[#051530]"><UiText>{" Operator baholari "}</UiText></h3>
+          <p className="mt-0.5 text-sm font-medium text-[#1c3358]"><UiText>{" Har bir yulduz — 1 dan 5 gacha. O‘rtacha baho shu taqsimotdan hisoblanadi. "}</UiText></p>
         </div>
         {loading && !stats ? (
-          <p className="py-4 text-center text-sm font-medium text-[#1c3358]">
-            Baholar yuklanmoqda…
-          </p>
+          <p className="py-4 text-center text-sm font-medium text-[#1c3358]"><UiText>{" Baholar yuklanmoqda… "}</UiText></p>
         ) : (stats?.rated ?? 0) === 0 ? (
-          <p className="py-4 text-center text-sm font-medium text-[#1c3358]">
-            Bu sanalarda hali baho yo‘q.
-          </p>
+          <p className="py-4 text-center text-sm font-medium text-[#1c3358]"><UiText>{" Bu sanalarda hali baho yo‘q. "}</UiText></p>
         ) : (
           <div className="space-y-1.5">
             {([5, 4, 3, 2, 1] as const).map((n) => (
@@ -398,40 +417,28 @@ export function AdminChatDashboard() {
       >
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <p className="text-xs font-semibold tracking-[0.22em] text-[#1a6fd4] uppercase">
-              Analitika
-            </p>
-            <h3 className="font-heading text-xl font-semibold text-[#051530]">
-              Kunlik murojaatlar
-            </h3>
-            <p className="mt-0.5 text-sm font-medium text-[#1c3358]">
-              Har bir kunga tushgan savollar — filtrlangan sanalar bo‘yicha.
-            </p>
+            <p className="text-xs font-semibold tracking-[0.22em] text-[#1a6fd4] uppercase"><UiText>{" Analitika "}</UiText></p>
+            <h3 className="font-heading text-xl font-semibold text-[#051530]"><UiText>{" Kunlik murojaatlar "}</UiText></h3>
+            <p className="mt-0.5 text-sm font-medium text-[#1c3358]"><UiText>{" Har bir kunga tushgan savollar — filtrlangan sanalar bo‘yicha. "}</UiText></p>
           </div>
           <div className="flex flex-wrap gap-2">
             <div className="rounded-xl bg-white px-3 py-2 shadow-sm">
-              <p className="text-[10px] font-semibold tracking-wide text-[#1a3a66] uppercase">
-                O‘rtacha / kun
-              </p>
+              <p className="text-[10px] font-semibold tracking-wide text-[#1a3a66] uppercase"><UiText>{" O‘rtacha / kun "}</UiText></p>
               <p className="text-lg font-semibold text-[#051530]">{avg}</p>
             </div>
             <div className="rounded-xl bg-white px-3 py-2 shadow-sm">
-              <p className="text-[10px] font-semibold tracking-wide text-[#1a3a66] uppercase">
-                Eng ko‘p
-              </p>
+              <p className="text-[10px] font-semibold tracking-wide text-[#1a3a66] uppercase"><UiText>{" Eng ko‘p "}</UiText></p>
               <p className="text-lg font-semibold text-[#0b4fa8]">
-                {peak ? `${peak.total}` : "0"}
+                <UiText>{peak ? `${peak.total}` : "0"}</UiText>
                 {peak ? (
                   <span className="ml-1 text-xs font-semibold text-[#1c3358]">
-                    {formatDay(peak.day)}
+                    <UiText>{formatDay(peak.day)}</UiText>
                   </span>
                 ) : null}
               </p>
             </div>
             <div className="rounded-xl bg-white px-3 py-2 shadow-sm">
-              <p className="text-[10px] font-semibold tracking-wide text-[#1a3a66] uppercase">
-                Oxirgi kun
-              </p>
+              <p className="text-[10px] font-semibold tracking-wide text-[#1a3a66] uppercase"><UiText>{" Oxirgi kun "}</UiText></p>
               <p className="text-lg font-semibold text-[#051530]">
                 {today?.total ?? 0}
                 {delta != null ? (
@@ -440,7 +447,7 @@ export function AdminChatDashboard() {
                       delta >= 0 ? "text-[#15803d]" : "text-[#b91c1c]"
                     }`}
                   >
-                    {delta >= 0 ? "+" : ""}
+                    <UiText>{delta >= 0 ? "+" : ""}</UiText>
                     {delta}%
                   </span>
                 ) : null}
@@ -449,27 +456,20 @@ export function AdminChatDashboard() {
           </div>
         </div>
         {loading && !daily.length ? (
-          <p className="py-8 text-center text-sm font-medium text-[#1c3358]">
-            Grafik yuklanmoqda…
-          </p>
+          <p className="py-8 text-center text-sm font-medium text-[#1c3358]"><UiText>{" Grafik yuklanmoqda… "}</UiText></p>
         ) : daily.every((row) => row.total === 0) ? (
-          <p className="py-8 text-center text-sm font-medium text-[#1c3358]">
-            Bu sanalarda murojaat yo‘q.
-          </p>
+          <p className="py-8 text-center text-sm font-medium text-[#1c3358]"><UiText>{" Bu sanalarda murojaat yo‘q. "}</UiText></p>
         ) : (
           <DailyChart days={daily} />
         )}
         <div className="flex flex-wrap gap-4 text-xs font-semibold text-[#14325c]">
           <span className="inline-flex items-center gap-1.5">
-            <span className="size-2.5 rounded-full bg-[#1a6fd4]" />
-            Murojaatlar
-          </span>
+            <span className="size-2.5 rounded-full bg-[#1a6fd4]" /><UiText>{" Murojaatlar "}</UiText></span>
           <span className="inline-flex items-center gap-1.5">
-            <span className="size-2.5 rounded-full bg-[#0f766e]" />
-            Yopilgan
-          </span>
+            <span className="size-2.5 rounded-full bg-[#0f766e]" /><UiText>{" Yopilgan "}</UiText></span>
         </div>
       </div>
+      </> : null}
     </section>
   );
 }

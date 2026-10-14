@@ -1,102 +1,90 @@
+
+import { UiText } from "@/components/ui-locale";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { AdminChatNav } from "@/components/admin-chat-nav";
+import { ClientAccessBadge } from "@/components/client-access-badge";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { withLang, type Locale } from "@/lib/locale";
+import { routes } from "@/lib/site";
+import { publicCopy } from "@/lib/public-copy";
 import { cn } from "@/lib/utils";
+import { BrandLogo } from "@/components/brand-logo";
 
-/** Header keeps the portrait; the page backdrop uses the DMED mark. */
-const PORTRAIT = "/nazarov-portrait.webp?v=hq1";
-const PORTRAIT_SM = "/nazarov-portrait-sm.webp?v=hq1";
-
-export function BrandLogo({
-  size = "sm",
-  showText = true,
-}: {
-  size?: "sm" | "lg";
-  showText?: boolean;
-}) {
-  const px = size === "lg" ? 96 : 44;
-
-  return (
-    <Link href="/nazarov" className="group inline-flex items-center gap-3">
-      <span
-        className="relative overflow-hidden rounded-xl bg-[#0a1220] ring-1 ring-white/50 shadow-[0_8px_20px_-10px_rgba(0,0,0,0.55)]"
-        style={{ width: px, height: px }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={size === "lg" ? PORTRAIT : PORTRAIT_SM}
-          srcSet={`${PORTRAIT_SM} 320w, ${PORTRAIT} 640w`}
-          sizes={`${px}px`}
-          alt="Nazarov"
-          width={px}
-          height={px}
-          decoding="async"
-          className={
-            size === "lg"
-              ? "h-full w-full origin-[24%_70%] scale-[1.65] object-cover"
-              : "h-full w-full origin-[24%_70%] scale-[2.05] object-cover"
-          }
-        />
-      </span>
-      {showText ? (
-        <span className="flex flex-col leading-none">
-          <span
-            className={
-              size === "lg"
-                ? "font-heading text-3xl font-semibold tracking-tight text-[#071a38]"
-                : "font-heading text-xl font-semibold tracking-tight text-[#071a38]"
-            }
-          >
-            Nazarov
-          </span>
-          <span className="mt-1 text-[11px] font-medium tracking-wide text-[#1a3a66] transition group-hover:text-[#071a38]">
-            Humoyun Mirzo
-          </span>
-        </span>
-      ) : null}
-    </Link>
-  );
-}
+export { BrandLogo };
 
 export function SiteHeader({
   username,
   role,
   showAdminLink = false,
   wide = false,
+  expiresAt,
+  chatOnly = false,
+  locale,
 }: {
   username?: string;
-  role?: "client" | "admin";
+  role?: "client" | "admin" | "operator";
   showAdminLink?: boolean;
   wide?: boolean;
+  expiresAt?: string;
+  chatOnly?: boolean;
+  locale?: Locale;
 }) {
+  const t = publicCopy(locale || "uz");
   return (
-    <header className="sticky top-0 z-40 border-b border-[#d7e4fb]/80 bg-white/80 backdrop-blur-md">
+    <header className="site-header sticky top-0 z-40">
       <div
         className={cn(
           "mx-auto flex min-h-14 w-full flex-wrap items-center justify-between gap-2 px-4 py-2 sm:px-6",
           wide ? "max-w-5xl" : "max-w-3xl",
         )}
       >
-        <BrandLogo />
+        <BrandLogo href={chatOnly ? routes.operator : withLang(routes.catalog, locale || "uz")} />
 
-        <div className="flex items-center gap-2">
+        <div className="flex max-w-full flex-wrap items-center justify-end gap-1.5 sm:gap-2">
+          {locale && !chatOnly ? <LanguageSwitcher locale={locale} /> : null}
           {role === "admin" ? (
             <>
               <Button asChild variant="ghost" size="sm">
-                <Link href="/nazarov">Materiallar</Link>
+                  <Link href={withLang("/nazarov", locale || "uz")}><UiText>{t.materialsNav}</UiText></Link>
               </Button>
               <Button asChild variant="ghost" size="sm">
-                <Link href="/admin">Boshqaruv</Link>
+                <Link href={withLang("/admin", locale || "uz")}><UiText>{t.adminNav}</UiText></Link>
               </Button>
-              <AdminChatNav />
+              <Button asChild variant="ghost" size="sm">
+                <Link href={withLang("/admin/mijozlar", locale || "uz")}><UiText>{t.clientsNav}</UiText></Link>
+              </Button>
+              <Button asChild variant="ghost" size="sm">
+                <Link href={withLang("/admin/operatorlar", locale || "uz")}><UiText>{t.operatorsNav}</UiText></Link>
+              </Button>
+              <Button asChild variant="ghost" size="sm">
+                <Link href={withLang("/admin/mijozlar#chat-statistika", locale || "uz")}><UiText>{t.reportsNav}</UiText></Link>
+              </Button>
+              <AdminChatNav locale={locale || "uz"} />
               {username ? (
-                <span className="hidden text-xs text-[#7a7166] lg:inline">
-                  {username} · admin
-                </span>
+                <span className="header-user hidden text-xs font-medium lg:inline">
+                  {username}<UiText>{" · admin "}</UiText></span>
               ) : null}
               <form action="/api/logout" method="post">
                 <Button type="submit" variant="outline" size="sm">
-                  Chiqish
+                  <UiText>{t.logout}</UiText>
+                </Button>
+              </form>
+            </>
+          ) : username ? (
+            <>
+              {chatOnly ? null : (
+                <Button asChild variant="ghost" size="sm">
+                  <Link href={withLang(routes.operator, locale || "uz")}><UiText>{t.chatNav}</UiText></Link>
+                </Button>
+              )}
+              <div className="flex min-w-0 flex-col items-end leading-tight">
+                <span className="header-user hidden text-xs font-medium sm:inline">{username}</span>
+                <ClientAccessBadge expiresAt={expiresAt} />
+              </div>
+              <form action="/api/logout" method="post">
+                <Button type="submit" variant="outline" size="sm">
+                  <UiText>{t.logout}</UiText>
                 </Button>
               </form>
             </>

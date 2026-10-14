@@ -1,15 +1,21 @@
 "use client";
+import { UiText } from "@/components/ui-locale";
+
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import { BRAND_NAME } from "@/lib/brand";
+import { BrandMark } from "@/components/brand-logo";
 import { MessageCircle, Mic, Paperclip, Send, Square, Star, X } from "lucide-react";
 import { ratingFromStored } from "@/lib/chat-rating";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { ChatMessageBody } from "@/components/chat-message-media";
+import { formatUzPhoneInput } from "@/lib/uz-phone";
+import { type Locale } from "@/lib/locale";
 
-type Lang = "uz" | "ru";
+type Lang = Locale;
 
 type ChatMsg = {
   id: number;
@@ -41,13 +47,12 @@ const copy = {
     name: "Ism",
     namePh: "Ismingizni kiriting",
     phone: "Telefon",
-    email: "Email",
-    emailPh: "Emailingizni kiriting (ixtiyoriy)",
+    phonePh: "+998 90 123 45 67",
     language: "Til tanlash",
     start: "Suhbatni boshlash",
     online: "Online · saytda javob beriladi",
     waiting: "Operator javobini kutyapmiz…",
-    open: "Dmed bilan yozish",
+    open: "DMED bilan yozish",
     close: "Yopish",
     messagePh: "Xabar yozing…",
     send: "Yuborish",
@@ -68,7 +73,9 @@ const copy = {
     star: "ball",
     thanks: "Bahoyingiz uchun rahmat.",
     uz: "O‘zbekcha",
-    ru: "Rus",
+    ru: "Русский",
+    en: "English",
+    kaa: "Qaraqalpaqsha",
   },
   ru: {
     welcome: "Добро пожаловать!",
@@ -76,13 +83,12 @@ const copy = {
     name: "Имя",
     namePh: "Введите имя",
     phone: "Телефон",
-    email: "Email",
-    emailPh: "Введите email (необязательно)",
+    phonePh: "+998 90 123 45 67",
     language: "Выбор языка",
     start: "Начать чат",
     online: "Online · ответ будет на сайте",
     waiting: "Ожидаем ответ оператора…",
-    open: "Написать Dmed",
+    open: "Написать DMED",
     close: "Закрыть",
     messagePh: "Напишите сообщение…",
     send: "Отправить",
@@ -104,6 +110,80 @@ const copy = {
     thanks: "Спасибо за оценку.",
     uz: "O‘zbekcha",
     ru: "Русский",
+    en: "English",
+    kaa: "Qaraqalpaqsha",
+  },
+  en: {
+    welcome: "Welcome!",
+    intro: "Please introduce yourself to start the chat",
+    name: "Name",
+    namePh: "Enter your name",
+    phone: "Phone",
+    phonePh: "+998 90 123 45 67",
+    language: "Language",
+    start: "Start chat",
+    online: "Online · we reply on the site",
+    waiting: "Waiting for the operator…",
+    open: "Message DMED",
+    close: "Close",
+    messagePh: "Write a message…",
+    send: "Send",
+    sending: "Sending…",
+    attach: "Photo or video",
+    voice: "Voice message",
+    stopVoice: "Stop recording",
+    recording: "Recording…",
+    needMic: "Allow microphone access.",
+    mediaFail: "File was not sent. Try again.",
+    pendingAck: "Your message was received. We will reply in this chat.",
+    empty: "Fill in your name and phone.",
+    fail: "Could not send. Try again.",
+    closed: "Chat closed",
+    rateTitle: "Rate the operator",
+    rateHint: "Give a score from 1 to 5",
+    restart: "New chat",
+    star: "stars",
+    thanks: "Thank you for your rating.",
+    uz: "O‘zbekcha",
+    ru: "Русский",
+    en: "English",
+    kaa: "Qaraqalpaqsha",
+  },
+  kaa: {
+    welcome: "Xosh keldińiz!",
+    intro: "Sáwbetti baslaw ushın ózińizdi tanıtıń",
+    name: "Atı",
+    namePh: "Atıńızdı kiritiń",
+    phone: "Telefon",
+    phonePh: "+998 90 123 45 67",
+    language: "Tildi saylaw",
+    start: "Sáwbetti baslaw",
+    online: "Online · juwap saytta beriledi",
+    waiting: "Operator juwabın kútip atırmız…",
+    open: "DMED penen jazıw",
+    close: "Jabıw",
+    messagePh: "Xabar jazıń…",
+    send: "Jiberiw",
+    sending: "Jiberilip atır…",
+    attach: "Súwret yamasa video",
+    voice: "Dawıslı xabar",
+    stopVoice: "Jazıwdı toqtatıw",
+    recording: "Jazılıp atır…",
+    needMic: "Mikrofonǵa ruqsat beriń.",
+    mediaFail: "Fayl jiberilmedi. Qayta urınıp kóriń.",
+    pendingAck: "Xabarıńız qabıl etildi. Usı chatta juwap beremiz.",
+    empty: "At hám telefondı toltırıń.",
+    fail: "Xabar jiberilmedi. Qayta urınıp kóriń.",
+    closed: "Sáwbet jabıldı",
+    rateTitle: "Operatordı bahalań",
+    rateHint: "1 den 5 ke shekem baha qoyıń",
+    restart: "Jańa sáwbet",
+    star: "ball",
+    thanks: "Bahańız ushın raxmet.",
+    uz: "O‘zbekcha",
+    ru: "Русский",
+    en: "English",
+    kaa: "Qaraqalpaqsha",
   },
 } as const;
 
@@ -112,6 +192,7 @@ async function chatJson(
   method = "POST",
   query = "",
 ) {
+  try {
   const res = await fetch(`/api/chat${query}`, {
     method,
     credentials: "same-origin",
@@ -123,9 +204,11 @@ async function chatJson(
     unknown
   > | null;
   return { status: res.status, data };
+  } catch { return { status: 503, data: null }; }
 }
 
 async function chatForm(form: FormData) {
+  try {
   const res = await fetch("/api/chat", {
     method: "POST",
     credentials: "same-origin",
@@ -136,32 +219,38 @@ async function chatForm(form: FormData) {
     unknown
   > | null;
   return { status: res.status, data };
+  } catch { return { status: 503, data: null }; }
 }
 
 function hasReceiptAck(messages: ChatMsg[]) {
   return messages.some(
     (msg) =>
       msg.role === "dmed" &&
-      (msg.body === copy.uz.pendingAck || msg.body === copy.ru.pendingAck),
+      (msg.body === copy.uz.pendingAck ||
+        msg.body === copy.ru.pendingAck ||
+        msg.body === copy.en.pendingAck ||
+        msg.body === copy.kaa.pendingAck),
   );
 }
 
-function formatClock(iso: string) {
+function formatClock(iso: string, locale: Lang) {
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) return "";
-  return date.toLocaleTimeString("uz-UZ", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  return date.toLocaleTimeString(
+    locale === "ru" ? "ru-RU" : locale === "en" ? "en-GB" : locale === "kaa" ? "kaa" : "uz-UZ",
+    {
+      hour: "2-digit",
+      minute: "2-digit",
+    },
+  );
 }
 
-export function DmedChat() {
+export function DmedChat({ locale = "uz" }: { locale?: Lang }) {
   const pathname = usePathname() || "/";
   const [open, setOpen] = useState(false);
-  const [lang, setLang] = useState<Lang>("uz");
+  const [lang, setLang] = useState<Lang>(locale);
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("+998");
   const [text, setText] = useState("");
   const [messages, setMessages] = useState<ChatMsg[]>([]);
   const [started, setStarted] = useState(false);
@@ -185,14 +274,25 @@ export function DmedChat() {
   const t = copy[lang];
 
   const hidden = useMemo(
-    () => pathname === "/admin" || pathname.startsWith("/admin/"),
+    () =>
+      pathname === "/admin" ||
+      pathname.startsWith("/admin/") ||
+      pathname === "/kirish" ||
+      pathname.startsWith("/kirish") ||
+      pathname === "/chat" ||
+      pathname.startsWith("/chat/") ||
+      pathname === "/operator" ||
+      pathname.startsWith("/operator/"),
     [pathname],
   );
+
+  useEffect(() => {
+    setLang(locale);
+  }, [locale]);
 
   function applySession(session: ChatSession | null | undefined, markOpen: boolean) {
     if (!session) return;
     setStarted(true);
-    if (session.language === "ru") setLang("ru");
     if (Array.isArray(session.messages)) setMessages(session.messages);
     setWaiting(Boolean(session.waitingForOperator) && session.status !== "closed");
     setUnread(markOpen ? 0 : Number(session.unreadFromOperator) || 0);
@@ -234,6 +334,15 @@ export function DmedChat() {
   }, [hidden]);
 
   useEffect(() => {
+    function onLocale(event: Event) {
+      const next = (event as CustomEvent<string>).detail;
+      if (next === "uz" || next === "ru" || next === "en" || next === "kaa") setLang(next);
+    }
+    window.addEventListener("nazarov-locale", onLocale);
+    return () => window.removeEventListener("nazarov-locale", onLocale);
+  }, []);
+
+  useEffect(() => {
     if (hidden || !started) return;
     let id = 0;
     const tick = () => {
@@ -243,13 +352,13 @@ export function DmedChat() {
         applySession(data?.session as ChatSession | null, open);
       });
     };
-    id = window.setInterval(tick, open ? 4000 : 12000);
+    id = window.setInterval(tick, open ? (waiting ? 900 : 2500) : 12000);
     document.addEventListener("visibilitychange", tick);
     return () => {
       window.clearInterval(id);
       document.removeEventListener("visibilitychange", tick);
     };
-  }, [hidden, started, open]);
+  }, [hidden, started, open, waiting]);
 
   useEffect(() => {
     if (!open || !started) return;
@@ -281,7 +390,6 @@ export function DmedChat() {
       action: "start",
       name,
       phone,
-      email,
       language: lang,
       page: pathname,
     });
@@ -297,8 +405,7 @@ export function DmedChat() {
     }
     setStarted(true);
     setName("");
-    setPhone("");
-    setEmail("");
+    setPhone("+998");
     applySession(
       {
         language: lang,
@@ -364,9 +471,13 @@ export function DmedChat() {
       action: "message",
       text: body,
       page: pathname,
+      language: lang,
     });
     setBusy(false);
     if (status >= 400 || !data?.ok) {
+      setMessages(current => current.filter(message => message.id !== tempVisitor.id && message.id !== tempAck.id));
+      setText(current => current || body);
+      setWaiting(waiting);
       setError(typeof data?.error === "string" ? data.error : t.fail);
       return;
     }
@@ -421,6 +532,9 @@ export function DmedChat() {
     setBusy(false);
     URL.revokeObjectURL(localUrl);
     if (status >= 400 || !data?.ok) {
+      setMessages(current => current.filter(message => message.id !== tempVisitor.id && message.id !== tempAck.id));
+      setText(current => current || caption);
+      setWaiting(waiting);
       setError(typeof data?.error === "string" ? data.error : t.mediaFail);
       return;
     }
@@ -538,17 +652,17 @@ export function DmedChat() {
         <section
           className="fixed right-4 bottom-5 z-[80] flex w-[min(calc(100%-2rem),22.5rem)] flex-col overflow-hidden rounded-[28px] bg-white shadow-[0_18px_50px_-12px_rgba(15,23,42,0.45)]"
           role="dialog"
-          aria-label="Dmed"
+          aria-label={BRAND_NAME}
         >
           <header className="flex items-center gap-3 bg-[#1a6fd4] px-4 py-3 text-white">
-            <span className="relative flex size-11 items-center justify-center rounded-full bg-white/15 text-lg font-semibold">
-              D
+            <span className="relative flex size-10 items-center justify-center">
+              <BrandMark tone="dark" className="size-10" />
               <span className="absolute right-0 bottom-0 size-2.5 rounded-full border-2 border-[#1a6fd4] bg-[#22c55e]" />
             </span>
             <div className="min-w-0 flex-1">
-              <p className="text-[17px] leading-none font-semibold">Dmed</p>
+              <p className="text-[17px] leading-none font-semibold"><UiText>{BRAND_NAME}</UiText></p>
               <p className="mt-1 text-xs text-white/85">
-                {closed ? t.closed : waiting ? t.waiting : t.online}
+                <UiText>{closed ? t.closed : waiting ? t.waiting : t.online}</UiText>
               </p>
             </div>
             <button
@@ -565,10 +679,10 @@ export function DmedChat() {
             <form className="space-y-3 px-5 py-5" onSubmit={onStart}>
               <div>
                 <h2 className="text-center text-2xl font-semibold tracking-tight text-[#1f1b16]">
-                  {t.welcome}
+                  <UiText>{t.welcome}</UiText>
                 </h2>
                 <p className="mt-2 text-center text-sm leading-relaxed text-[#6b7280]">
-                  {t.intro}
+                  <UiText>{t.intro}</UiText>
                 </p>
               </div>
 
@@ -596,41 +710,35 @@ export function DmedChat() {
                   id="dmed-phone"
                   name="phone"
                   type="tel"
+                  inputMode="numeric"
                   autoComplete="tel"
-                  placeholder="+998901234567"
+                  maxLength={13}
+                  placeholder={t.phonePh}
                   value={phone}
                   aria-invalid={Boolean(fieldErrors.phone)}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={(e) => setPhone(formatUzPhoneInput(e.target.value))}
                   className="h-11 rounded-xl bg-[#f3f4f6]"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="dmed-email">{t.email}</Label>
-                <Input
-                  id="dmed-email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder={t.emailPh}
-                  value={email}
-                  aria-invalid={Boolean(fieldErrors.email)}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="h-11 rounded-xl bg-[#f3f4f6]"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <Label htmlFor="dmed-lang">{t.language}</Label>
+                <Label htmlFor="dmed-lang"><UiText>{t.language}</UiText></Label>
                 <select
                   id="dmed-lang"
                   name="language"
                   value={lang}
-                  onChange={(e) => setLang(e.target.value === "ru" ? "ru" : "uz")}
+                  onChange={(e) => {
+                    const next = e.target.value;
+                    setLang(
+                      next === "ru" || next === "en" || next === "kaa" ? next : "uz",
+                    );
+                  }}
                   className="h-11 w-full rounded-xl border border-input bg-[#f3f4f6] px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
                 >
-                  <option value="uz">{t.uz}</option>
-                  <option value="ru">{t.ru}</option>
+                  <option value="uz"><UiText>{t.uz}</UiText></option>
+                  <option value="ru"><UiText>{t.ru}</UiText></option>
+                  <option value="en"><UiText>{t.en}</UiText></option>
+                  <option value="kaa"><UiText>{t.kaa}</UiText></option>
                 </select>
               </div>
 
@@ -645,7 +753,7 @@ export function DmedChat() {
                 disabled={busy}
                 className="h-12 w-full rounded-full bg-[#1a6fd4] text-base text-white hover:bg-[#155bb0]"
               >
-                {busy ? t.sending : t.start}
+                <UiText>{busy ? t.sending : t.start}</UiText>
                 <span aria-hidden> →</span>
               </Button>
             </form>
@@ -655,7 +763,20 @@ export function DmedChat() {
                 ref={listRef}
                 className="min-h-0 flex-1 space-y-2 overflow-y-auto px-4 py-4"
               >
-                {messages.map((msg) => (
+                {messages.map((msg) =>
+                  msg.kind === "split" || msg.role === "system" ? (
+                    <div
+                      key={msg.id}
+                      className="flex items-center gap-2 py-1"
+                      role="separator"
+                    >
+                      <span className="h-px flex-1 bg-[#d7e4fb]" />
+                      <span className="text-[11px] font-medium tracking-wide text-[#6b7c99]">
+                        {msg.body}
+                      </span>
+                      <span className="h-px flex-1 bg-[#d7e4fb]" />
+                    </div>
+                  ) : (
                   <div
                     key={msg.id}
                     className={
@@ -673,13 +794,14 @@ export function DmedChat() {
                             : "mt-1 text-[10px] text-[#7a7166]"
                         }
                       >
-                        {formatClock(msg.createdAt)}
+                        <UiText>{formatClock(msg.createdAt, lang)}</UiText>
                       </p>
                     ) : null}
                   </div>
-                ))}
+                  ),
+                )}
                 {waiting && canSend ? (
-                  <p className="px-1 text-xs text-[#7a7166]">{t.waiting}</p>
+                  <p className="px-1 text-xs text-[#7a7166]"><UiText>{t.waiting}</UiText></p>
                 ) : null}
                 {canRate || (closed && ratingFromStored(rating)) ? (
                   <div
@@ -687,11 +809,11 @@ export function DmedChat() {
                     className="mt-2 rounded-2xl bg-[#eef5ff] px-3 py-3"
                   >
                     <p className="text-center text-sm font-medium text-[#0b2a55]">
-                      {canRate ? t.rateTitle : t.thanks}
+                      <UiText>{canRate ? t.rateTitle : t.thanks}</UiText>
                     </p>
                     {canRate ? (
                       <p className="mt-1 text-center text-xs text-[#3d5f8a]">
-                        {t.rateHint}
+                        <UiText>{t.rateHint}</UiText>
                       </p>
                     ) : null}
                     <div
@@ -806,7 +928,7 @@ export function DmedChat() {
                 </form>
               ) : (
                 <div className="space-y-2 border-t border-[#eee] px-4 py-3">
-                  <p className="text-center text-xs text-[#7a7166]">{t.closed}</p>
+                  <p className="text-center text-xs text-[#7a7166]"><UiText>{t.closed}</UiText></p>
                   <Button
                     type="button"
                     data-dmed-chat="restart"
@@ -814,7 +936,7 @@ export function DmedChat() {
                     onClick={() => void onRestart()}
                     className="h-11 w-full rounded-full bg-[#1a6fd4] text-sm text-white hover:bg-[#155bb0]"
                   >
-                    {busy ? t.sending : t.restart}
+                    <UiText>{busy ? t.sending : t.restart}</UiText>
                   </Button>
                 </div>
               )}

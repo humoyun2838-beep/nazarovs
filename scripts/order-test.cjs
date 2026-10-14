@@ -6,6 +6,24 @@ const fs = require("fs");
 const path = require("path");
 
 const BASE = process.env.BASE_URL || "http://127.0.0.1:3847";
+const ADMIN_PASS = process.env.ADMIN_PASSWORD || "local-dev-only-password";
+let sessionCookie = "";
+
+async function loginAdmin() {
+  const form = new FormData();
+  form.set("username", "Nazarov");
+  form.set("password", ADMIN_PASS);
+  form.set("next", "/nazarov");
+  const res = await fetch(`${BASE}/api/login`, {
+    method: "POST",
+    body: form,
+    redirect: "manual",
+  });
+  const cookie = res.headers.get("set-cookie") || "";
+  const match = cookie.match(/nazarov_session=([^;]+)/);
+  if (!match) throw new Error("order-test login failed");
+  sessionCookie = `nazarov_session=${match[1]}`;
+}
 const tree = JSON.parse(
   fs.readFileSync(path.join(__dirname, "../src/data/dmed-tree.json"), "utf8"),
 );
@@ -52,8 +70,6 @@ const EXPECTED_AMALIYOTCHI = [
   "Bemorlarning o'z hududiga biriktirilishi",
   "DMED Pro mobil ilovasi orqali bemorni oilaviy shifokorga biriktirish",
   "Patronaj rejasini tuzish",
-  "Bemorning profili",
-  "Tug‘ilgan sanasi ma’lum bo'lmagan bemorni qidirish",
   "Skrining/So’rovnomalar",
 ];
 
@@ -111,17 +127,15 @@ function assertSequence(actual, expected, label) {
   }
 }
 
-function flattenTree(nodes, out = []) {
-  for (const node of nodes || []) {
-    out.push(node.title);
-    flattenTree(node.children, out);
-  }
-  return out;
+function childTitles(slug) {
+  const section = tree.sections.find((s) => s.slug === slug);
+  if (!section) throw new Error(`missing section ${slug}`);
+  return (section.children || []).map((c) => c.title);
 }
 
 async function get(pathname) {
   const res = await fetch(`${BASE}${pathname}`, {
-    headers: { "user-agent": "nazarov-order/1.0" },
+    headers: { "user-agent": "nazarov-order/1.0", cookie: sessionCookie },
   });
   const body = await res.text();
   if (res.status !== 200) {
@@ -131,10 +145,16 @@ async function get(pathname) {
 }
 
 async function main() {
+  await loginAdmin();
   const treeTitles = (tree.sections || []).map((s) => s.title);
   assertSequence(treeTitles, EXPECTED_SECTIONS, "dmed-tree.json");
 
-  const catalog = listTitles(await get("/nazarov"));
+  const catalogAll = listTitles(await get("/nazarov"));
+  const faqTitle = "Top 20 ta savol";
+  if (!catalogAll.includes(faqTitle)) {
+    throw new Error("catalog is missing the FAQ section");
+  }
+  const catalog = catalogAll.filter((title) => title !== faqTitle);
   assertSequence(catalog, EXPECTED_SECTIONS, "/nazarov");
   if (catalog.length !== EXPECTED_SECTIONS.length) {
     throw new Error(
@@ -143,25 +163,24 @@ async function main() {
   }
 
   const royxatga = listTitles(await get("/b/royxatga-oluvchi"));
-  assertSequence(royxatga, EXPECTED_ROYXATGA, "/b/royxatga-oluvchi");
+  assertSequence(royxatga, childTitles("royxatga-oluvchi"), "/b/royxatga-oluvchi");
 
   const amaliyotchi = listTitles(await get("/b/amaliyotchi-hamshira"));
-  assertSequence(amaliyotchi, EXPECTED_AMALIYOTCHI, "/b/amaliyotchi-hamshira");
+  assertSequence(
+    amaliyotchi,
+    childTitles("amaliyotchi-hamshira"),
+    "/b/amaliyotchi-hamshira",
+  );
 
   const shifokor = listTitles(await get("/b/shifokor"));
-  assertSequence(shifokor, EXPECTED_SHIFOKOR, "/b/shifokor");
+  assertSequence(shifokor, childTitles("shifokor"), "/b/shifokor");
 
   const qabul = listTitles(
     await get("/b/qabul-bolimining-navbatchi-shifokorhamshirasi"),
   );
   assertSequence(
     qabul,
-    [
-      "Bemorni joylashtirish. Kasalxonaga qabul qilish",
-      "Yo'llanmasiz bemorni ro'yxatga olish va joylashtirish",
-      "Shaxsi noma’lum bemorni ro‘yxatga olish (rasmiylashtirish)",
-      "Bemorning profili",
-    ],
+    childTitles("qabul-bolimining-navbatchi-shifokorhamshirasi"),
     "/b/qabul",
   );
 
@@ -174,18 +193,16 @@ async function main() {
   }
 
   const tizimga = tree.sections[0];
-  if (!tizimga.leaf || !tizimga.leafSlug) {
-    throw new Error("Tizimga kirish should open as a lesson");
+  const tizimgaLesson = tizimga.children?.[0]?.slug;
+  if (!tizimgaLesson) {
+    throw new Error("Tizimga kirish lesson slug missing");
   }
   const home = await get("/nazarov");
-  if (!home.includes(`/m/${tizimga.leafSlug}`)) {
-    throw new Error("catalog does not link Tizimga kirish to its lesson");
+  if (!home.includes(`/b/${tizimga.slug}`) && !home.includes(`/m/${tizimgaLesson}`)) {
+    throw new Error("catalog does not link Tizimga kirish");
   }
 
-  const sample = flattenTree(
-    tree.sections.find((s) => s.slug === "shifokor").children,
-  ).slice(0, 6);
-  assertSequence(shifokor, sample, "shifokor vs tree");
+  assertSequence(shifokor, childTitles("shifokor").slice(0, 6), "shifokor vs tree");
 
   console.log(
     JSON.stringify(

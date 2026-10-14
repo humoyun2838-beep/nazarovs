@@ -7,8 +7,6 @@ const ALLOWED_HOSTS = new Set([
   "notion.so",
 ]);
 
-export const dynamic = "force-dynamic";
-
 function isAllowed(hostname: string) {
   const host = hostname.toLowerCase();
   return (
@@ -56,15 +54,19 @@ export async function GET(req: NextRequest) {
   const proxy =
     req.nextUrl.searchParams.get("proxy") === "1" || shouldProxy(target);
   if (proxy) {
+    const range=req.headers.get("range");
     const upstream = await fetch(target.toString(), {
       headers: {
+        ...(range?{Range:range}:{}),
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         Referer: "https://www.notion.so/",
       },
-      cache: "no-store",
-    });
-    if (!upstream.ok) {
+      cache: range?"no-store":"force-cache",
+      ...(range?{}:{next:{revalidate:86400}}),
+      signal: AbortSignal.timeout(20000),
+    }).catch(() => null);
+    if (!upstream?.ok) {
       return NextResponse.json(
         { error: "Rasm yuklanmadi" },
         { status: 502 },
@@ -78,7 +80,10 @@ export async function GET(req: NextRequest) {
     headers.set("Cache-Control", "public, max-age=86400");
     const length = upstream.headers.get("content-length");
     if (length) headers.set("Content-Length", length);
-    return new NextResponse(upstream.body, { status: 200, headers });
+    headers.set("Accept-Ranges","bytes");
+    const contentRange=upstream.headers.get("content-range");
+    if(contentRange)headers.set("Content-Range",contentRange);
+    return new NextResponse(upstream.body, { status: upstream.status, headers });
   }
 
   return NextResponse.redirect(target.toString(), 302);

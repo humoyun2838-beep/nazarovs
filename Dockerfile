@@ -1,27 +1,26 @@
-FROM node:22-bookworm-slim
-
+FROM node:24-bookworm-slim AS builder
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV NPM_CONFIG_IGNORE_SCRIPTS=true
-ENV npm_config_ignore_scripts=true
-ENV npm_config_build_from_source=false
-
+RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ ca-certificates && rm -rf /var/lib/apt/lists/*
 COPY package.json package-lock.json .npmrc ./
-COPY vendor/better-sqlite3/linux-x64.node /tmp/linux-x64.node
-# Railway sets NODE_ENV=production; keep dev/build packages for Next + Tailwind.
-RUN NODE_ENV=development npm ci --ignore-scripts=true --include=dev \
-  && mkdir -p node_modules/better-sqlite3/prebuilds \
-  && cp /tmp/linux-x64.node node_modules/better-sqlite3/prebuilds/linux-x64.node \
-  && node -e "require('better-sqlite3'); console.log('better-sqlite3 ok')" \
-  && node -e "require.resolve('@tailwindcss/postcss'); console.log('tailwind postcss ok')"
-
+RUN NODE_ENV=development npm ci --include=dev --ignore-scripts=true \
+  && npm rebuild better-sqlite3 --ignore-scripts=false \
+  && node -e "const D=require('better-sqlite3');new D(':memory:').close()"
 COPY . .
-RUN NODE_ENV=production npm run build \
-  && mkdir -p /app/seed \
-  && cp data/nazarov.db /app/seed/nazarov.db
+RUN mkdir -p /app/seed /tmp/nazarov-build \
+  && cp data/nazarov.db /app/seed/nazarov.db \
+  && cp data/nazarov.db /tmp/nazarov-build/nazarov.db \
+  && DATA_DIR=/tmp/nazarov-build NODE_ENV=production npm run build
 
-ENV NODE_ENV=production
-ENV DATA_DIR=/app/data
-EXPOSE 3847
-
+FROM node:24-bookworm-slim AS runner
+WORKDIR /app
+ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 DATA_DIR=/app/data PORT_ALLOW_OVERRIDE=1 SEPARATE_SITES=0 COOKIE_SECURE=1
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/seed ./seed
+COPY --from=builder /app/src/data ./src/data
+COPY --from=builder /app/scripts ./scripts
+COPY --from=builder /app/package.json /app/next.config.ts /app/tsconfig.json ./
+EXPOSE 8080
 ENTRYPOINT ["sh", "scripts/docker-entrypoint.sh"]

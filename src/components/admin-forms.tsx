@@ -1,4 +1,6 @@
 "use client";
+import { UiText } from "@/components/ui-locale";
+
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -10,6 +12,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { extractMediaFromContent, serializeLessonContent } from "@/lib/media-blocks";
+import type { Locale } from "@/lib/locale";
+import { uiCopy } from "@/lib/ui-copy";
+
+type MediaDraft = {
+  key: string;
+  kind: "image" | "video";
+  url?: string;
+  file?: File;
+  preview: string;
+};
+
+function newKey() {
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
 
 type SaveResult =
   | { ok: true; id?: number; slug?: string }
@@ -32,12 +49,10 @@ function ResultMessage({
   }
   return (
     <div className="rounded-lg bg-emerald-50 px-3 py-2 text-sm text-[#0f5c4c]">
-      <p>Saqlandi. Mijozlar sahifasida hozir ko‘rinadi.</p>
+      <p><UiText>{"Saqlandi. Mijozlar sahifasida hozir ko‘rinadi."}</UiText></p>
       {slug ? (
         <p className="mt-1">
-          <Link href={`/m/${slug}`} className="underline underline-offset-2">
-            Mijoz ko‘rinishini ochish
-          </Link>
+          <Link href={`/m/${slug}`} className="underline underline-offset-2"><UiText>{" Mijoz ko‘rinishini ochish "}</UiText></Link>
         </p>
       ) : null}
     </div>
@@ -58,7 +73,8 @@ async function postForm(url: string, form: FormData, method = "POST") {
   return data;
 }
 
-export function CategoryCreateForm() {
+export function CategoryCreateForm({ locale = "uz" }: { locale?: Locale }) {
+  const copy = uiCopy(locale);
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const [state, setState] = useState<SaveResult | null>(null);
@@ -82,21 +98,19 @@ export function CategoryCreateForm() {
         }
       }}
     >
-      <p className="text-sm text-[#5a5248]">
-        Yangi bo‘lim mijozlarning “Bo‘limlar” ro‘yxatida chiqadi.
-      </p>
+      <p className="text-sm text-[#5a5248]"><UiText>{copy.sectionLead}</UiText></p>
       <div className="grid gap-2">
-        <Label htmlFor="cat-title">Bo‘lim nomi *</Label>
-        <Input id="cat-title" name="title" required placeholder="Masalan: Yangi kurs" />
+        <Label htmlFor="cat-title"><UiText>{copy.sectionName}</UiText> *</Label>
+        <Input id="cat-title" name="title" required placeholder={copy.sectionNamePh} />
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="cat-desc">Tavsif</Label>
-        <Input id="cat-desc" name="description" placeholder="Qisqa izoh" />
+        <Label htmlFor="cat-desc"><UiText>{copy.description}</UiText></Label>
+        <Input id="cat-desc" name="description" placeholder={copy.descriptionPh} />
       </div>
       <input type="hidden" name="icon" value="stethoscope" />
       <ResultMessage state={state} />
       <Button type="submit" disabled={pending} className="h-11 w-full sm:w-auto">
-        {pending ? "Saqlanmoqda..." : "Bo‘lim qo‘shish"}
+        <UiText>{pending ? copy.saving : copy.addSection}</UiText>
       </Button>
     </form>
   );
@@ -108,23 +122,33 @@ function MaterialFields({
   pending,
   state,
   onSubmit,
+  locale = "uz",
 }: {
   categories: { id: number; title: string }[];
   material?: Material;
   pending: boolean;
   state: SaveResult | null;
   onSubmit: (form: FormData) => void;
+  locale?: Locale;
 }) {
+  const copy = uiCopy(locale);
   const preferred =
     categories.find((c) => c.title.toLowerCase() === "dmed") ?? categories[0];
   const defaultCategoryId = String(
     material?.categoryId ?? preferred?.id ?? "",
   );
+  const parsed = extractMediaFromContent(material?.content || "");
   const [title, setTitle] = useState(material?.title || "");
-  const [content, setContent] = useState(material?.content || "");
+  const [content, setContent] = useState(parsed.text);
+  const [media, setMedia] = useState<MediaDraft[]>(() =>
+    parsed.media.map((item) => ({
+      key: newKey(),
+      kind: item.kind,
+      url: item.src,
+      preview: item.src,
+    })),
+  );
   const [removeImage, setRemoveImage] = useState(false);
-  const [videoName, setVideoName] = useState("");
-  const [videoPreview, setVideoPreview] = useState<string | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(
     material?.imageUrl || null,
   );
@@ -135,15 +159,53 @@ function MaterialFields({
     return () => {
       if (videoUrlRef.current) URL.revokeObjectURL(videoUrlRef.current);
       if (imageUrlRef.current) URL.revokeObjectURL(imageUrlRef.current);
+      for (const item of media) {
+        if (item.file && item.preview.startsWith("blob:")) {
+          URL.revokeObjectURL(item.preview);
+        }
+      }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const previewContent = useMemo(() => {
-    if (videoPreview && !/VIDEO::/i.test(content)) {
-      return `VIDEO::${videoPreview}\n\n${content}`.trim();
+    const items = media
+      .map((item) =>
+        item.preview ? { kind: item.kind, src: item.preview } : null,
+      )
+      .filter((item): item is { kind: "image" | "video"; src: string } => Boolean(item));
+    return serializeLessonContent(items, content);
+  }, [content, media]);
+
+  function addFiles(kind: "image" | "video", files: FileList | null) {
+    if (!files?.length) return;
+    const extra: MediaDraft[] = [];
+    for (const file of Array.from(files)) {
+      const preview = URL.createObjectURL(file);
+      extra.push({ key: newKey(), kind, file, preview });
     }
-    return content;
-  }, [content, videoPreview]);
+    setMedia((prev) => [...prev, ...extra]);
+  }
+
+  function moveMedia(index: number, dir: -1 | 1) {
+    setMedia((prev) => {
+      const next = [...prev];
+      const j = index + dir;
+      if (j < 0 || j >= next.length) return prev;
+      [next[index], next[j]] = [next[j], next[index]];
+      return next;
+    });
+  }
+
+  function removeMedia(index: number) {
+    setMedia((prev) => {
+      const item = prev[index];
+      if (item?.file && item.preview.startsWith("blob:")) {
+        URL.revokeObjectURL(item.preview);
+      }
+      return prev.filter((_, i) => i !== index);
+    });
+  }
 
   return (
     <form
@@ -154,6 +216,29 @@ function MaterialFields({
         const form = new FormData(event.currentTarget);
         form.set("content", content);
         form.set("title", title);
+        const plan: Array<
+          | { kind: "image" | "video"; src: string }
+          | { kind: "image" | "video"; newIndex: number }
+        > = [];
+        const videoFiles: File[] = [];
+        const imageFiles: File[] = [];
+        for (const item of media) {
+          if (item.url) {
+            plan.push({ kind: item.kind, src: item.url });
+            continue;
+          }
+          if (!item.file) continue;
+          if (item.kind === "video") {
+            plan.push({ kind: "video", newIndex: videoFiles.length });
+            videoFiles.push(item.file);
+          } else {
+            plan.push({ kind: "image", newIndex: imageFiles.length });
+            imageFiles.push(item.file);
+          }
+        }
+        form.set("mediaPlan", JSON.stringify(plan));
+        for (const file of videoFiles) form.append("videos", file);
+        for (const file of imageFiles) form.append("images", file);
         onSubmit(form);
       }}
     >
@@ -161,12 +246,11 @@ function MaterialFields({
       <input type="hidden" name="removeImage" value={removeImage ? "1" : "0"} />
 
       <p className="rounded-lg bg-[#eef3fb] px-3 py-2 text-sm text-[#243b6b]">
-        Video, matn va rasm shu yerda saqlanadi. Mijozlar login-parolsiz
-        `/nazarov` da ko‘radi.
+        <UiText>{copy.lessonLead}</UiText>
       </p>
 
       <div className="grid gap-2">
-        <Label htmlFor="mat-category">Qaysi bo‘limga? *</Label>
+        <Label htmlFor="mat-category"><UiText>{copy.whichSection}</UiText> *</Label>
         <select
           id="mat-category"
           name="categoryId"
@@ -176,14 +260,14 @@ function MaterialFields({
         >
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
-              {category.title}
+              <UiText>{category.title}</UiText>
             </option>
           ))}
         </select>
       </div>
 
       <div className="grid gap-2">
-        <Label htmlFor="mat-title">Sarlavha *</Label>
+        <Label htmlFor="mat-title"><UiText>{copy.title}</UiText> *</Label>
         <Input
           id="mat-title"
           name="title"
@@ -191,82 +275,126 @@ function MaterialFields({
           className="h-11"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Masalan: Shifokor — yangi dars"
+          placeholder={copy.titlePh}
         />
       </div>
 
       <div className="grid gap-2">
-        <Label htmlFor="mat-summary">Qisqa izoh</Label>
+        <Label htmlFor="mat-summary"><UiText>{copy.summary}</UiText></Label>
         <Input
           id="mat-summary"
           name="summary"
           className="h-11"
           defaultValue={material?.summary || ""}
-          placeholder="Mijozlar ro‘yxatida ko‘rinadigan qisqa matn"
+          placeholder={copy.summaryPh}
         />
       </div>
 
       <div className="grid gap-2">
-        <Label htmlFor="mat-video">Video dars (mp4, webm — 80MB gacha)</Label>
-        <Input
-          id="mat-video"
-          name="video"
-          type="file"
-          accept="video/mp4,video/webm,video/quicktime,.mp4,.webm,.mov"
-          className="h-11"
-          onChange={(event) => {
-            const file = event.target.files?.[0];
-            if (videoUrlRef.current) URL.revokeObjectURL(videoUrlRef.current);
-            if (!file) {
-              setVideoName("");
-              setVideoPreview(null);
-              videoUrlRef.current = null;
-              return;
-            }
-            const url = URL.createObjectURL(file);
-            videoUrlRef.current = url;
-            setVideoName(file.name);
-            setVideoPreview(url);
-          }}
-        />
-        {videoName ? (
-          <p className="text-xs text-[#5a5248]">Tanlangan video: {videoName}</p>
-        ) : /VIDEO::/i.test(content) ? (
-          <p className="text-xs text-[#0f5c4c]">
-            Bu darsda video allaqachon bor. Yangi fayl yuklasangiz, almashtiriladi.
-          </p>
+        <Label><UiText>{copy.videoMedia}</UiText></Label>
+        <div className="flex flex-wrap gap-2">
+          <label className="inline-flex h-11 cursor-pointer items-center rounded-full bg-[#1a6fd4] px-4 text-sm font-medium text-white">
+            <UiText>{copy.addVideo}</UiText>
+            <input
+              type="file"
+              accept="video/mp4,video/webm,video/quicktime,.mp4,.webm,.mov"
+              multiple
+              className="sr-only"
+              onChange={(event) => {
+                addFiles("video", event.target.files);
+                event.target.value = "";
+              }}
+            />
+          </label>
+          <label className="inline-flex h-11 cursor-pointer items-center rounded-full border border-[#d7e4fb] bg-white px-4 text-sm font-medium text-[#0b2a55]">
+            <UiText>{copy.addImage}</UiText>
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif"
+              multiple
+              className="sr-only"
+              onChange={(event) => {
+                addFiles("image", event.target.files);
+                event.target.value = "";
+              }}
+            />
+          </label>
+        </div>
+        {media.length === 0 ? (
+          <p className="text-xs text-[#7a7166]"><UiText>{" Hali video yoki rasm yo‘q. Mp4/webm — 80MB, rasm — 8MB gacha. "}</UiText></p>
         ) : (
-          <p className="text-xs text-[#7a7166]">
-            Video ixtiyoriy. Faqat matn ham yetarli.
-          </p>
+          <ul className="space-y-2">
+            {media.map((item, index) => (
+              <li
+                key={item.key}
+                className="flex flex-wrap items-center gap-3 rounded-xl bg-[#f7f3ec]/80 px-3 py-2"
+              >
+                {item.kind === "video" ? (
+                  <video
+                    src={item.preview}
+                    className="h-16 w-24 rounded-lg bg-black object-cover"
+                    muted
+                    playsInline
+                  />
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={item.preview}
+                    alt=""
+                    className="h-16 w-24 rounded-lg object-cover"
+                  />
+                )}
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium text-[#071a38]">
+                    <UiText>{item.kind === "video" ? "Video" : "Rasm"}</UiText> {index + 1}
+                  </p>
+                  <p className="truncate text-xs text-[#5a5248]">
+                    {item.file?.name || item.url || ""}
+                  </p>
+                </div>
+                <div className="flex shrink-0 gap-1">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    disabled={index === 0}
+                    onClick={() => moveMedia(index, -1)}
+                  ><UiText>{" Yuqoriga "}</UiText></Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    disabled={index === media.length - 1}
+                    onClick={() => moveMedia(index, 1)}
+                  ><UiText>{" Pastga "}</UiText></Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => removeMedia(index)}
+                  ><UiText>{" O‘chirish "}</UiText></Button>
+                </div>
+              </li>
+            ))}
+          </ul>
         )}
-        {videoPreview ? (
-          <video
-            controls
-            playsInline
-            src={videoPreview}
-            className="max-h-64 w-full rounded-xl bg-black"
-          />
-        ) : null}
       </div>
 
       <div className="grid gap-2">
-        <Label htmlFor="mat-content">Dars matni</Label>
+        <Label htmlFor="mat-content"><UiText>{copy.lessonText}</UiText></Label>
         <Textarea
           id="mat-content"
           name="content"
           rows={10}
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder="Mijozlar ochganda o‘qiydigan matn. Video alohida yuklanadi."
+          placeholder={copy.lessonTextPh}
         />
-        <p className="text-xs text-[#7a7166]">
-          Matn bo‘sh bo‘lishi mumkin, lekin video yoki rasm bo‘lsin.
-        </p>
+        <p className="text-xs text-[#7a7166]"><UiText>{" Matn bo‘sh bo‘lishi mumkin, lekin video yoki rasm bo‘lsin. "}</UiText></p>
       </div>
 
       <div className="grid gap-2">
-        <Label htmlFor="mat-image">Rasm (ixtiyoriy, 8MB gacha)</Label>
+        <Label htmlFor="mat-image"><UiText>{copy.coverImage}</UiText></Label>
         {imagePreview && !removeImage ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -275,7 +403,7 @@ function MaterialFields({
             className="max-h-48 w-full rounded-xl object-cover"
           />
         ) : (
-          <p className="text-sm text-[#7a7166]">Rasm yo‘q</p>
+          <p className="text-sm text-[#7a7166]"><UiText>{"Rasm yo‘q"}</UiText></p>
         )}
         {material?.imageUrl ? (
           <label className="flex items-center gap-2 text-sm text-[#5a5248]">
@@ -283,9 +411,7 @@ function MaterialFields({
               type="checkbox"
               checked={removeImage}
               onChange={(e) => setRemoveImage(e.target.checked)}
-            />
-            Hozirgi rasmni o‘chirish
-          </label>
+            /><UiText>{" Hozirgi muqova rasmni o‘chirish "}</UiText></label>
         ) : null}
         <Input
           id="mat-image"
@@ -306,11 +432,9 @@ function MaterialFields({
       </div>
 
       <details className="rounded-xl border border-black/8 bg-[#f7f3ec]/60 px-3 py-2">
-        <summary className="cursor-pointer text-sm font-medium text-[#5a5248]">
-          Qo‘shimcha (icon)
-        </summary>
+        <summary className="cursor-pointer text-sm font-medium text-[#5a5248]"><UiText>{" Qo‘shimcha (icon) "}</UiText></summary>
         <div className="mt-3 grid gap-2">
-          <Label htmlFor="mat-icon">Icon</Label>
+          <Label htmlFor="mat-icon"><UiText>{"Icon"}</UiText></Label>
           <select
             id="mat-icon"
             name="icon"
@@ -319,7 +443,7 @@ function MaterialFields({
           >
             {ICON_OPTIONS.map((name) => (
               <option key={name} value={name}>
-                {name}
+                <UiText>{name}</UiText>
               </option>
             ))}
           </select>
@@ -327,9 +451,7 @@ function MaterialFields({
       </details>
 
       <section className="rounded-2xl border border-black/8 bg-[#fbfaf7] p-3">
-        <p className="mb-2 text-xs font-medium tracking-wide text-[#7a7166] uppercase">
-          Mijozlarda qanday ko‘rinadi
-        </p>
+        <p className="mb-2 text-xs font-medium tracking-wide text-[#7a7166] uppercase"><UiText>{" Mijozlarda qanday ko‘rinadi "}</UiText></p>
         <MaterialBody title={title || "Sarlavha"} content={previewContent} />
       </section>
 
@@ -337,19 +459,19 @@ function MaterialFields({
 
       <div className="flex flex-wrap gap-2">
         <Button type="submit" disabled={pending} className="h-11">
-          {pending
+          <UiText>{pending
             ? "Saqlanmoqda..."
             : material
               ? "O‘zgarishlarni saqlash"
-              : "Mijozlarga chiqarish"}
+              : "Mijozlarga chiqarish"}</UiText>
         </Button>
         {material ? (
           <>
             <Button asChild type="button" variant="outline" className="h-11">
-              <Link href="/admin">Orqaga</Link>
+              <Link href="/admin"><UiText>{"Orqaga"}</UiText></Link>
             </Button>
             <Button asChild type="button" variant="ghost" className="h-11">
-              <Link href={`/m/${material.slug}`}>Mijozlarda ko‘rish</Link>
+              <Link href={`/m/${material.slug}`}><UiText>{"Mijozlarda ko‘rish"}</UiText></Link>
             </Button>
           </>
         ) : null}
@@ -360,8 +482,10 @@ function MaterialFields({
 
 export function MaterialCreateForm({
   categories,
+  locale = "uz",
 }: {
   categories: { id: number; title: string }[];
+  locale?: Locale;
 }) {
   const router = useRouter();
   const [state, setState] = useState<SaveResult | null>(null);
@@ -370,9 +494,7 @@ export function MaterialCreateForm({
 
   if (categories.length === 0) {
     return (
-      <div className="rounded-2xl border border-dashed border-white/40 bg-white/90 p-5 text-sm text-[#7a7166]">
-        Avval bo‘lim qo‘shing, keyin material kiriting.
-      </div>
+      <div className="rounded-2xl border border-dashed border-white/40 bg-white/90 p-5 text-sm text-[#7a7166]"><UiText>{" Avval bo‘lim qo‘shing, keyin material kiriting. "}</UiText></div>
     );
   }
 
@@ -380,6 +502,7 @@ export function MaterialCreateForm({
     <div className="rounded-2xl border border-white/30 bg-white/95 p-5 shadow-sm">
       <MaterialFields
         key={formKey}
+        locale={locale}
         categories={categories}
         pending={pending}
         state={state}

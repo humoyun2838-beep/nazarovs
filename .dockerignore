@@ -1,5 +1,10 @@
 node_modules
 .next
+.next*
+artifacts
+runtime-data
+qa-data
+output
 .tools
 .git
 .cursor

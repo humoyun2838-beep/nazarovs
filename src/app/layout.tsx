@@ -2,7 +2,15 @@ import type { Metadata } from "next";
 import { Fraunces, Manrope } from "next/font/google";
 import { PageBackdrop } from "@/components/page-backdrop";
 import { DmedChat } from "@/components/dmed-chat";
+import { VisitPulse } from "@/components/visit-pulse";
+import { htmlLang } from "@/lib/locale";
+import { getLocale } from "@/lib/locale-server";
+import { BRAND_APPLE_ICON, BRAND_FAVICON, BRAND_FAVICON_16, BRAND_LOGO, BRAND_MANIFEST, BRAND_NAME } from "@/lib/brand";
+import { canonicalOrigin } from "@/lib/site";
 import "./globals.css";
+import { UiLocaleProvider } from "@/components/ui-locale";
+
+const publishedOrigin = canonicalOrigin();
 
 const display = Fraunces({
   variable: "--font-display",
@@ -18,53 +26,47 @@ const sans = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.nazarov.uz"),
+  ...(publishedOrigin ? { metadataBase: new URL(publishedOrigin) } : {}),
   title: {
-    default: "Nazarov Humoyun Mirzo",
-    template: "%s · Nazarov Humoyun Mirzo",
+    default: BRAND_NAME,
+    template: `%s · ${BRAND_NAME}`,
   },
-  description:
-    "Nazarov Humoyun Mirzo o‘quv materiallari portali. DMED darslari va videolar ochiq.",
-  applicationName: "Nazarov Humoyun Mirzo",
-  keywords: [
-    "Nazarov",
-    "Humoyun Mirzo",
-    "nazarov.uz",
-    "www.nazarov.uz",
-    "o‘quv materiallari",
-    "o'zbekiston",
-  ],
-  authors: [{ name: "Nazarov Humoyun Mirzo", url: "https://www.nazarov.uz" }],
-  creator: "Nazarov Humoyun Mirzo",
-  alternates: {
-    canonical: "https://www.nazarov.uz",
-  },
+  description: "DMED o‘quv materiallari portali. Darslar va videolar ochiq.",
+  applicationName: BRAND_NAME,
+  keywords: [BRAND_NAME, "o‘quv materiallari", "o'zbekiston"],
+  authors: [{ name: BRAND_NAME }],
+  creator: BRAND_NAME,
+  ...(publishedOrigin ? { alternates: { canonical: publishedOrigin } } : {}),
   openGraph: {
     type: "website",
     locale: "uz_UZ",
-    url: "https://www.nazarov.uz",
-    siteName: "Nazarov Humoyun Mirzo",
-    title: "Nazarov Humoyun Mirzo",
-    description:
-      "O‘quv materiallari portali. Mijozlar darhol materiallarni ochadi.",
+    ...(publishedOrigin ? { url: publishedOrigin } : {}),
+    siteName: BRAND_NAME,
+    title: BRAND_NAME,
+    description: "DMED o‘quv materiallari portali.",
     images: [
       {
-        url: "/nazarov-portrait.webp?v=hq1",
-        width: 640,
-        height: 640,
-        alt: "Nazarov Humoyun Mirzo",
+        url: BRAND_LOGO,
+        width: 80,
+        height: 80,
+        alt: BRAND_NAME,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nazarov Humoyun Mirzo",
-    description: "O‘quv materiallari portali",
-    images: ["/nazarov-portrait.webp?v=hq1"],
+    title: BRAND_NAME,
+    description: "DMED o‘quv materiallari portali",
+    images: [BRAND_LOGO],
   },
+  manifest: BRAND_MANIFEST,
   icons: {
-    icon: "/nazarov-portrait-sm.webp?v=hq1",
-    apple: "/nazarov-portrait.webp?v=hq1",
+    icon: [
+      { url: "/favicon.ico?v=mark5", sizes: "any" },
+      { url: BRAND_FAVICON, sizes: "32x32", type: "image/png" },
+      { url: BRAND_FAVICON_16, sizes: "16x16", type: "image/png" },
+    ],
+    apple: BRAND_APPLE_ICON,
   },
   robots: {
     index: true,
@@ -72,24 +74,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const locale = await getLocale();
   return (
     <html
-      lang="uz"
+      lang={htmlLang(locale)}
+      data-locale={locale}
       className={`${display.variable} ${sans.variable} h-full antialiased`}
     >
-      <head>
-        <link
-          rel="preload"
-          href="/nazarov-bg-wash.webp?v=dmed4"
-          as="image"
-          type="image/webp"
-        />
-      </head>
       <body className="relative flex min-h-full flex-col font-sans text-[#071a38]">
+        <UiLocaleProvider locale={locale}>
         <PageBackdrop />
         <div className="page-shell">{children}</div>
-        <DmedChat />
+        <DmedChat locale={locale} />
+        <VisitPulse />
+        </UiLocaleProvider>
       </body>
     </html>
   );

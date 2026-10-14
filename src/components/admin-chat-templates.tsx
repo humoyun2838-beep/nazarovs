@@ -1,4 +1,6 @@
 "use client";
+import { UiText } from "@/components/ui-locale";
+
 
 import { useEffect, useMemo, useState } from "react";
 import { BookmarkPlus, ChevronDown, Pencil, Plus, Trash2, X } from "lucide-react";
@@ -30,12 +32,16 @@ export function AdminChatTemplates({
   templates,
   onInsert,
   onTemplates,
+  manage = true,
+  endpoint = "/api/admin/chat-workspace",
 }: {
   language?: string;
   draft: string;
   templates?: ChatTemplate[];
   onInsert: (body: string) => void;
   onTemplates?: (pack: TemplatePack) => void;
+  manage?: boolean;
+  endpoint?: string;
 }) {
   const lang = language === "ru" ? "ru" : "uz";
   const builtin = useMemo(() => templatesFor(lang), [lang]);
@@ -84,7 +90,7 @@ export function AdminChatTemplates({
     setBusy(true);
     setError("");
     try {
-      const res = await fetch("/api/admin/chat", {
+      const res = await fetch(endpoint, {
         method: "POST",
         credentials: "same-origin",
         headers: { "content-type": "application/json" },
@@ -120,7 +126,7 @@ export function AdminChatTemplates({
     setBusy(true);
     setError("");
     try {
-      const res = await fetch("/api/admin/chat", {
+      const res = await fetch(endpoint, {
         method: "POST",
         credentials: "same-origin",
         headers: { "content-type": "application/json" },
@@ -148,6 +154,7 @@ export function AdminChatTemplates({
   }
 
   useEffect(() => {
+    if (!manage || endpoint !== "/api/admin/chat-workspace") return;
     if (migrated || typeof window === "undefined" || localTemplateMigrateStarted) {
       setMigrated(true);
       return;
@@ -177,7 +184,7 @@ export function AdminChatTemplates({
       for (const row of parsed) {
         const text = typeof row.body === "string" ? row.body.trim() : "";
         if (text.length < 4) continue;
-        const res = await fetch("/api/admin/chat", {
+        const res = await fetch(endpoint, {
           method: "POST",
           credentials: "same-origin",
           headers: { "content-type": "application/json" },
@@ -198,11 +205,12 @@ export function AdminChatTemplates({
     return () => {
       cancelled = true;
     };
-  }, [migrated, onTemplates]);
+  }, [migrated, onTemplates, manage, endpoint]);
 
   return (
     <div data-admin-chat="templates" className="space-y-2">
       <div className="flex flex-wrap items-center gap-1.5">
+        {manage ? (
         <button
           type="button"
           data-chat-template="create"
@@ -215,8 +223,9 @@ export function AdminChatTemplates({
           )}
         >
           <Plus className="size-3.5" />
-          {lang === "ru" ? "Новый шаблон" : "Yangi shablon"}
+          <UiText>{lang === "ru" ? "Новый шаблон" : "Yangi shablon"}</UiText>
         </button>
+        ) : null}
         {quick.map((row) => (
           <button
             key={row.id}
@@ -225,7 +234,7 @@ export function AdminChatTemplates({
             onClick={() => onInsert(row.body)}
             className="shrink-0 rounded-full border border-[#cfe0f5] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0b4fa8] transition hover:border-[#1a6fd4] hover:bg-[#eaf3ff]"
           >
-            {row.label}
+            <UiText>{row.label}</UiText>
           </button>
         ))}
         {custom.map((row) => (
@@ -237,7 +246,7 @@ export function AdminChatTemplates({
             onClick={() => onInsert(row.body)}
             className="shrink-0 rounded-full border border-[#1a6fd4] bg-[#eaf3ff] px-2.5 py-1 text-[11px] font-semibold text-[#0b4fa8] transition hover:bg-[#dcebff]"
           >
-            {row.label}
+            <UiText>{row.label}</UiText>
           </button>
         ))}
         <button
@@ -250,9 +259,7 @@ export function AdminChatTemplates({
               ? "bg-[#1a6fd4] text-white"
               : "border border-[#cfe0f5] bg-[#f4f8ff] text-[#1a3a66]",
           )}
-        >
-          Barchasi
-          <ChevronDown className={cn("size-3.5 transition", open ? "rotate-180" : "")} />
+        ><UiText>{" Barchasi "}</UiText><ChevronDown className={cn("size-3.5 transition", open ? "rotate-180" : "")} />
         </button>
       </div>
 
@@ -263,13 +270,13 @@ export function AdminChatTemplates({
         >
           <div className="flex items-center justify-between gap-2">
             <p className="text-[11px] font-bold tracking-wide text-[#1a3a66] uppercase">
-              {editingId
+              <UiText>{editingId
                 ? lang === "ru"
                   ? "Изменить шаблон"
                   : "Shablonni tahrirlash"
                 : lang === "ru"
                   ? "Новый шаблон"
-                  : "Yangi shablon"}
+                  : "Yangi shablon"}</UiText>
             </p>
             <button
               type="button"
@@ -311,13 +318,13 @@ export function AdminChatTemplates({
               data-chat-template="save"
             >
               <BookmarkPlus className="size-3.5" />
-              {editingId
+              <UiText>{editingId
                 ? lang === "ru"
                   ? "Сохранить"
                   : "Saqlash"
                 : lang === "ru"
                   ? "Добавить"
-                  : "Qo‘shish"}
+                  : "Qo‘shish"}</UiText>
             </Button>
             {draft.trim().length >= 4 ? (
               <Button
@@ -331,7 +338,7 @@ export function AdminChatTemplates({
                 }}
                 className="h-8 rounded-lg border-[#cfe0f5] text-[#0b4fa8]"
               >
-                {lang === "ru" ? "Взять из ответа" : "Javobdan olish"}
+                <UiText>{lang === "ru" ? "Взять из ответа" : "Javobdan olish"}</UiText>
               </Button>
             ) : null}
           </div>
@@ -341,9 +348,9 @@ export function AdminChatTemplates({
             </p>
           ) : (
             <p className="text-[11px] text-[#5b7aa8]">
-              {lang === "ru"
+              <UiText>{lang === "ru"
                 ? "Шаблон сохранится в админке. Потом одним нажатием вставляется."
-                : "Shablon admin panelda saqlanadi. Keyin bir bosishda javobga tushadi."}
+                : "Shablon admin panelda saqlanadi. Keyin bir bosishda javobga tushadi."}</UiText>
             </p>
           )}
         </div>
@@ -357,7 +364,7 @@ export function AdminChatTemplates({
             return (
               <div key={group.id}>
                 <p className="mb-1.5 text-[10px] font-bold tracking-wide text-[#1a3a66] uppercase">
-                  {lang === "ru" ? group.ru : group.uz}
+                  <UiText>{lang === "ru" ? group.ru : group.uz}</UiText>
                 </p>
                 <div className="flex flex-wrap gap-1.5">
                   {groupRows.map((row) => (
@@ -372,7 +379,7 @@ export function AdminChatTemplates({
                       }}
                       className="rounded-lg bg-white px-2 py-1.5 text-left text-[11px] font-medium text-[#051530] shadow-sm ring-1 ring-[#d7e6fb] hover:ring-[#1a6fd4]"
                     >
-                      {row.label}
+                      <UiText>{row.label}</UiText>
                     </button>
                   ))}
                 </div>
@@ -381,7 +388,7 @@ export function AdminChatTemplates({
           })}
           <div>
             <p className="mb-1.5 text-[10px] font-bold tracking-wide text-[#1a3a66] uppercase">
-              {lang === "ru" ? "Мои шаблоны" : "Mening shablonlarim"}
+              <UiText>{lang === "ru" ? "Мои шаблоны" : "Mening shablonlarim"}</UiText>
             </p>
             {custom.length ? (
               <div className="space-y-1">
@@ -396,8 +403,10 @@ export function AdminChatTemplates({
                       }}
                       className="min-w-0 flex-1 truncate rounded-lg bg-white px-2 py-1.5 text-left text-[11px] font-medium text-[#051530] ring-1 ring-[#d7e6fb]"
                     >
-                      {row.label}
+                      <UiText>{row.label}</UiText>
                     </button>
+                    {manage ? (
+                    <>
                     <button
                       type="button"
                       aria-label={lang === "ru" ? "Изменить" : "Tahrirlash"}
@@ -414,14 +423,16 @@ export function AdminChatTemplates({
                     >
                       <Trash2 className="size-3.5" />
                     </button>
+                    </>
+                    ) : null}
                   </div>
                 ))}
               </div>
             ) : (
               <p className="text-[11px] text-[#5b7aa8]">
-                {lang === "ru"
+                <UiText>{lang === "ru"
                   ? "Пока нет своих шаблонов — нажмите «Шаблон»."
-                  : "Hali o‘z shablon yo‘q — «Shablon» ni bosing."}
+                  : "Hali o‘z shablon yo‘q — «Shablon» ni bosing."}</UiText>
               </p>
             )}
           </div>

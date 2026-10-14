@@ -1,0 +1,78 @@
+{
+  "Tashxisni qo'shish": {
+    "ru": "Добавить диагноз",
+    "en": "Add diagnosis"
+  },
+  "Barcha tashxislar": {
+    "ru": "Все диагнозы",
+    "en": "All diagnoses"
+  },
+  "Taklif qilish": {
+    "ru": "Пригласить",
+    "en": "Invite"
+  },
+  "Qabulni boshlash": {
+    "ru": "Начать приём",
+    "en": "Start the appointment"
+  },
+  "Yangi epizod": {
+    "ru": "Новый эпизод",
+    "en": "New episode"
+  },
+  "Shablonni tanlang": {
+    "ru": "Выберите шаблон",
+    "en": "Select a template"
+  },
+  "Ko'rikni yakunlash": {
+    "ru": "Завершить осмотр",
+    "en": "Finish the examination"
+  },
+  "Qabulga yozuvlar": {
+    "ru": "Записи на приём",
+    "en": "Appointment bookings"
+  },
+  "Qabulni qo'shish": {
+    "ru": "Добавить приём",
+    "en": "Add appointment"
+  },
+  "Davom etish": {
+    "ru": "Продолжить",
+    "en": "Continue"
+  },
+  "Joriy ko'rik": {
+    "ru": "Текущий осмотр",
+    "en": "Current examination"
+  },
+  "Bemorni qabulga yozish": {
+    "ru": "Запись пациента на приём",
+    "en": "Book the patient"
+  },
+  "Chop etish": {
+    "ru": "Печать",
+    "en": "Print"
+  },
+  "Qo'shish": {
+    "ru": "Добавить",
+    "en": "Add"
+  },
+  "Kasalxona": {
+    "ru": "Больница",
+    "en": "Hospital"
+  },
+  "Kasalxonaga yollanma": {
+    "ru": "Направление в больницу",
+    "en": "Hospital referral"
+  },
+  "Kasalxonaga qabul qilish": {
+    "ru": "Приём в больницу",
+    "en": "Hospital admission"
+  },
+  "Qabullar-Aktiv": {
+    "ru": "Приёмы — активные",
+    "en": "Appointments — active"
+  },
+  "Qabulga yozuvni yaratish": {
+    "ru": "Создать запись на приём",
+    "en": "Create an appointment booking"
+  }
+}

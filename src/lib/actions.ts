@@ -5,8 +5,10 @@ import {
   authenticate,
   clearSessionCookie,
   createSessionToken,
+  setOperatorCookie,
   setSessionCookie,
 } from "@/lib/auth";
+import { getClientAccess } from "@/lib/client-access";
 import {
   clean,
   createCategoryFromForm,
@@ -33,12 +35,33 @@ export async function loginAction(
   }
 
   const user = await authenticate(username, password);
-  if (!user) {
-    return { ok: false, error: "Login yoki parol noto‘g‘ri." };
+  if (!user || user.blocked) {
+    return {
+      ok: false,
+      error: user?.blocked
+        ? "Bu operator hisobi bloklangan."
+        : "Login yoki parol noto‘g‘ri.",
+    };
   }
 
   if (expectedRole === "admin" && user.role !== "admin") {
     return { ok: false, error: "Bu sahifa faqat admin uchun." };
+  }
+  if (expectedRole === "operator" && user.role === "admin") {
+    return { ok: false, error: "Bu admin logini. Chat uchun admin bergan login kerak." };
+  }
+  if (expectedRole === "operator" && user.role === "client") {
+    return { ok: false, error: "Bu mijoz logini. Operator chatiga alohida operator logini yozing." };
+  }
+  if (expectedRole === "operator" && user.role !== "operator") {
+    return { ok: false, error: "Login yoki parol noto‘g‘ri." };
+  }
+
+  if (user.role === "client") {
+    const access = getClientAccess(user.id, user.username);
+    if (access.expired) {
+      return { ok: false, error: "Login muddati tugagan. Admin qayta faollashtirsin." };
+    }
   }
 
   const token = await createSessionToken({
@@ -46,14 +69,19 @@ export async function loginAction(
     username: user.username,
     role: user.role,
   });
-  await setSessionCookie(token);
+  if (user.role === "operator") await setOperatorCookie(token);
+  else await setSessionCookie(token);
 
-  const fallback = user.role === "admin" ? "/admin" : "/nazarov";
+  const fallback =
+    user.role === "admin" ? "/admin" : user.role === "operator" ? "/operator" : "/nazarov";
   const dest =
-    next.startsWith("/") &&
-    !(user.role !== "admin" && next.startsWith("/admin"))
-      ? next
-      : fallback;
+    user.role === "operator"
+      ? "/operator"
+      : next.startsWith("/") &&
+          !next.startsWith("//") &&
+          !(user.role !== "admin" && next.startsWith("/admin"))
+        ? next
+        : fallback;
   redirect(dest);
 }
 

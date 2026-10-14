@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   compress: true,
   poweredByHeader: false,
   serverExternalPackages: ["better-sqlite3"],
@@ -118,6 +119,15 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/stickers/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/stickers/lessons/:path*",
         headers: [
           {
             key: "Cache-Control",

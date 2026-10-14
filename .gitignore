@@ -12,9 +12,13 @@
 
 # testing
 /coverage
+/qa-data/
+/runtime-data/
+/.next-preview/
 
 # next.js
 /.next/
+/.next-*/
 /out/
 
 # production
@@ -57,3 +61,7 @@ artifacts/
 scripts/tunn3l.config.json
 scripts/tunn3l.config.*.json
 
+
+# Local chat verification builds
+/.next-chat-*/
+/.next-fast*/

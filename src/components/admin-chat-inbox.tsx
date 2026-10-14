@@ -1,14 +1,19 @@
 "use client";
+import { UiText } from "@/components/ui-locale";
+
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, CircleStop, Search, Send } from "lucide-react";
+import { ArrowLeft, CircleStop, Power, Search, Send, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { CloseChatDialog, type InquiryCategory } from "@/components/close-chat-dialog";
 import { AdminChatTemplates } from "@/components/admin-chat-templates";
 import { ChatMessageBody } from "@/components/chat-message-media";
 import type { ChatTemplatePack } from "@/lib/chat-templates";
 import { starLabel } from "@/lib/chat-rating";
+import type { Locale } from "@/lib/locale";
+import { uiCopy } from "@/lib/ui-copy";
 import { cn } from "@/lib/utils";
 
 type InboxRow = {
@@ -55,6 +60,7 @@ type Thread = {
   ip?: string;
   status?: string;
   rating?: string;
+  inquiryCategoryTitle?: string;
   messages: ChatMsg[];
 };
 
@@ -77,11 +83,21 @@ function formatWhen(iso: string) {
   return date.toLocaleDateString("uz-UZ", { day: "numeric", month: "short" });
 }
 
+async function chatFetch(input: RequestInfo | URL, init?: RequestInit) {
+  try { return await fetch(input, init); }
+  catch { return new Response(JSON.stringify({ ok: false, error: "Tarmoq bilan aloqa yo‘q. Qayta urinib ko‘ring." }), { status: 503, headers: { "content-type": "application/json" } }); }
+}
+
 export function AdminChatInbox({
   initialSessionId = "",
+  staffOnly = false,
+  locale = "uz",
 }: {
   initialSessionId?: string;
+  staffOnly?: boolean;
+  locale?: Locale;
 }) {
+  const copy = uiCopy(locale);
   const [sessions, setSessions] = useState<InboxRow[]>([]);
   const [active, setActive] = useState(initialSessionId);
   const [thread, setThread] = useState<Thread | null>(null);
@@ -90,7 +106,13 @@ export function AdminChatInbox({
   const [folder, setFolder] = useState<InboxFolder>("all");
   const [folders, setFolders] = useState<InboxFolders>({ all: 0, new: 0, replied: 0 });
   const [templatePack, setTemplatePack] = useState<ChatTemplatePack>({ uz: [], ru: [] });
+  const [categories, setCategories] = useState<InquiryCategory[]>([]);
+  const [closingId, setClosingId] = useState("");
+  const [closeError, setCloseError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [aiBusy, setAiBusy] = useState(false);
+  const [aiAuto, setAiAuto] = useState(false);
+  const [aiReady, setAiReady] = useState(false);
   const [loadingList, setLoadingList] = useState(true);
   const [loadingThread, setLoadingThread] = useState(false);
   const [error, setError] = useState("");
@@ -100,14 +122,20 @@ export function AdminChatInbox({
   const replyRef = useRef<HTMLTextAreaElement>(null);
   const lastMsgId = useRef(0);
   const activeRef = useRef(active);
+  const drafts = useRef<Record<string, string>>({});
   const queryRef = useRef(query);
   const folderRef = useRef(folder);
+  const listRequest = useRef(0);
+  const threadRequest = useRef(0);
+  const mutationBusy = useRef(false);
+  mutationBusy.current = busy || aiBusy;
 
   activeRef.current = active;
   queryRef.current = query;
   folderRef.current = folder;
 
   async function loadList() {
+    const request = ++listRequest.current;
     const params = new URLSearchParams();
     const q = queryRef.current.trim();
     if (q) params.set("q", q);
@@ -115,7 +143,7 @@ export function AdminChatInbox({
     const f = folderRef.current;
     if (f !== "all") params.set("f", f);
     try {
-      const res = await fetch(`/api/admin/chat?${params.toString()}`, {
+      const res = await chatFetch(`/api/admin/chat-workspace?${params.toString()}`, {
         credentials: "same-origin",
       });
       const data = (await res.json().catch(() => null)) as {
@@ -123,8 +151,12 @@ export function AdminChatInbox({
         sessions?: InboxRow[];
         folders?: InboxFolders;
         templates?: ChatTemplatePack;
+        categories?: InquiryCategory[];
+        aiAuto?: boolean;
+        aiReady?: boolean;
         error?: string;
       } | null;
+      if (request !== listRequest.current) return;
       if (!res.ok || !data?.sessions) {
         setListError(data?.error || "Suhbatlar yuklanmadi.");
         return;
@@ -133,17 +165,22 @@ export function AdminChatInbox({
       setSessions(data.sessions);
       if (data.folders) setFolders(data.folders);
       if (data.templates) setTemplatePack(data.templates);
+      if (data.categories) setCategories(data.categories);
+      if (typeof data.aiAuto === "boolean") setAiAuto(data.aiAuto);
+      if (typeof data.aiReady === "boolean") setAiReady(data.aiReady);
     } catch {
       setListError("Suhbatlar yuklanmadi.");
     } finally {
-      setLoadingList(false);
+      if (request === listRequest.current) setLoadingList(false);
     }
   }
 
   async function loadThread(id: string, silent = false) {
+    if (silent && mutationBusy.current) return;
+    const request = ++threadRequest.current;
     if (!silent && !thread) setLoadingThread(true);
     try {
-      const res = await fetch("/api/admin/chat", {
+      const res = await chatFetch("/api/admin/chat-workspace", {
         method: "POST",
         credentials: "same-origin",
         headers: { "content-type": "application/json" },
@@ -156,11 +193,13 @@ export function AdminChatInbox({
       const data = (await res.json().catch(() => null)) as {
         session?: Thread;
       } | null;
-      if (data?.session && data.session.id === id) {
+      if (request !== threadRequest.current || activeRef.current !== id) return;
+      if (!res.ok || !data?.session) { setError("Suhbat yuklanmadi. Qayta urinib ko‘ring."); return; }
+      if (data.session.id === id) {
         setThread(data.session);
       }
     } finally {
-      setLoadingThread(false);
+      if (request === threadRequest.current) setLoadingThread(false);
     }
   }
 
@@ -194,8 +233,12 @@ export function AdminChatInbox({
   }, [thread?.messages]);
 
   function openSession(id: string) {
+    if (busy || aiBusy) return;
+    if (activeRef.current) drafts.current[activeRef.current] = text;
+    activeRef.current = id;
+    ++threadRequest.current;
     if (id !== active) {
-      setText("");
+      setText(drafts.current[id] || "");
       setThread(null);
     }
     setActive(id);
@@ -205,7 +248,7 @@ export function AdminChatInbox({
 
   async function sendReplyBody(body: string) {
     if (!active) return false;
-    const res = await fetch("/api/admin/chat", {
+    const res = await chatFetch("/api/admin/chat-workspace", {
       method: "POST",
       credentials: "same-origin",
       headers: { "content-type": "application/json" },
@@ -220,7 +263,7 @@ export function AdminChatInbox({
       setError(data?.error || "Javob yozilmadi.");
       return false;
     }
-    if (data.session) setThread(data.session);
+    if (data.session) { ++threadRequest.current; setThread(data.session); }
     loadList();
     return true;
   }
@@ -238,41 +281,116 @@ export function AdminChatInbox({
     replyRef.current?.focus();
   }
 
-  async function endChat() {
-    if (!active || busy) return;
-    setBusy(true);
+  async function aiDraft() {
+    if (!active || busy || aiBusy) return;
+    setAiBusy(true);
     setError("");
-    const pending = text.trim();
-    if (pending) {
-      const sent = await sendReplyBody(pending);
-      if (!sent) {
-        setBusy(false);
-        return;
-      }
-      setText("");
-    }
-    const res = await fetch("/api/admin/chat", {
+    const res = await chatFetch("/api/admin/ai", {
       method: "POST",
       credentials: "same-origin",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ action: "close", sessionId: active }),
+      body: JSON.stringify({ action: "chat-draft", sessionId: active }),
+    });
+    const data = (await res.json().catch(() => null)) as {
+      ok?: boolean;
+      text?: string;
+      error?: string;
+      message?: string;
+    } | null;
+    setAiBusy(false);
+    if (!data?.ok || !data.text) {
+      setError(data?.message || data?.error || copy.draftFail);
+      return;
+    }
+    setText(data.text);
+    window.setTimeout(() => {
+      replyRef.current?.focus();
+      const node = replyRef.current;
+      if (node) {
+        node.selectionStart = data.text!.length;
+        node.selectionEnd = data.text!.length;
+      }
+    }, 0);
+  }
+
+  async function aiReply() {
+    if (!active || busy || aiBusy) return;
+    setAiBusy(true);
+    setError("");
+    const res = await chatFetch("/api/admin/ai", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ action: "chat-reply", sessionId: active, force: true }),
     });
     const data = (await res.json().catch(() => null)) as {
       ok?: boolean;
       session?: Thread;
       error?: string;
+      message?: string;
     } | null;
-    setBusy(false);
+    setAiBusy(false);
     if (!data?.ok) {
-      setError(
-        data?.error === "closed"
-          ? "Suhbat allaqachon yakunlangan."
-          : data?.error || "Suhbat yopilmadi.",
-      );
+      setError(data?.message || data?.error || copy.replyFail);
       return;
     }
-    if (data.session) setThread(data.session);
+    if (data.session) { ++threadRequest.current; setThread(data.session); }
+    setText("");
     loadList();
+  }
+
+  async function toggleAi() {
+    const next = !aiAuto;
+    setAiAuto(next);
+    const res = await chatFetch("/api/admin/chat-workspace", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ action: "ai-auto", enabled: next }),
+    });
+    const data = (await res.json().catch(() => null)) as {
+      ok?: boolean;
+      aiAuto?: boolean;
+      aiReady?: boolean;
+      error?: string;
+    } | null;
+    if (!data?.ok) {
+      setAiAuto(!next);
+      setError(data?.error || "AI holati saqlanmadi.");
+      return;
+    }
+    setAiAuto(Boolean(data.aiAuto));
+    if (typeof data.aiReady === "boolean") setAiReady(data.aiReady);
+    void loadList();
+    if (next && active) {
+      await aiReply();
+      return;
+    }
+    if (active) void loadThread(active);
+  }
+
+  async function endChat(categoryId: number) {
+    if (!closingId || busy) return;
+    const targetId = closingId;
+    setBusy(true);
+    setCloseError("");
+    try {
+      const res = await chatFetch("/api/admin/chat-workspace", {
+        method: "POST", credentials: "same-origin",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ action: "close", sessionId: targetId, categoryId }),
+      });
+      const data = await res.json() as { ok?: boolean; session?: Thread; error?: string };
+      if (!res.ok || !data.ok) {
+        setCloseError(data.error === "closed" ? "Suhbat allaqachon yakunlangan." : data.error || "Suhbat yopilmadi.");
+        return;
+      }
+      if (data.session && activeRef.current === targetId) { ++threadRequest.current; setThread(data.session); setText(""); }
+      setClosingId("");
+      void loadList();
+      window.dispatchEvent(new Event("chat-closed"));
+    } catch { setCloseError("Tarmoq bilan aloqa yo‘q. Qayta urinib ko‘ring."); }
+    finally { setBusy(false); }
   }
 
   function insertTemplate(body: string) {
@@ -303,21 +421,24 @@ export function AdminChatInbox({
       : null;
   const emptyCopy =
     query
-      ? "Qidiruv bo‘yicha suhbat topilmadi."
+      ? copy.emptySearch
       : folder === "new"
-        ? "Yangi savol yo‘q — hammasi javoblangan."
+        ? copy.emptyNew
         : folder === "replied"
-          ? "Hali javob yozilgan suhbat yo‘q."
-          : "Hali mijoz savoli yo‘q. Katalogdagi Dmed orqali yozilganda shu yerda chiqadi.";
+          ? copy.emptyReplied
+          : copy.emptyAll;
 
   const folderTabs = [
-    { id: "all" as const, label: "Hammasi", count: folders.all },
-    { id: "new" as const, label: "Yangi", count: folders.new },
-    { id: "replied" as const, label: "Javoblangan", count: folders.replied },
+    { id: "all" as const, label: copy.all, count: folders.all },
+    { id: "new" as const, label: copy.fresh, count: folders.new },
+    { id: "replied" as const, label: copy.replied, count: folders.replied },
   ];
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)]">
+    <div
+      className="grid gap-4 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)]"
+      data-staff-chat={staffOnly ? "desk" : undefined}
+    >
       <aside
         data-admin-chat="inbox"
         className={cn(
@@ -326,13 +447,49 @@ export function AdminChatInbox({
         )}
       >
         <div className="space-y-3 border-b border-[#e7eef8] p-3">
+          {staffOnly ? null : (
+          <>
+          <button
+            type="button"
+            data-admin-chat="ai-auto"
+            onClick={() => void toggleAi()}
+            className={cn(
+              "flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-sm font-medium",
+              aiAuto
+                ? "bg-[#e8f4ff] text-[#0b4fa8]"
+                : "bg-[#f3f4f6] text-[#5a5248]",
+            )}
+          >
+            <span className="inline-flex items-center gap-2">
+              <Power className="size-4" />
+              <UiText>{copy.aiToggle}</UiText>
+            </span>
+            <span
+              className={cn(
+                "rounded-full px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide",
+                aiAuto ? "bg-[#1a6fd4] text-white" : "bg-white text-[#7a7166]",
+              )}
+            >
+              <UiText>{aiAuto ? copy.onShort : copy.offShort}</UiText>
+            </span>
+          </button>
+          <p className="text-[11px] leading-relaxed text-[#7a7166]">
+            <UiText>{aiAuto
+              ? copy.aiOn
+              : copy.aiOff}</UiText>
+            <UiText>{!aiReady
+              ? copy.aiMissing
+              : ""}</UiText>
+          </p>
+          </>
+          )}
           <form onSubmit={(event) => event.preventDefault()}>
             <div className="relative">
               <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-[#5b7aa8]" />
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Ism, telefon yoki xabar…"
+                placeholder={copy.searchChats}
                 className="h-10 rounded-xl border-[#cfe0f5] bg-[#f4f8ff] pl-9 text-[#051530]"
                 aria-label="Suhbatlarni qidirish"
               />
@@ -362,7 +519,7 @@ export function AdminChatInbox({
                   )}
                 >
                   <span className="block text-[11px] font-semibold leading-none">
-                    {tab.label}
+                    <UiText>{tab.label}</UiText>
                   </span>
                   <span
                     data-inbox-count={tab.id}
@@ -381,18 +538,16 @@ export function AdminChatInbox({
         </div>
         <div className="min-h-0 flex-1 space-y-1 overflow-y-auto p-2">
           {loadingList ? (
-            <p className="p-3 text-sm font-medium text-[#1c3358]">Suhbatlar yuklanmoqda…</p>
+            <p className="p-3 text-sm font-medium text-[#1c3358]"><UiText>{"Suhbatlar yuklanmoqda…"}</UiText></p>
           ) : listError ? (
             <div className="space-y-2 p-3">
               <p className="text-sm text-[#b42318]" role="alert">
-                {listError}
+                <UiText>{listError}</UiText>
               </p>
-              <Button type="button" size="sm" variant="outline" onClick={() => loadList()}>
-                Qayta urinish
-              </Button>
+              <Button type="button" size="sm" variant="outline" onClick={() => loadList()}><UiText>{" Qayta urinish "}</UiText></Button>
             </div>
           ) : sessions.length === 0 ? (
-            <p className="p-3 text-sm font-medium text-[#1c3358]">{emptyCopy}</p>
+            <p className="p-3 text-sm font-medium text-[#1c3358]"><UiText>{emptyCopy}</UiText></p>
           ) : (
             sessions.map((row) => {
               const selected = active === row.id;
@@ -404,6 +559,7 @@ export function AdminChatInbox({
                 data-unread={row.unread ? "1" : "0"}
                 data-folder-item={row.unread ? "new" : "replied"}
                 onClick={() => openSession(row.id)}
+                disabled={busy || aiBusy}
                 className={cn(
                   "flex w-full items-start gap-2.5 rounded-2xl px-2.5 py-2.5 text-left text-sm transition",
                   selected
@@ -423,7 +579,7 @@ export function AdminChatInbox({
                         : "bg-[#d9e7f8] text-[#0b4fa8]",
                   )}
                 >
-                  {initial}
+                  <UiText>{initial}</UiText>
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="flex items-center justify-between gap-2">
@@ -434,7 +590,7 @@ export function AdminChatInbox({
                         selected ? "text-white/80" : "text-[#3d5f8a]",
                       )}
                     >
-                      {formatWhen(row.lastAt)}
+                      <UiText>{formatWhen(row.lastAt)}</UiText>
                     </span>
                   </span>
                   <span className="mt-0.5 flex items-center gap-2">
@@ -455,7 +611,7 @@ export function AdminChatInbox({
                             : "bg-[#e8eef6] text-[#1a3a66]",
                         )}
                       >
-                        {starLabel(row.rating) || "Yopilgan"}
+                        <UiText>{starLabel(row.rating) || "Yopilgan"}</UiText>
                       </span>
                     ) : null}
                     {row.unread ? (
@@ -470,15 +626,14 @@ export function AdminChatInbox({
                       </span>
                     ) : null}
                   </span>
-                  {row.ip ? (
+                  {row.ip && !staffOnly ? (
                     <span
                       data-inbox-ip={row.ip}
                       className={cn(
                         "mt-0.5 block truncate font-mono text-[11px] font-semibold",
                         selected ? "text-white/90" : "text-[#0b4fa8]",
                       )}
-                    >
-                      IP {row.ip}
+                    ><UiText>{" IP "}</UiText><UiText>{row.ip}</UiText>
                     </span>
                   ) : null}
                 </span>
@@ -512,19 +667,30 @@ export function AdminChatInbox({
                 <p className="truncate text-xs font-medium text-[#1c3358]">
                   {open.phone}
                   {open.email ? ` · ${open.email}` : ""}
-                  {open.language ? ` · ${open.language === "ru" ? "Русский" : "O‘zbekcha"}` : ""}
-                  {open.status === "closed"
+                  <UiText>{open.language
+                    ? ` · ${
+                        open.language === "ru"
+                          ? "Русский"
+                          : open.language === "en"
+                            ? "English"
+                            : "O‘zbekcha"
+                      }`
+                    : ""}</UiText>
+                  <UiText>{staffOnly ? null : open.page ? ` · ${open.page}` : ""}</UiText>
+                  <UiText>{open.status === "closed"
                     ? starLabel(open.rating)
                       ? ` · Yopilgan · ${starLabel(open.rating)}`
                       : " · Yopilgan"
-                    : ""}
+                    : ""}</UiText>
                 </p>
+                {staffOnly ? null : (
                 <p
                   className="mt-0.5 font-mono text-xs font-semibold tracking-wide text-[#0b4fa8]"
                   data-visitor-ip={open.ip || ""}
                 >
-                  {open.ip ? `IP ${open.ip}` : "IP —"}
+                  <UiText>{open.ip ? `IP ${open.ip}` : "IP —"}</UiText>
                 </p>
+                )}
               </div>
               {open.status !== "closed" ? (
                 <Button
@@ -533,12 +699,12 @@ export function AdminChatInbox({
                   size="sm"
                   data-admin-chat="close"
                   disabled={busy}
-                  onClick={() => void endChat()}
+                  onClick={() => { setCloseError(""); setClosingId(active); }}
                   className="shrink-0 rounded-full border-[#f3c4c0] text-[#b42318] hover:bg-[#fff1f0]"
                 >
                   <CircleStop className="size-3.5" />
-                  <span className="hidden sm:inline">Suhbatni yakunlash</span>
-                  <span className="sm:hidden">Yakunlash</span>
+                  <span className="hidden sm:inline"><UiText>{"Suhbatni yakunlash"}</UiText></span>
+                  <span className="sm:hidden"><UiText>{"Yakunlash"}</UiText></span>
                 </Button>
               ) : null}
             </header>
@@ -560,17 +726,23 @@ export function AdminChatInbox({
                         : "mt-1 text-[10px] text-white/75"
                     }
                   >
-                    {msg.role === "visitor" ? "Mijoz" : "Siz"} · {formatClock(msg.createdAt)}
+                    <UiText>{msg.role === "visitor" ? copy.visitor : copy.you}</UiText> · <UiText>{formatClock(msg.createdAt)}</UiText>
                   </p>
                 </div>
               ))}
+              {aiBusy ? (
+                <div className="ml-8 rounded-2xl rounded-br-md bg-[#1a6fd4]/80 px-3 py-2 text-sm text-white">
+                  <UiText>{copy.loading}</UiText>
+                </div>
+              ) : null}
             </div>
             {open.status === "closed" ? (
               <p className="border-t border-[#eee] px-4 py-3 text-sm text-[#7a7166]">
-                Suhbat yakunlandi. Yangi javob yozib bo‘lmaydi.
-                {starLabel(open.rating)
+                <UiText>{copy.closedLead}</UiText>
+                <UiText>{open.inquiryCategoryTitle ? ` Bo‘lim: ${open.inquiryCategoryTitle}.` : ""}</UiText>
+                <UiText>{starLabel(open.rating)
                   ? ` Baho: ${starLabel(open.rating)}.`
-                  : " Mijoz operatorni 1–5 ball bilan baholashi kutilmoqda."}
+                  : " Mijoz operatorni 1–5 ball bilan baholashi kutilmoqda."}</UiText>
               </p>
             ) : (
             <form className="border-t border-[#e7eef8] p-3" onSubmit={reply}>
@@ -581,7 +753,8 @@ export function AdminChatInbox({
                   open.language === "ru" ? templatePack.ru : templatePack.uz
                 }
                 onInsert={insertTemplate}
-                onTemplates={setTemplatePack}
+                onTemplates={staffOnly ? undefined : setTemplatePack}
+                manage={!staffOnly}
               />
               <div className="mt-2 flex items-end gap-2">
                 <Textarea
@@ -589,16 +762,36 @@ export function AdminChatInbox({
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                   onKeyDown={onReplyKey}
-                  placeholder="Javob yozing — Enter bilan yuboriladi"
+                  placeholder={copy.replyPh}
                   className="min-h-16 flex-1 resize-none rounded-xl border-[#cfe0f5] bg-[#f4f8ff] text-[#051530]"
                 />
                 <Button
                   type="submit"
-                  disabled={busy || !text.trim()}
+                  disabled={busy || aiBusy || !text.trim()}
                   className="h-11 rounded-full bg-[#1a6fd4] px-4 text-white hover:bg-[#155bb0]"
                 >
                   <Send className="size-4" />
-                  <span className="hidden sm:inline">Yuborish</span>
+                  <span className="hidden sm:inline"><UiText>{copy.send}</UiText></span>
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  disabled={busy || aiBusy || !aiReady}
+                  onClick={() => void aiDraft()}
+                  className="h-11 rounded-full border-[#9dbbe8] text-[#0b4fa8]"
+                >
+                  <Sparkles className="size-4" />
+                  <span className="hidden sm:inline"><UiText>{copy.aiDraft}</UiText></span>
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  disabled={busy || aiBusy || !aiReady}
+                  onClick={() => void aiReply()}
+                  className="h-11 rounded-full border-[#9dbbe8] text-[#0b4fa8]"
+                >
+                  <Sparkles className="size-4" />
+                  <span className="hidden lg:inline"><UiText>{copy.aiSend}</UiText></span>
                 </Button>
               </div>
               <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
@@ -608,11 +801,11 @@ export function AdminChatInbox({
                   size="sm"
                   data-admin-chat="close"
                   disabled={busy}
-                  onClick={() => void endChat()}
+                  onClick={() => { setCloseError(""); setClosingId(active); }}
                   className="h-8 rounded-full border-[#f3c4c0] text-[#b42318] hover:bg-[#fff1f0]"
                 >
                   <CircleStop className="size-3.5" />
-                  Suhbatni yakunlash
+                  <UiText>{copy.closeChat}</UiText>
                 </Button>
                 {error ? (
                   <p className="text-sm text-[#b42318]" role="alert">
@@ -620,7 +813,7 @@ export function AdminChatInbox({
                   </p>
                 ) : (
                   <p className="text-[11px] text-[#9a9186]">
-                    Yakunlagach mijoz operatorni 1–5 ball bilan baholaydi. Shift+Enter — yangi qator.
+                    <UiText>{copy.closeHint}</UiText>
                   </p>
                 )}
               </div>
@@ -628,14 +821,14 @@ export function AdminChatInbox({
             )}
           </>
         ) : loadingThread ? (
-          <p className="m-auto text-sm font-medium text-[#1c3358]">Suhbat ochilmoqda…</p>
+          <p className="m-auto text-sm font-medium text-[#1c3358]"><UiText>{copy.opening}</UiText></p>
         ) : (
           <p className="m-auto max-w-xs px-6 text-center text-sm font-medium text-[#1c3358]">
-            Chapdan suhbatni bosing. Javobni shablon bilan tez yozasiz —
-            hech narsa avtomatik ochilmaydi.
+            <UiText>{copy.pickThread}</UiText>
           </p>
         )}
       </section>
+      <CloseChatDialog key={closingId || "idle"} open={Boolean(closingId)} name={open?.name || ""} categories={categories} busy={busy} error={closeError} onOpenChange={value => { if (!value) setClosingId(""); }} onConfirm={endChat} />
     </div>
   );
 }

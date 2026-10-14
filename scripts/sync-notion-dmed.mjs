@@ -110,8 +110,11 @@ function roleIcon(name) {
 }
 
 function attachmentParts(source, fileIds, title) {
-  let fileId = (fileIds && fileIds[0]) || "";
-  if (!fileId && source.startsWith("attachment:")) fileId = source.split(":")[1];
+  let fileId = source.startsWith("attachment:") ? source.split(":")[1] : "";
+  if (!fileId && /^https?:\/\//i.test(source)) {
+    try { const folder = new URL(source).pathname.split("/").at(-2); if (/^[0-9a-f-]{36}$/i.test(folder || "")) fileId = folder; } catch {}
+  }
+  if (!fileId) fileId = (fileIds && fileIds[0]) || "";
   if (!fileId) {
     fileId =
       source.match(

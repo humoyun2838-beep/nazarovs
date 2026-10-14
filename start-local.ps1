@@ -8,5 +8,5 @@ if (-not (Test-Path (Join-Path $nodeDir "node.exe"))) {
 $env:Path = "$nodeDir;" + $env:Path
 if (-not (Test-Path ".env")) { Copy-Item ".env.example" ".env" }
 Write-Host "Sayt: http://127.0.0.1:3847/nazarov"
-Write-Host "Admin: http://127.0.0.1:3847/admin/login  (Nazarov / admin9915504)"
+Write-Host "Admin: http://127.0.0.1:3847/admin/login  (Nazarov / YOUR_PRIVATE_ADMIN_PASSWORD)"
 npm run start

@@ -10,8 +10,8 @@ type VideoMeta = {
 const META = videoMeta as Record<string, VideoMeta>;
 const signedCache = new Map<string, { url: string; exp: number }>();
 const CACHE_MS = 8 * 60 * 1000;
-
-export const dynamic = "force-dynamic";
+const signing = new Map<string,Promise<string>>();
+const failures=new Map<string,number>();
 
 function filenameCandidates(filename: string) {
   let decoded = filename;
@@ -49,6 +49,7 @@ async function signOnceAttempt(blockId: string, fileId: string, filename: string
       ],
     }),
     cache: "no-store",
+    signal: AbortSignal.timeout(8000),
   });
 
   if (!res.ok) {
@@ -57,15 +58,21 @@ async function signOnceAttempt(blockId: string, fileId: string, filename: string
   const data = (await res.json()) as { signedUrls?: string[] };
   const signed = data.signedUrls?.[0];
   if (!signed) throw new Error("empty signed url");
+  if (/\.(mp4|mov|webm)$/i.test(filename)) {
+    const check=await fetch(signed,{headers:{Range:"bytes=0-0"},cache:"no-store",signal:AbortSignal.timeout(8000)});
+    await check.body?.cancel();
+    if(check.status!==206&&check.status!==200)throw new Error(`file unavailable ${check.status}`);
+  }
   return signed;
 }
 
 async function signOnce(blockId: string, fileId: string, filename: string) {
   let lastError: unknown;
-  for (let attempt = 0; attempt < 3; attempt += 1) {
+  for (let attempt = 0; attempt < 2; attempt += 1) {
     try {
       return await signOnceAttempt(blockId, fileId, filename);
     } catch (error) {
+      if(error instanceof Error&&error.message.startsWith("file unavailable"))throw error;
       lastError = error;
       await new Promise((resolve) => setTimeout(resolve, 150 * (attempt + 1)));
     }
@@ -97,7 +104,7 @@ async function signNotionFile(
   for (const fid of fileIds) {
     for (const name of uniqueNames) {
       try {
-        const signed = await signOnce(blockId, fid, name);
+        const signed = await signOnce(known?.blockId || blockId, fid, name);
         signedCache.set(cacheKey, { url: signed, exp: Date.now() + CACHE_MS });
         return signed;
       } catch (e) {
@@ -110,9 +117,12 @@ async function signNotionFile(
 
 async function proxySigned(signed: string, req: NextRequest) {
   const range = req.headers.get("range") || undefined;
+  const image = !range && /\.(png|jpe?g|webp|gif|svg)$/i.test(req.nextUrl.searchParams.get("n") || "");
   const upstream = await fetch(signed, {
     headers: range ? { Range: range } : undefined,
-    cache: "no-store",
+    cache: image ? "force-cache" : "no-store",
+    ...(image ? { next: { revalidate: 86400 } } : {}),
+    signal: AbortSignal.timeout(20000),
   });
 
   if (!upstream.ok && upstream.status !== 206) {
@@ -125,7 +135,7 @@ async function proxySigned(signed: string, req: NextRequest) {
     upstream.headers.get("content-type") || "video/mp4",
   );
   headers.set("Accept-Ranges", "bytes");
-  headers.set("Cache-Control", "public, max-age=60");
+  headers.set("Cache-Control", image ? "public, max-age=86400, stale-while-revalidate=604800" : "public, max-age=60");
   const length = upstream.headers.get("content-length");
   const contentRange = upstream.headers.get("content-range");
   if (length) headers.set("Content-Length", length);
@@ -156,13 +166,18 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const signed = await signNotionFile(blockId, fileId, name);
+    const key=`${blockId}:${fileId}:${name}`;
+    if((failures.get(key)||0)>Date.now())return NextResponse.json({error:"Source file unavailable"},{status:502,headers:{"Cache-Control":"no-store"}});
+    let pending=signing.get(key);
+    if(!pending){pending=signNotionFile(blockId,fileId,name);signing.set(key,pending);void pending.finally(()=>signing.delete(key)).catch(()=>{});}
+    let signed:string;
+    try {signed=await pending;}catch(error){failures.set(key,Date.now()+60000);throw error;}
     if (fmt === "json") {
       return NextResponse.json(
         { url: signed },
         {
           headers: {
-            "Cache-Control": "public, max-age=90, s-maxage=90",
+            "Cache-Control": "no-store",
           },
         },
       );

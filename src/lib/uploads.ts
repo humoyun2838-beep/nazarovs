@@ -64,9 +64,9 @@ export function removeUploadedMedia(url: string | null | undefined) {
 }
 
 export function mediaUrlsFromContent(content: string) {
-  return [...(content || "").matchAll(/VIDEO::(\/media\/[A-Za-z0-9._-]+)/g)].map(
-    (m) => m[1],
-  );
+  return [
+    ...(content || "").matchAll(/(?:VIDEO|IMAGE)::(\/media\/[A-Za-z0-9._-]+)/g),
+  ].map((m) => m[1]);
 }
 
 export async function saveUploadedVideo(file: File | null) {

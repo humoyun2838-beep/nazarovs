@@ -1,3 +1,4 @@
+import { createElement } from "react";
 import { getIcon, getIconTone } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
@@ -17,25 +18,25 @@ export function TopicIcon({
       <span
         aria-hidden
         className={cn(
-          "relative shrink-0 overflow-hidden rounded-[14px] bg-white shadow-[0_8px_18px_-10px_rgba(15,40,80,0.45)] ring-1 ring-black/5",
-          large ? "size-16 rounded-2xl" : "size-12",
+          "relative flex shrink-0 items-center justify-center overflow-hidden bg-white shadow-[0_12px_28px_-14px_rgba(15,40,80,0.5)] ring-1 ring-[#d5e4f6]",
+          large ? "size-16 rounded-[22px]" : "size-14 rounded-[18px]",
         )}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={image}
           alt=""
-          width={large ? 64 : 48}
-          height={large ? 64 : 48}
+          width={large ? 64 : 56}
+          height={large ? 64 : 56}
           decoding="async"
-          loading="lazy"
-          className="h-full w-full object-contain p-0.5"
+          loading={large ? "eager" : "lazy"}
+          fetchPriority={large ? "high" : "low"}
+          className="h-full w-full object-cover"
         />
       </span>
     );
   }
 
-  const Icon = getIcon(name);
   const tone = getIconTone(name);
 
   return (
@@ -51,11 +52,11 @@ export function TopicIcon({
         boxShadow: `0 8px 18px -8px ${tone.glow}, inset 0 0 0 2px ${tone.ring}`,
       }}
     >
-      <Icon
-        className={large ? "size-7" : "size-6"}
-        strokeWidth={2.45}
-        absoluteStrokeWidth
-      />
+      {createElement(getIcon(name), {
+        className: large ? "size-7" : "size-6",
+        strokeWidth: 2.45,
+        absoluteStrokeWidth: true,
+      })}
     </span>
   );
 }

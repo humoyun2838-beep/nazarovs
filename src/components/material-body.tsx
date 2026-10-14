@@ -1,12 +1,19 @@
 "use client";
+import { UiText } from "@/components/ui-locale";
+
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { localizeLessonText } from "@/lib/lesson-locale";
+import { publicCopy } from "@/lib/public-copy";
+import { withLang, type Locale } from "@/lib/locale";
+import { uiCopy } from "@/lib/ui-copy";
 
 type Block =
   | { type: "text"; value: string }
   | { type: "heading"; level: 1 | 2 | 3; value: string }
   | { type: "internal"; href: string; label: string }
+  | { type: "external"; href: string; label: string }
   | { type: "video"; src: string }
   | { type: "image"; src: string };
 
@@ -45,6 +52,40 @@ function isImageUrl(href: string) {
   );
 }
 
+function hiResUrl(src: string) {
+  try {
+    const absolute = src.startsWith("http")
+      ? new URL(src)
+      : new URL(src, "http://127.0.0.1");
+    if (absolute.searchParams.has("width")) {
+      absolute.searchParams.set("width", "2400");
+    }
+    if (absolute.searchParams.has("w")) {
+      absolute.searchParams.set("w", "2400");
+    }
+    if (absolute.searchParams.has("q")) {
+      absolute.searchParams.set("q", "95");
+    }
+    if (absolute.searchParams.has("u")) {
+      const inner = absolute.searchParams.get("u") || "";
+      try {
+        const nested = new URL(inner);
+        if (nested.searchParams.has("width")) nested.searchParams.set("width", "2400");
+        if (nested.searchParams.has("w")) nested.searchParams.set("w", "2400");
+        if (nested.searchParams.has("q")) nested.searchParams.set("q", "95");
+        nested.searchParams.delete("blur");
+        absolute.searchParams.set("u", nested.toString());
+      } catch {
+        /* keep original */
+      }
+    }
+    absolute.searchParams.delete("blur");
+    if (src.startsWith("http")) return absolute.toString();
+    return `${absolute.pathname}${absolute.search}`;
+  } catch {
+    return src;
+  }
+}
 function encodeFileName(name: string) {
   try {
     return encodeURIComponent(decodeURIComponent(name));
@@ -61,8 +102,12 @@ function toPlayableSrc(raw: string, { proxy = false } = {}) {
     src.startsWith("blob:")
   ) {
     if (proxy && src.startsWith("/api/media") && !src.includes("proxy=")) {
-      return `${src}${src.includes("?") ? "&" : "?"}proxy=1`;
+      return hiResUrl(`${src}${src.includes("?") ? "&" : "?"}proxy=1`);
     }
+    return hiResUrl(src);
+  }
+
+  if (src.startsWith("/stickers/") || src.startsWith("/ai-") || src.startsWith("/nazarov-")) {
     return src;
   }
 
@@ -75,8 +120,8 @@ function toPlayableSrc(raw: string, { proxy = false } = {}) {
     return proxy ? `${path}&proxy=1` : path;
   }
 
-  const wrapped = `/api/media?u=${encodeURIComponent(src)}`;
-  return proxy ? `${wrapped}&proxy=1` : wrapped;
+    const wrapped = `/api/media?u=${encodeURIComponent(src)}`;
+  return proxy ? hiResUrl(`${wrapped}&proxy=1`) : hiResUrl(wrapped);
 }
 
 function cleanContent(content: string) {
@@ -94,6 +139,9 @@ function cleanContent(content: string) {
     .replace(/^\[Learn more\]\([^)]+\)\s*$/gim, "")
     .replace(/^Manba:\s*https?:\/\/\S+\s*$/gim, "")
     .replace(/^Video dars:\s*$/gim, "")
+    .replace(/^\s*image\.png\s*$/gim, "")
+    .replace(/^\s*\S+\.(?:png|jpe?g|webp|gif)\s*$/gim, "")
+    .replace(/\u00a0/g, " ")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 }
@@ -157,6 +205,15 @@ function parseContent(
       continue;
     }
 
+    const fileMarker = trimmed.match(/^FILE::(.+)$/);
+    if (fileMarker) {
+      const raw = fileMarker[1];
+      let label = raw.split("|").at(-1) || "Fayl / Файл";
+      try { label = decodeURIComponent(label); } catch { /* keep file name */ }
+      blocks.push({ type: "external", href: toPlayableSrc(raw), label });
+      continue;
+    }
+
     const mdImage = trimmed.match(/^!\[([^\]]*)\]\((https?:\/\/[^)]+|\/[^)]+)\)$/);
     if (mdImage) {
       pushImage(mdImage[2]);
@@ -187,6 +244,8 @@ function parseContent(
           blocks.push({ type: "internal", href: internal, label });
         } else if (href.startsWith("/")) {
           blocks.push({ type: "internal", href, label });
+        } else if (/^https?:\/\//i.test(href) && !/notion\.(site|so)/i.test(href)) {
+          blocks.push({ type: "external", href, label });
         } else {
           // Drop external Notion / unknown links — keep label as text
           blocks.push({ type: "text", value: `${label}\n` });
@@ -199,7 +258,7 @@ function parseContent(
     const urlRe = /(https?:\/\/[^\s)]+)/g;
     let match: RegExpExecArray | null;
     let foundUrl = false;
-    let lineBlocks: Block[] = [];
+    const lineBlocks: Block[] = [];
     while ((match = urlRe.exec(trimmed)) !== null) {
       foundUrl = true;
       if (match.index > last) {
@@ -216,8 +275,10 @@ function parseContent(
           lineBlocks.push({
             type: "internal",
             href: internal,
-            label: "Darsga o‘tish",
+            label: "go-lesson",
           });
+        } else if (!/notion\.(site|so)/i.test(href)) {
+          lineBlocks.push({ type: "external", href, label: href });
         }
       }
       last = match.index + href.length;
@@ -233,7 +294,7 @@ function parseContent(
         .replace(/^(URL Source:|Published Time:|Markdown Content:)\s*/i, "")
         .trim();
       for (const b of lineBlocks) {
-        if (b.type === "internal") blocks.push(b);
+        if (b.type === "internal" || b.type === "external") blocks.push(b);
       }
       if (leftover && !/^(URL Source|Published Time|Markdown Content)/i.test(leftover)) {
         blocks.push({ type: "text", value: `${leftover}\n` });
@@ -252,12 +313,27 @@ function parseContent(
   return blocks;
 }
 
-function VideoPlayer({ src }: { src: string }) {
+function VideoPlayer({ src, t }: { src: string; t: ReturnType<typeof publicCopy> }) {
+  const container = useRef<HTMLDivElement>(null);
+  const [nearViewport, setNearViewport] = useState(false);
   const [playUrl, setPlayUrl] = useState<string | null>(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!container.current || !("IntersectionObserver" in window)) {
+      setNearViewport(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setNearViewport(true); observer.disconnect(); }
+    }, { rootMargin: "500px" });
+    observer.observe(container.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!nearViewport) return;
     let cancelled = false;
 
     async function resolve() {
@@ -269,7 +345,8 @@ function VideoPlayer({ src }: { src: string }) {
           const endpoint = new URL(src, window.location.origin);
           endpoint.searchParams.set("fmt", "json");
           const res = await fetch(endpoint.pathname + endpoint.search, {
-            cache: "force-cache",
+            cache: "no-store",
+            signal: AbortSignal.timeout(20000),
           });
           if (!res.ok) throw new Error(`sign ${res.status}`);
           const data = (await res.json()) as { url?: string };
@@ -290,10 +367,10 @@ function VideoPlayer({ src }: { src: string }) {
     return () => {
       cancelled = true;
     };
-  }, [src]);
+  }, [src, nearViewport]);
 
   const retryViaProxy = () => {
-    if (src.startsWith("/api/media/notion")) {
+    if (src.startsWith("/api/media")) {
       const endpoint = new URL(src, window.location.origin);
       endpoint.searchParams.set("proxy", "1");
       setError(false);
@@ -305,23 +382,26 @@ function VideoPlayer({ src }: { src: string }) {
   };
 
   return (
-    <div className="relative overflow-hidden rounded-xl bg-[#0b0b0b]">
+    <div ref={container} className="relative overflow-hidden rounded-xl bg-[#0b0b0b]">
       {error ? (
         <div className="flex aspect-video flex-col items-center justify-center gap-3 px-4 text-center text-sm text-white/80">
-          <p>Video yuklanmadi. Qayta urinish mumkin.</p>
+          <p><UiText>{t.videoFail}</UiText></p>
+          <a href="#lesson-text" className="text-sm font-semibold text-white underline">
+            <UiText>{t.guide}</UiText>
+          </a>
           <button
             type="button"
             onClick={retryViaProxy}
             className="rounded-lg bg-white/15 px-3 py-1.5 text-white transition hover:bg-white/25"
           >
-            Qayta yuklash
+            <UiText>{t.videoReload}</UiText>
           </button>
         </div>
       ) : (
         <>
           {loading && !playUrl ? (
             <div className="flex aspect-video items-center justify-center text-sm text-white/70">
-              Video ochilmoqda…
+              <UiText>{t.videoOpening}</UiText>
             </div>
           ) : null}
           {playUrl ? (
@@ -329,18 +409,18 @@ function VideoPlayer({ src }: { src: string }) {
               key={playUrl}
               controls
               playsInline
-              preload="none"
-              className="aspect-video w-full bg-black"
+              preload="metadata"
+              className="lesson-video aspect-video w-full bg-black"
               src={playUrl}
               onError={() => {
-                if (playUrl.startsWith("http") && src.startsWith("/api/media/notion")) {
+                if (playUrl.startsWith("http") && src.startsWith("/api/media")) {
                   retryViaProxy();
                   return;
                 }
                 setError(true);
               }}
             >
-              Brauzeringiz video formatini qo‘llab-quvvatlamaydi.
+              <UiText>{t.videoUnsupported}</UiText>
             </video>
           ) : null}
         </>
@@ -349,15 +429,49 @@ function VideoPlayer({ src }: { src: string }) {
   );
 }
 
-function ContentImage({ src }: { src: string }) {
+function ContentImage({ src, alt }: { src: string; alt: string }) {
+  const [open, setOpen] = useState(false);
+  const [broken, setBroken] = useState(false);
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={src}
-      alt=""
-      loading="lazy"
-      className="my-3 w-full rounded-xl border border-black/10 bg-white object-contain shadow-sm"
-    />
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="my-4 block w-full cursor-zoom-in rounded-xl text-left"
+      >
+        {broken ? (
+          <span className="block rounded-xl bg-[#f4f8ff] px-4 py-6 text-sm font-medium text-[#163056]">
+            <UiText>{alt}</UiText>
+          </span>
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={src}
+            alt={alt}
+            loading="lazy"
+            decoding="async"
+            className="lesson-shot"
+            onError={() => setBroken(true)}
+          />
+        )}
+        <span className="mt-2 block text-sm font-medium text-[#163056]"><UiText>{alt}</UiText></span>
+      </button>
+      {open ? (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-[#041018]/88 p-3 sm:p-8"
+          onClick={() => setOpen(false)}
+          role="dialog"
+          aria-modal="true"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={src}
+            alt={alt}
+            className="max-h-full max-w-full rounded-lg object-contain shadow-2xl"
+          />
+        </div>
+      ) : null}
+    </>
   );
 }
 
@@ -365,11 +479,17 @@ export function MaterialBody({
   content,
   title,
   linkMap = {},
+  locale = "uz",
+  localized = false,
 }: {
   content: string;
   title: string;
   linkMap?: Record<string, string>;
+  locale?: Locale;
+  localized?: boolean;
 }) {
+  const t = publicCopy(locale);
+  const shotAlt = uiCopy(locale).screenshot;
   const blocks = useMemo(
     () => parseContent(content || "", linkMap),
     [content, linkMap],
@@ -382,32 +502,32 @@ export function MaterialBody({
   return (
     <div className="space-y-6">
       {videos.length > 0 ? (
-        <section className="space-y-3 rounded-2xl border border-[#d7e4fb] bg-white/95 p-3 shadow-sm sm:p-4">
-          <h2 className="px-1 font-heading text-lg font-semibold">Video dars</h2>
+        <section className="catalog-panel space-y-3 rounded-[1.5rem] p-3 sm:p-4">
+          <h2 className="px-1 font-heading text-lg font-semibold"><UiText>{t.videoLesson}</UiText></h2>
           {videos.map((block, index) => (
-            <VideoPlayer key={`${block.src}-${index}`} src={block.src} />
+            <VideoPlayer key={`${block.src}-${index}`} src={block.src} t={t} />
           ))}
         </section>
       ) : null}
 
-      <section className="prose-material rounded-2xl border border-[#d7e4fb] bg-white/95 p-5 text-[15px] leading-7 shadow-sm sm:p-7">
-        <h2 className="mb-4 font-heading text-lg font-semibold">{title}</h2>
+        <section id="lesson-text" className="prose-material catalog-panel rounded-[1.6rem] p-5 text-[16px] leading-7 sm:p-8">
+        <h2 className="mb-4 font-heading text-lg font-semibold"><UiText>{title}</UiText></h2>
         {rest.length === 0 && videos.length === 0 ? (
-          <p>Mazmun hali yozilmagan.</p>
+          <p><UiText>{t.emptyBody}</UiText></p>
         ) : !rest.some(
             (b) =>
               b.type === "image" ||
               b.type === "heading" ||
-              b.type === "internal" ||
+              b.type === "internal" || b.type === "external" ||
               (b.type === "text" && b.value.trim()),
           ) && videos.length > 0 ? (
-          <p className="text-[#7a7166]">Video yuqorida. Qo‘shimcha matn yo‘q.</p>
+          <p className="text-[#7a7166]"><UiText>{t.extraNone}</UiText></p>
         ) : (
           rest.map((block, index) => {
             if (block.type === "text") {
               return (
                 <span key={index} className="whitespace-pre-wrap">
-                  {block.value}
+                  {localized ? block.value : localizeLessonText(block.value, locale)}
                 </span>
               );
             }
@@ -420,21 +540,26 @@ export function MaterialBody({
                   key={index}
                   className="mt-4 mb-2 font-heading font-semibold text-[#1f1b16]"
                 >
-                  {block.value}
+                  {localized ? block.value : localizeLessonText(block.value, locale)}
                 </Tag>
               );
             }
             if (block.type === "image") {
-              return <ContentImage key={index} src={block.src} />;
+              return <ContentImage key={index} src={block.src} alt={shotAlt} />;
+            }
+            if (block.type === "external") {
+              return <a key={index} href={block.href} target="_blank" rel="noopener noreferrer" className="my-2 block rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 font-semibold text-blue-800">↗ <UiText>{block.label}</UiText></a>;
             }
             if (block.type === "internal") {
               return (
               <Link
                 key={index}
-                href={block.href}
+                href={withLang(block.href, locale)}
                 className="my-1 block rounded-lg bg-[#eef3fb] px-3 py-2 text-[#2f6fed] no-underline transition hover:bg-[#dce8fb]"
               >
-                {block.label}
+                <UiText>{block.label === "go-lesson"
+                  ? t.goToLesson
+                  : localized ? block.label : localizeLessonText(block.label, locale)}</UiText>
               </Link>
               );
             }

@@ -1,4 +1,6 @@
 "use client";
+import { UiText } from "@/components/ui-locale";
+
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -66,18 +68,14 @@ export function TelegramConnect() {
       <div id="callmebot-login" className="min-h-12" />
       <div className="flex flex-col gap-2 sm:flex-row">
         <Button asChild className="h-12 rounded-full bg-[#1a6fd4] text-white hover:bg-[#155bb0]">
-          <a href="https://t.me/CallMeBot_txtbot" target="_blank" rel="noreferrer">
-            1) CallMeBot’ni ochish
-          </a>
+          <a href="https://t.me/CallMeBot_txtbot" target="_blank" rel="noreferrer"><UiText>{" 1) CallMeBot’ni ochish "}</UiText></a>
         </Button>
         <Button asChild variant="outline" className="h-12 rounded-full">
           <a
             href="https://api2.callmebot.com/txt/login.php"
             target="_blank"
             rel="noreferrer"
-          >
-            2) Telegram Login
-          </a>
+          ><UiText>{" 2) Telegram Login "}</UiText></a>
         </Button>
       </div>
       <p
@@ -88,7 +86,7 @@ export function TelegramConnect() {
         }
         role="status"
       >
-        {status}
+        <UiText>{status}</UiText>
       </p>
     </div>
   );

@@ -13,15 +13,8 @@ export function getSetting(key: string) {
 }
 
 export function setSetting(key: string, value: string) {
-  const current = getSetting(key);
-  if (current) {
-    db.update(appSettings)
-      .set({ value })
-      .where(eq(appSettings.key, key))
-      .run();
-    return;
-  }
   db.insert(appSettings)
     .values({ key, value })
+    .onConflictDoUpdate({ target: appSettings.key, set: { value } })
     .run();
 }

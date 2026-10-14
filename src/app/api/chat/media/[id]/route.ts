@@ -1,6 +1,8 @@
 import { readFile } from "node:fs/promises";
 import { NextResponse, type NextRequest } from "next/server";
 import { getChatMessage, readChatSessionId, CHAT_COOKIE } from "@/lib/chat";
+import { operatorAccess } from "@/lib/operators";
+import { OPERATOR_COOKIE } from "@/lib/operator-cookie";
 import { COOKIE_NAME, verifySessionToken } from "@/lib/session";
 import { safeContentType, safeMediaAbsPath } from "@/lib/chat-media";
 
@@ -21,11 +23,18 @@ export async function GET(
   const visitorSid = await readChatSessionId(
     request.cookies.get(CHAT_COOKIE)?.value,
   );
-  const admin = await verifySessionToken(
+  const staff = await verifySessionToken(
     request.cookies.get(COOKIE_NAME)?.value || "",
   );
+  const operator = await verifySessionToken(
+    request.cookies.get(OPERATOR_COOKIE)?.value || "",
+  );
   const allowed =
-    visitorSid === row.sessionId || admin?.role === "admin";
+    visitorSid === row.sessionId ||
+    staff?.role === "admin" ||
+    staff?.role === "client" ||
+    (operator?.role === "operator" && operatorAccess(Number(operator.sub)) === "active") ||
+    (staff?.role === "operator" && operatorAccess(Number(staff.sub)) === "active");
   if (!allowed) {
     return NextResponse.json({ ok: false, error: "auth" }, { status: 401 });
   }

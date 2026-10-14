@@ -1,11 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
 import Database from "better-sqlite3";
+import { dataDir } from "@/lib/data-dir";
 
 let sqlite: Database.Database | null = null;
 
 function openReadonly() {
-  const dbPath = path.join(process.cwd(), "data", "nazarov.db");
+  const dbPath = path.join(dataDir(), "nazarov.db");
   if (!fs.existsSync(dbPath)) return null;
   if (sqlite) return sqlite;
   sqlite = new Database(dbPath, { readonly: true, fileMustExist: true });

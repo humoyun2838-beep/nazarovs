@@ -1,0 +1,1587 @@
+{
+  "eng-kop-beriladigan-savollarga-qisqa-javoblar": {
+    "uz": "Top 20 ta savol",
+    "ru": "Топ-20 вопросов",
+    "en": "Top 20 questions"
+  },
+  "tizimga-kirish": {
+    "uz": "Tizimga kirish",
+    "ru": "Вход в систему",
+    "en": "Sign in to the system"
+  },
+  "royxatga-oluvchi": {
+    "uz": "Ro‘yxatga oluvchi",
+    "ru": "Регистратор",
+    "en": "Registrar"
+  },
+  "amaliyotchi-hamshira": {
+    "uz": "Amaliyotchi hamshira",
+    "ru": "Практикующая медсестра",
+    "en": "Practice nurse"
+  },
+  "patronaj-hamshirasi": {
+    "uz": "Patronaj hamshirasi",
+    "ru": "Патронажная медсестра",
+    "en": "Patronage nurse"
+  },
+  "shifokor": {
+    "uz": "Shifokor",
+    "ru": "Врач",
+    "en": "Doctor"
+  },
+  "qabul-bolimining-navbatchi-shifokorhamshirasi": {
+    "uz": "Qabul bo‘limining navbatchi shifokor/Hamshirasi",
+    "ru": "Дежурный врач/Медсестра приемного покоя",
+    "en": "Duty doctor/nurse of the admission unit"
+  },
+  "shifoxonaning-davolovchi-shifokor": {
+    "uz": "Shifoxonaning davolovchi shifokor",
+    "ru": "Лечащий врач стационара",
+    "en": "Hospital attending doctor"
+  },
+  "shifoxona-tor-mutaxassis-korik-tartibi": {
+    "uz": "Shifoxona. Tor mutaxassis korik tartibi",
+    "ru": "Стационар. Осмотр узкого специалиста",
+    "en": "Hospital. Narrow specialist exam flow"
+  },
+  "laborant": {
+    "uz": "Laborant",
+    "ru": "Лаборант",
+    "en": "Lab technician"
+  },
+  "taqrizchi-qayta-korib-chiquvchi": {
+    "uz": "Taqrizchi (qayta ko'rib chiquvchi)",
+    "ru": "Рецензент электронных рецептов",
+    "en": "Reviewer"
+  },
+  "direktor": {
+    "uz": "Direktor",
+    "ru": "Директор",
+    "en": "Director"
+  },
+  "statist": {
+    "uz": "Statist",
+    "ru": "Статист",
+    "en": "Statistician"
+  },
+  "farmasevt": {
+    "uz": "Farmasevt",
+    "ru": "Фармацевт",
+    "en": "Pharmacist"
+  },
+  "ombor-mudiri": {
+    "uz": "Ombor mudiri",
+    "ru": "Старый склад (warehouse.dmed.uz)",
+    "en": "Warehouse manager"
+  },
+  "buxgalter": {
+    "uz": "Buxgalter",
+    "ru": "Бухгалтер",
+    "en": "Accountant"
+  },
+  "kassir": {
+    "uz": "Kassir",
+    "ru": "Кассир",
+    "en": "Cashier"
+  },
+  "bosh-hamshira": {
+    "uz": "Bosh hamshira",
+    "ru": "Старшая медсестра",
+    "en": "Head nurse"
+  },
+  "hamshira": {
+    "uz": "Hamshira",
+    "ru": "Медсестра",
+    "en": "Nurse"
+  },
+  "bemor": {
+    "uz": "Bemor",
+    "ru": "Пациент",
+    "en": "Patient"
+  },
+  "kpi-asosiy-samaradorlik-korsatkichlari": {
+    "uz": "KPI (Asosiy samaradorlik ko’rsatkichlari)",
+    "ru": "KPI (ключевые показатели эффективности)",
+    "en": "KPI (key performance indicators)"
+  },
+  "yangi-omborxona": {
+    "uz": "Yangi Omborxona",
+    "ru": "Новый склад (wh.dmed.uz)",
+    "en": "New warehouse"
+  },
+  "muxlisa-ilovasini-ornatish": {
+    "uz": "Muxlisa ilovasini o‘rnatish",
+    "ru": "Установка приложения Muxlisa",
+    "en": "Install the Muxlisa app"
+  },
+  "login-to-system-uz": {
+    "uz": "Tizimga kirish",
+    "ru": "Вход в систему",
+    "en": "Sign in to the system"
+  },
+  "bepul-yozilish-26860b77fb": {
+    "uz": "Bepul yozilish",
+    "ru": "Бесплатная запись",
+    "en": "Free booking"
+  },
+  "bemorning-antropometriya-malumotlarini-kiritish-va-shif-16860b77fb": {
+    "uz": "Bemorning antropometriya malumotlarini kiritish va shifokorga yuborish",
+    "ru": "Ввод антропометрии пациента и отправка врачу",
+    "en": "Enter patient anthropometry and send to the doctor"
+  },
+  "yurak-qon-tomir-kasalliklari-skriningi-maqsadida-patron-28b60b77fb": {
+    "uz": "\"Yurak-qon tomir kasalliklari skriningi\" maqsadida patronajni rejalashtirish va amalga oshirish"
+  },
+  "bemorni-qabulga-taklif-qilish-va-yangi-epizod-yaratish-16860b77fb": {
+    "uz": "Bemorni qabulga taklif qilish va yangi epizod yaratish",
+    "ru": "Вызов пациента на приём и создание нового эпизода",
+    "en": "Invite the patient and create a new episode"
+  },
+  "bemorni-joylashtirish-kasalxonaga-qabul-qilish-16860b77fb": {
+    "uz": "Bemorni joylashtirish. Kasalxonaga qabul qilish",
+    "ru": "Размещение пациента. Приём в больницу",
+    "en": "Place the patient. Admit to hospital"
+  },
+  "boshlangich-tekshiruvni-otkazish-16860b77fb": {
+    "uz": "Boshlangich tekshiruvni otkazish",
+    "ru": "Проведение первичного осмотра",
+    "en": "Perform the initial exam"
+  },
+  "tor-mutaxassis": {
+    "uz": "Shifoxona. Tor mutaxassis korik tartibi",
+    "ru": "Стационар. Порядок осмотра узкого специалиста",
+    "en": "Hospital. Narrow specialist exam flow"
+  },
+  "biomaterialni-olish-16860b77fb": {
+    "uz": "Biomaterialni olish",
+    "ru": "Забор биоматериала",
+    "en": "Take a biomaterial sample"
+  },
+  "taqrizchi-1": {
+    "uz": "Reimbursatsiya retseptini tasdiqlash/qayta ishlashga yuborish",
+    "ru": "Подтверждение рецепта возмещения / отправка на доработку",
+    "en": "Approve a reimbursement prescription / send for rework"
+  },
+  "akkaunt-yaratish-16860b77fb": {
+    "uz": "Akkaunt yaratish",
+    "ru": "Создание учётной записи",
+    "en": "Create an account"
+  },
+  "learning-materials-statist-ssv-reports-uzb": {
+    "uz": "SSV Hisobotlari"
+  },
+  "drug-release-mis-uz": {
+    "uz": "DMED EMIS orqali retsept bo‘yicha dori-vositasini berish"
+  },
+  "ombor-mudiri-2": {
+    "uz": "Ta’minotchilar va shartnomalarni qo‘shish"
+  },
+  "buxgalter-1": {
+    "uz": "\"Muolaja\" turidagi xizmatlarni sozlash"
+  },
+  "smenani-ochish-va-yopish-28d60b77fb": {
+    "uz": "Smenani ochish va yopish"
+  },
+  "bosh-hamshira-1": {
+    "uz": "Davolash kursini o‘tkazish",
+    "ru": "Проведение курса лечения",
+    "en": "Run a treatment course"
+  },
+  "muolaja-hamshirasi-1d760b77fb": {
+    "uz": "Muolaja hamshirasi",
+    "ru": "Процедурная медсестра",
+    "en": "Procedure nurse"
+  },
+  "dmed-mobil-ilovasi-30660b77fb": {
+    "uz": "DMED mobil ilovasi",
+    "ru": "Мобильное приложение DMED",
+    "en": "DMED mobile app"
+  },
+  "kpi-info-uz": {
+    "uz": "KPI moduli haqida umumiy ma’lumot",
+    "ru": "Общие сведения о модуле KPI",
+    "en": "Overview of the KPI module"
+  },
+  "ombor-mudiri-39060b77fb": {
+    "uz": "Ombor mudiri",
+    "ru": "Заведующий складом",
+    "en": "Warehouse manager"
+  },
+  "muxlisa-setup-uz": {
+    "uz": "Muxlisa ilovasini o‘rnatish",
+    "ru": "Установка приложения Muxlisa",
+    "en": "Install the Muxlisa app"
+  },
+  "faq-face-id-oneid": {
+    "uz": "Face-ID yoki OneID ishlamasa, nima qilaman?"
+  },
+  "bepul-belgilangan-vaqtga-yozilish-26860b77fb": {
+    "uz": "Bepul belgilangan vaqtga yozilish",
+    "ru": "Бесплатная запись на назначенное время",
+    "en": "Free booking for a set time"
+  },
+  "bemorlarning-oz-hududiga-biriktirilishi-16860b77fb": {
+    "uz": "Bemorlarning o'z hududiga biriktirilishi",
+    "ru": "Прикрепление пациентов к своему участку",
+    "en": "Attach patients to their catchment area"
+  },
+  "qandli-diabet-skriningi-maqsadida-patronajni-rejalashti-27e60b77fb": {
+    "uz": "\"Qandli diabet skriningi\" maqsadida patronajni rejalashtirish va amalga oshirish"
+  },
+  "bemorning-kasallik-tarihini-davom-ettirish-16860b77fb": {
+    "uz": "Bemorning kasallik tarihini davom ettirish",
+    "ru": "Продолжение истории болезни пациента",
+    "en": "Continue the patient’s medical history"
+  },
+  "yollanmasiz-bemorni-royxatga-olish-va-joylashtirish-16860b77fb": {
+    "uz": "Yo'llanmasiz bemorni ro'yxatga olish va joylashtirish",
+    "ru": "Регистрация и размещение пациента без направления",
+    "en": "Register and place a patient without a referral"
+  },
+  "003-tibbiy-xujjat-shaklini-yaratish-tahrirlash-va-chop--16860b77fb": {
+    "uz": "003-tibbiy xujjat shaklini yaratish/tahrirlash va chop etish",
+    "ru": "Создание/редактирование и печать формы 003",
+    "en": "Create/edit and print form 003"
+  },
+  "bemor-test-natijalarini-kiritish-16860b77fb": {
+    "uz": "Bemor test natijalarini kiritish",
+    "ru": "Ввод результатов тестов пациента",
+    "en": "Enter patient test results"
+  },
+  "hisobni-akkauntni-faolsizlantirish-3ac60b77fb": {
+    "uz": "Hisobni (akkauntni) faolsizlantirish",
+    "ru": "Отключение учётной записи",
+    "en": "Deactivate an account"
+  },
+  "farmasevt-2": {
+    "uz": "Dori-vositasini DMED Pro‘da berish"
+  },
+  "ombor-mudiri-3": {
+    "uz": "Mahsulotlar qo‘shish"
+  },
+  "buxgalter-2": {
+    "uz": "Ombordagi mahsulot narxini sozlash",
+    "ru": "Настройка цены товара на складе"
+  },
+  "hisoblar-bo-limi-funksionali-28d60b77fb": {
+    "uz": "\"Hisoblar\" bo‘limi funksionali"
+  },
+  "conducting-physiotherapybosh-hamshira-uz": {
+    "uz": "Fizioterapiya kursini o‘tkazish",
+    "ru": "Проведение курса физиотерапии",
+    "en": "Run a physiotherapy course"
+  },
+  "davolash-kursini-o-tkazish-1d760b77fb-2": {
+    "uz": "Davolash kursini o‘tkazish",
+    "ru": "Проведение курса лечения",
+    "en": "Run a treatment course"
+  },
+  "dmed-pacient-authorize-uz": {
+    "uz": "DMED ilovasida avtorizatsiya",
+    "ru": "Авторизация в приложении DMED",
+    "en": "Sign in to the DMED app"
+  },
+  "kpi-family-doc-uz": {
+    "uz": "Oila shifokori KPI",
+    "ru": "KPI семейного врача",
+    "en": "Family doctor KPI"
+  },
+  "malumotnomalar-mahsulotlar-b5860b77fb": {
+    "uz": "Ma’lumotnomalar/Mahsulotlar",
+    "ru": "Справочники/Товары"
+  },
+  "faq-ilova-xato": {
+    "uz": "Ilovani yangilagach kirmayapti. Nima qilaman?"
+  },
+  "bepul-jonli-navbatga-yozilish-26860b77fb": {
+    "uz": "Bepul jonli navbatga yozilish",
+    "ru": "Бесплатная запись в живую очередь",
+    "en": "Free live-queue booking"
+  },
+  "patient-assignment-dmed-pro-uz": {
+    "uz": "DMED Pro mobil ilovasi orqali bemorni oilaviy shifokorga biriktirish",
+    "ru": "Прикрепление пациента к семейному врачу через DMED Pro",
+    "en": "Attach a patient to a family doctor via DMED Pro"
+  },
+  "dmed-proda-onkogematologik-kasalliklarni-erta-aniqlash--26c60b77fb": {
+    "uz": "DMED PROda \"Onkogematologik kasalliklarni erta aniqlash skriningi\" maqsadida patronaj ko’rikni rejalashtirish",
+    "ru": "Планирование патронажа в DMED PRO для онкогематологического скрининга"
+  },
+  "qoshimcha-talon-16860b77fb": {
+    "uz": "Qo’shimcha talon",
+    "ru": "Дополнительный талон",
+    "en": "Extra ticket"
+  },
+  "shaxsi-nomalum-bemorni-ro-yxatga-olish-rasmiylashtirish-3ac60b77fb": {
+    "uz": "Shaxsi noma’lum bemorni ro‘yxatga olish (rasmiylashtirish)",
+    "ru": "Регистрация пациента без установленных данных",
+    "en": "Register an unidentified patient"
+  },
+  "kasalxonaga-yotkizish-bemorni-kochirish-16860b77fb": {
+    "uz": "Kasalxonaga yotkizish. Bemorni ko'chirish.",
+    "ru": "Госпитализация. Перевод пациента.",
+    "en": "Hospital admission. Transfer the patient."
+  },
+  "yangi-lis-1f160b77fb": {
+    "uz": "Yangi LIS",
+    "ru": "Новая ЛИС",
+    "en": "New LIS"
+  },
+  "kasalxonaga-yotqizish-holatini-tasdiqlash-16960b77fb": {
+    "uz": "Kasalxonaga yotqizish holatini tasdiqlash",
+    "ru": "Подтверждение госпитализации",
+    "en": "Confirm a hospital admission"
+  },
+  "ombor-mudiri-4": {
+    "uz": "Omborlar qo‘shish"
+  },
+  "imtiyozli-yollanma-orqali-yotqizish-uchun-nozologik-gur-27660b77fb": {
+    "uz": "Imtiyozli yo’llanma orqali yotqizish uchun nozologik guruhni yaratish va sozlash jarayoni"
+  },
+  "hisob-fakturalar-bilan-bogliq-operatsiyalar-28d60b77fb": {
+    "uz": "Hisob-fakturalar bilan bog’liq operatsiyalar",
+    "ru": "Операции, связанные со счетами-фактурами",
+    "en": "Invoice-related operations"
+  },
+  "fizioterapiya-hamshirasi-20060b77fb": {
+    "uz": "Fizioterapiya hamshirasi",
+    "ru": "Медсестра физиотерапии",
+    "en": "Physiotherapy nurse"
+  },
+  "bosh-sahifa-30660b77fb": {
+    "uz": "Bosh sahifa",
+    "ru": "Главная",
+    "en": "Home"
+  },
+  "kpi-family-nurse-uz": {
+    "uz": "Amaliyotchi hamshira KPI",
+    "ru": "KPI процедурной медсестры",
+    "en": "Practice nurse KPI"
+  },
+  "malumotnomalar-taminotchilar-9bb60b77fb": {
+    "uz": "Ma’lumotnomalar/Ta’minotchilar",
+    "ru": "Справочники/Поставщики"
+  },
+  "faq-chet-el-fuqarolari": {
+    "uz": "Chet el fuqarolari qanday ro‘yxatdan o‘tadi?"
+  },
+  "pulli-yozilish-26860b77fb": {
+    "uz": "Pulli yozilish",
+    "ru": "Платная запись",
+    "en": "Paid booking"
+  },
+  "patronaj-rejasini-tuzish-16860b77fb": {
+    "uz": "Patronaj rejasini tuzish",
+    "ru": "Составление плана патронажа",
+    "en": "Make a patronage plan"
+  },
+  "ko-krak-bezi-saratonini-erta-aniqlash-skriningini-o-tka-30b60b77fb": {
+    "uz": "Ko‘krak bezi saratonini erta aniqlash skriningini o‘tkazish",
+    "ru": "Проведение скрининга рака молочной железы"
+  },
+  "bemorni-analizga-yuborish-16860b77fb": {
+    "uz": "Bemorni analizga yuborish",
+    "ru": "Направление пациента на анализы",
+    "en": "Send the patient for tests"
+  },
+  "pregnancy-hospitalization-uz": {
+    "uz": "\"Tug‘ruq\" maqsadida rejali va shoshilinch kasalxonaga yotqizish",
+    "ru": "Плановая и экстренная госпитализация с целью родов",
+    "en": "Planned and emergency admission for childbirth"
+  },
+  "analizga-yuborish-16860b77fb": {
+    "uz": "Analizga yuborish",
+    "ru": "Направление на анализы",
+    "en": "Send for tests"
+  },
+  "orders-uz": {
+    "uz": "\n”Buyurtmalar” bo‘limi funksionali"
+  },
+  "elektron-hujjat-aylanishi-1cf60b77fb": {
+    "uz": "Elektron hujjat aylanishi",
+    "ru": "Электронный документооборот",
+    "en": "Electronic document flow"
+  },
+  "ombor-mudiri-5": {
+    "uz": "Hisob: Kirim, Chiqim, Qoldiq"
+  },
+  "yangi-kassa-28d60b77fb-3": {
+    "uz": "Yangi kassa",
+    "ru": "Новая касса",
+    "en": "New cash desk"
+  },
+  "depozitlar-bo-limi-funksionali-28d60b77fb": {
+    "uz": "“Depozitlar” bo‘limi funksionali"
+  },
+  "conducting-physiotherapy-uz": {
+    "uz": "Fizioterapiya kursini o‘tkazish",
+    "ru": "Проведение курса физиотерапии",
+    "en": "Run a physiotherapy course"
+  },
+  "mening-qabullarim-30660b77fb": {
+    "uz": "Mening qabullarim",
+    "ru": "Мои приёмы",
+    "en": "My appointments"
+  },
+  "kpi-patronaj-uz": {
+    "uz": "Patronaj hamshirasi KPI",
+    "ru": "KPI патронажной медсестры",
+    "en": "Patronage nurse KPI"
+  },
+  "malumotnomalar-hisob-raqamlari-ed160b77fb": {
+    "uz": "Ma’lumotnomalar/Hisob raqamlari",
+    "ru": "Справочники/Счета"
+  },
+  "faq-tor-mutaxassis": {
+    "uz": "LOR yoki kardiologga to‘g‘ridan-to‘g‘ri yozilsam bo‘ladimi?"
+  },
+  "belgilangan-vaqtga-qabulga-pulli-yozilish-26860b77fb": {
+    "uz": "Belgilangan vaqtga qabulga pulli yozilish",
+    "ru": "Платная запись на приём в назначенное время",
+    "en": "Paid booking for a set appointment time"
+  },
+  "skrining-so-rovnomalar-27e60b77fb": {
+    "uz": "Skrining/So’rovnomalar",
+    "ru": "Скрининг/анкеты",
+    "en": "Screening/questionnaires"
+  },
+  "bemorni-boshqa-mutaxassisga-yuborish-16860b77fb": {
+    "uz": "Bemorni boshqa mutaxassisga yuborish",
+    "ru": "Направление пациента к другому специалисту",
+    "en": "Refer the patient to another specialist"
+  },
+  "imtiyozli-yollanma-asosida-shifoxonaga-yotqizish-27660b77fb": {
+    "uz": "Imtiyozli yo'llanma asosida shifoxonaga yotqizish",
+    "ru": "Госпитализация по льготному направлению",
+    "en": "Hospital admission with a privileged referral"
+  },
+  "tor-mutaxassisga-yunaltirish-16860b77fb": {
+    "uz": "Tor mutaxassisga yunaltirish",
+    "ru": "Направление к узкому специалисту",
+    "en": "Refer to a narrow specialist"
+  },
+  "order-actions-uz": {
+    "uz": "\nBiomaterial olish, buyurtma yaratish, buyurtma shtrix-kodi va tekshiruv ro‘yxatini (chek-listni) chop etish, buyurtmani boshqa laboratoriyaga yo‘naltirish, buyurtmani rad etish, buyurtmani nolga tenglashtirish",
+    "ru": "Забор биоматериала, создание заказа, печать штрихкода и чек-листа, направление в другую лабораторию, отказ и обнуление заказа"
+  },
+  "mehnatga-layoqatsizlik-varaqasini-tasdiqlash-tuzatish-u-38a60b77fb": {
+    "uz": "Mehnatga layoqatsizlik varaqasini tasdiqlash, tuzatish uchun qaytarish",
+    "ru": "Подтверждение листа нетрудоспособности, возврат на исправление"
+  },
+  "hisoblar-bo-limi-funksionali-28d60b77fb-3": {
+    "uz": "\"Hisoblar\" bo‘limi funksionali"
+  },
+  "mening-smenalarim-bo-limining-funksional-imkoniyatlari-28d60b77fb": {
+    "uz": "“Mening smenalarim” bo‘limining funksional imkoniyatlari"
+  },
+  "tibbiy-karta-30660b77fb": {
+    "uz": "Tibbiy karta",
+    "ru": "Медкарта",
+    "en": "Medical record"
+  },
+  "kpi-uzd-uz": {
+    "uz": "Ultratovushli diagnostika / Rentgen shifokori KPI",
+    "ru": "KPI врача УЗИ / рентгена",
+    "en": "Ultrasound / X-ray doctor KPI"
+  },
+  "malumotnomalar-sub-markaziy-omborlar-9a260b77fb": {
+    "uz": "Ma’lumotnomalar/Sub-markaziy omborlar",
+    "ru": "Справочники/Субцентральные склады"
+  },
+  "faq-jadval-band": {
+    "uz": "Nega shifokor jadvali doim “band”?"
+  },
+  "jonli-navbatga-qabulga-pulli-yozilish-26860b77fb": {
+    "uz": "Jonli navbatga qabulga pulli yozilish",
+    "ru": "Платная запись в живую очередь",
+    "en": "Paid live-queue booking"
+  },
+  "yuikning-testdan-oldingi-ehtimolini-baholash-2aa60b77fb": {
+    "uz": "YUIKning testdan oldingi ehtimolini baholash",
+    "ru": "Оценка дотестовой вероятности ИБС",
+    "en": "Pre-test probability of IHD"
+  },
+  "murojat-epizodi-orqali-kasalxonaga-yotqizish-16860b77fb": {
+    "uz": "Murojat epizodi orqali kasalxonaga yotqizish",
+    "ru": "Госпитализация через эпизод обращения",
+    "en": "Admit via the visit episode"
+  },
+  "imtiyozli-yo-llanma-bo-yicha-shifoxonaga-rasmiylashtiri-27660b77fb": {
+    "uz": "Imtiyozli yo‘llanma bo‘yicha shifoxonaga rasmiylashtirish jarayoni",
+    "ru": "Оформление в стационар по льготному направлению",
+    "en": "Hospital admission process with a privileged referral"
+  },
+  "davolash-kundaligini-yaratish-va-tahrirlash-16860b77fb": {
+    "uz": "Davolash kundaligini yaratish va tahrirlash",
+    "ru": "Создание и редактирование дневника лечения",
+    "en": "Create and edit the treatment diary"
+  },
+  "order-search-uz": {
+    "uz": "\nNatijani kiritish uchun tahlilni qidirish",
+    "ru": "Поиск анализа для ввода результата",
+    "en": "Search a test to enter the result"
+  },
+  "mehnatga-layoqatsizlik-varaqasini-chop-etish-1cf60b77fb": {
+    "uz": "Mehnatga layoqatsizlik varaqasini chop etish",
+    "ru": "Печать листа нетрудоспособности"
+  },
+  "hisob-fakturalar-bilan-bogliq-operatsiyalar-28d60b77fb-3": {
+    "uz": "Hisob-fakturalar bilan bog’liq operatsiyalar",
+    "ru": "Операции, связанные со счетами-фактурами",
+    "en": "Invoice-related operations"
+  },
+  "hisobotlar-bo-limining-funksional-imkoniyatlari-28d60b77fb": {
+    "uz": "“Hisobotlar” bo‘limining funksional imkoniyatlari"
+  },
+  "akkaunt-30660b77fb": {
+    "uz": "Akkaunt",
+    "ru": "Аккаунт",
+    "en": "Account"
+  },
+  "kpi-pediatr-uz": {
+    "uz": "Bolalar shifokori KPI",
+    "ru": "KPI детского врача",
+    "en": "Pediatrician KPI"
+  },
+  "malumotnomalar-bolim-omborlari-0a360b77fb": {
+    "uz": "Ma’lumotnomalar/Bo’lim omborlari",
+    "ru": "Справочники/Склады отделения"
+  },
+  "faq-server-navbat": {
+    "uz": "Dmed serveri ishlamasa, elektron navbatim kuyadimi?"
+  },
+  "search-unknown-date-of-birth-uz": {
+    "uz": "Tug‘ilgan sanasi ma’lum bo'lmagan bemorni qidirish",
+    "ru": "Поиск пациента с неизвестной датой рождения",
+    "en": "Search a patient with unknown date of birth"
+  },
+  "yurak-qon-tomir-kasalliklarini-erta-aniqlash-skriningi-28b60b77fb": {
+    "uz": "Yurak-qon tomir kasalliklarini erta aniqlash skriningi",
+    "ru": "Скрининг раннего выявления сердечно-сосудистых заболеваний"
+  },
+  "shifokor-7": {
+    "uz": "Homiladorlikni ro‘yxatga olish",
+    "ru": "Постановка беременности на учёт",
+    "en": "Register a pregnancy"
+  },
+  "058-shakl-yuqumli-kasallik-haqida-shoshilinch-xabar-3ad60b77fb": {
+    "uz": "058-shakl - Yuqumli kasallik haqida shoshilinch xabar",
+    "ru": "Форма 058 — экстренное извещение об инфекционном заболевании"
+  },
+  "klinik-tashxisni-asoslash-16860b77fb": {
+    "uz": "Klinik tashxisni asoslash",
+    "ru": "Обоснование клинического диагноза",
+    "en": "Justify the clinical diagnosis"
+  },
+  "result-input-and-print-uz": {
+    "uz": "\nTahlil natijasini kiritish va tasdiqlash. Tahlilni chop etish",
+    "ru": "Ввод и подтверждение результата анализа. Печать анализа",
+    "en": "Enter and confirm a test result. Print the test"
+  },
+  "malumotnoma-yaratish-1cf60b77fb-2": {
+    "uz": "Ma’lumotnoma yaratish",
+    "ru": "Создание справки"
+  },
+  "depozitlar-bo-limi-funksionali-28d60b77fb-3": {
+    "uz": "“Depozitlar” bo‘limi funksionali"
+  },
+  "shartnomalar-bo-limining-funksionali-28d60b77fb": {
+    "uz": "\"Shartnomalar\" bo‘limining funksionali"
+  },
+  "oilaviy-akkaunt-30660b77fb": {
+    "uz": "Oilaviy akkaunt",
+    "ru": "Семейный аккаунт",
+    "en": "Family account"
+  },
+  "kpi-ginekolog-uz": {
+    "uz": "Akusher-ginekolog KPI",
+    "ru": "KPI акушера-гинеколога",
+    "en": "Obstetrician-gynecologist KPI"
+  },
+  "hujjatlar-3d760b77fb": {
+    "uz": "Hujjatlar",
+    "ru": "Документы",
+    "en": "Documents"
+  },
+  "faq-sms-qabul": {
+    "uz": "Bormasam ham “Siz qabulda bo‘ldingiz” SMS keldi."
+  },
+  "bemorning-profili-24260b77fb": {
+    "uz": "Bemorning profili",
+    "ru": "Профиль пациента",
+    "en": "Patient profile"
+  },
+  "misda-yuqtk-xavfini-erta-aniqlash-skriningini-o-tkazish-28b60b77fb": {
+    "uz": "MISda YUQTK xavfini erta aniqlash skriningini o‘tkazish",
+    "ru": "Проведение скрининга риска ССЗ в МИС"
+  },
+  "111-form-uz": {
+    "uz": "Homiladorlik bo‘yicha hisobga qo‘yish",
+    "ru": "Постановка на учёт по беременности",
+    "en": "Put on the pregnancy register"
+  },
+  "shifoxona-davolovchi-8": {
+    "uz": "Davolash kursini yaratish",
+    "ru": "Создание курса лечения",
+    "en": "Create a treatment course"
+  },
+  "create-order-from-lis-uz": {
+    "uz": "\nLaboratoriyadan buyurtma yaratish",
+    "ru": "Создание заказа из лаборатории",
+    "en": "Create an order from the lab"
+  },
+  "elektron-hujjatlarning-haqiqiyligini-tekshirish-1cf60b77fb-2": {
+    "uz": "Elektron hujjatlarning haqiqiyligini tekshirish",
+    "ru": "Проверка подлинности электронных документов"
+  },
+  "kassirlar-smenalari-bo-limining-funksional-imkoniyatlar-28d60b77fb-2": {
+    "uz": "“Kassirlar smenalari” bo‘limining funksional imkoniyatlari"
+  },
+  "kassir-28d60b77fb": {
+    "uz": "Kassir",
+    "ru": "Кассир",
+    "en": "Cashier"
+  },
+  "pacient-state-funded-hospitalization-uz": {
+    "uz": "DMED ilovasida imtiyozli yo‘llanma holatini kuzatish va klinikani tanlash",
+    "ru": "Отслеживание льготного направления и выбор клиники в приложении DMED"
+  },
+  "kpi-director-uz": {
+    "uz": "Direktor KPI",
+    "ru": "KPI директора",
+    "en": "Director KPI"
+  },
+  "ehtiyohlar-73760b77fb": {
+    "uz": "Ehtiyohlar",
+    "ru": "Потребности"
+  },
+  "faq-statsionar-yollanma": {
+    "uz": "Shifoxonaga elektron yo‘llanma bilan qanday yotaman?"
+  },
+  "personal-data-update-uz": {
+    "uz": "Bemor profilidagi shaxsiy ma’lumotlar yangilash",
+    "ru": "Обновление личных данных в профиле пациента",
+    "en": "Update personal data in the patient profile"
+  },
+  "yurak-qon-tomir-kasalliklari-skriningi-maqsadida-patron-28b60b77fb-2": {
+    "uz": "\"Yurak-qon tomir kasalliklari skriningi\" maqsadida patronajni rejalashtirish va amalga oshirish"
+  },
+  "homiladorlik-hisobini-ochirish-3a060b77fb-2": {
+    "uz": "Homiladorlik hisobini o’chirish",
+    "ru": "Снятие с учёта по беременности",
+    "en": "Remove from the pregnancy register"
+  },
+  "physiotherapy-in-hospital-uz": {
+    "uz": "Fizioterapiya",
+    "ru": "Физиотерапия",
+    "en": "Physiotherapy"
+  },
+  "configuration-of-analyses-uz": {
+    "uz": "\nTahlillardan foydalanish imkoniyatini boshqarish Tarkibiy tahlil ichida parametrlarni ko‘rsatish tartibini sozlash",
+    "ru": "Управление доступом к анализам. Порядок параметров внутри составного анализа"
+  },
+  "qo-lda-kiritish-jurnallarini-to-ldirish-1cf60b77fb-2": {
+    "uz": "Qo‘lda kiritish jurnallarini to‘ldirish",
+    "ru": "Заполнение журналов ручного ввода"
+  },
+  "hisobotlar-bo-limining-funksional-imkoniyatlari-28d60b77fb-3": {
+    "uz": "“Hisobotlar” bo‘limining funksional imkoniyatlari"
+  },
+  "retsept-haqida-umumiy-malumot-30660b77fb": {
+    "uz": "Retsept haqida umumiy ma’lumot",
+    "ru": "Общие сведения о рецепте",
+    "en": "Prescription overview"
+  },
+  "kirimlar-84260b77fb": {
+    "uz": "Kirimlar ",
+    "ru": "Приходы",
+    "en": "Incoming"
+  },
+  "faq-imtiyozli-navbat": {
+    "uz": "Imtiyozli shaxslarga navbatda ustunlik bormi?"
+  },
+  "document-attachment-uz": {
+    "uz": "Hujjatni bemor profiliga biriktirish",
+    "ru": "Прикрепление документа к профилю пациента",
+    "en": "Attach a document to the patient profile"
+  },
+  "yuqtk-skriningi-natijalari-bo-yicha-bemorlarni-saralash-28b60b77fb": {
+    "uz": "YuQTK skriningi natijalari bo‘yicha bemorlarni saralash",
+    "ru": "Сортировка пациентов по результатам скрининга ССЗ"
+  },
+  "111-shaklni-to-ldirish-homilador-ayolning-shaxsiy-karta-3a060b77fb": {
+    "uz": "111-shaklni to‘ldirish (Homilador ayolning shaxsiy kartasi)",
+    "ru": "Заполнение формы 111 (индивидуальная карта беременной)"
+  },
+  "fizioterapevtik-muolajani-tayinlash-20060b77fb": {
+    "uz": "Fizioterapevtik muolajani tayinlash",
+    "ru": "Назначение физиотерапии"
+  },
+  "bi-orqali-jurnallarni-ko-rish-1cf60b77fb-2": {
+    "uz": "BI orqali jurnallarni ko‘rish",
+    "ru": "Просмотр журналов через BI"
+  },
+  "shartnomalar-bo-limining-funksionali-28d60b77fb-4": {
+    "uz": "\"Shartnomalar\" bo‘limining funksionali"
+  },
+  "retseptni-korish-30660b77fb": {
+    "uz": "Retseptni ko’rish",
+    "ru": "Просмотр рецепта",
+    "en": "View a prescription"
+  },
+  "talabnomalar-ec460b77fb": {
+    "uz": "Talabnomalar ",
+    "ru": "Заявки",
+    "en": "Requests"
+  },
+  "faq-dispanser": {
+    "uz": "Psixiatr, narkologga Dmed orqali yozilsam bo‘ladimi?"
+  },
+  "yangi-kassa-28d60b77fb": {
+    "uz": "Yangi kassa",
+    "ru": "Новая касса",
+    "en": "New cash desk"
+  },
+  "051-051-1-sonli-jurnallarni-korish-28b60b77fb": {
+    "uz": "051, 051-1 sonli jurnallarni ko’rish",
+    "ru": "Просмотр журналов №051, 051-1"
+  },
+  "113-form-uz": {
+    "uz": "113-shaklni to‘ldirish (Homilador ayolning almashinuv kartasi)",
+    "ru": "Заполнение формы 113 (обменная карта беременной)"
+  },
+  "fizioterapiya-kursini-o-tkazish-jarayonini-kuzatish-031-20060b77fb": {
+    "uz": "Fizioterapiya kursini o‘tkazish jarayonini kuzatish. 031-jurnalni ko‘rib chiqish",
+    "ru": "Контроль курса физиотерапии. Просмотр журнала 031"
+  },
+  "yurak-qon-tomir-kasalliklarini-erta-aniqlash-skriningi--28b60b77fb": {
+    "uz": "Yurak-qon tomir kasalliklarini erta aniqlash skriningi bo‘yicha hujjatlar",
+    "ru": "Документы скрининга раннего выявления ССЗ"
+  },
+  "sug-urta-tashkilotlarini-yaratish-va-sozlash-33a60b77fb-2": {
+    "uz": "Sug‘urta tashkilotlarini yaratish va sozlash"
+  },
+  "elektron-retsept-orqali-dori-vositasini-olish-30660b77fb": {
+    "uz": "Elektron retsept orqali dori-vositasini olish",
+    "ru": "Получение лекарства по электронному рецепту",
+    "en": "Get medicine with an electronic prescription"
+  },
+  "sarflar-b3360b77fb": {
+    "uz": "Sarflar",
+    "ru": "Расходы",
+    "en": "Issues"
+  },
+  "faq-poliklinikaga-biriktirilmagan": {
+    "uz": "“Siz hech qaysi poliklinikaga biriktirilmagansiz” chiqdi."
+  },
+  "hisob-fakturalar-bilan-bogliq-operatsiyalar-28d60b77fb-2": {
+    "uz": "Hisob-fakturalar bilan bog’liq operatsiyalar",
+    "ru": "Операции, связанные со счетами-фактурами",
+    "en": "Invoice-related operations"
+  },
+  "qandli-diabet-skriningi-27e60b77fb": {
+    "uz": "Qandli diabet skriningi",
+    "ru": "Скрининг сахарного диабета"
+  },
+  "referral-for-hospitalization-for-childbirth-uz": {
+    "uz": "\"Tug‘ruq\" maqsadida shifoxonaga yotqizish uchun yo‘llanma"
+  },
+  "bolimda-korikdan-otkazish-16860b77fb": {
+    "uz": "Bo`limda ko'rikdan o'tkazish",
+    "ru": "Осмотр в отделении",
+    "en": "Examine in the ward"
+  },
+  "051-051-1-sonli-jurnallarni-korish-28b60b77fb-3": {
+    "uz": "051, 051-1 sonli jurnallarni ko’rish",
+    "ru": "Просмотр журналов №051, 051-1"
+  },
+  "pacient-infokiosk-muxlisa-uz": {
+    "uz": "Muxlisa (infokiosk) yordamida bemorning o‘zini mustaqil ravishda qabulga yozdirib olishi",
+    "ru": "Самостоятельная запись пациента на приём через Muxlisa (инфокиоск)"
+  },
+  "qaytarilganlar-48960b77fb": {
+    "uz": "Qaytarilganlar ",
+    "ru": "Возвраты",
+    "en": "Returns"
+  },
+  "faq-chaqaloqni-qoshish": {
+    "uz": "Yangi tug‘ilgan chaqaloqni tizimga qanday qo‘shaman?"
+  },
+  "shartnomalar-bo-limining-funksionali-28d60b77fb-2": {
+    "uz": "\"Shartnomalar\" bo‘limining funksionali"
+  },
+  "misda-qandli-diabet-xavfini-aniqlash-skriningini-o-tkaz-27e60b77fb": {
+    "uz": "MISda qandli diabet xavfini aniqlash skriningini o‘tkazish",
+    "ru": "Проведение скрининга риска сахарного диабета в МИС"
+  },
+  "elektron-retsept-2c760b77fb": {
+    "uz": "Elektron retsept",
+    "ru": "Электронный рецепт",
+    "en": "Electronic prescription"
+  },
+  "jarrohlik-amaliyotidan-oldingi-epikriz-38260b77fb": {
+    "uz": "Jarrohlik amaliyotidan oldingi epikriz",
+    "ru": "Дооперационный эпикриз",
+    "en": "Pre-surgery epicrisis"
+  },
+  "qandli-diabet-skriningi-bo-yicha-hujjatlar-28b60b77fb": {
+    "uz": "Qandli diabet skriningi bo‘yicha hujjatlar",
+    "ru": "Документы по скринингу сахарного диабета"
+  },
+  "bemor-1fd60b77fb": {
+    "uz": "Bemor",
+    "ru": "Пациент",
+    "en": "Patient"
+  },
+  "hisobdan-chiqarish-c2160b77fb": {
+    "uz": "Hisobdan chiqarish",
+    "ru": "Списание"
+  },
+  "faq-emlash-kalendari": {
+    "uz": "Farzandimning emlash kalendarini ko‘ramanmi?"
+  },
+  "skrining-natijalari-bo-yicha-bemorlar-ro-yxatini-sarala-27e60b77fb": {
+    "uz": "Skrining natijalari bo‘yicha bemorlar ro‘yxatini saralash",
+    "ru": "Сортировка списка пациентов по результатам скрининга"
+  },
+  "misda-oddiy-retsept-yozish-2c760b77fb": {
+    "uz": "MISda oddiy retsept yozish",
+    "ru": "Выписка обычного рецепта в МИС"
+  },
+  "bosqichli-epikrizni-yaratish-16860b77fb": {
+    "uz": "Bosqichli epikrizni yaratish",
+    "ru": "Создание этапного эпикриза",
+    "en": "Create a staged epicrisis"
+  },
+  "nikohdan-o-tish-uchun-tibbiy-ko-rik-malumotnomasi-2a060b77fb-2": {
+    "uz": "Nikohdan o‘tish uchun tibbiy ko‘rik ma’lumotnomasi",
+    "ru": "Справка медосмотра для вступления в брак"
+  },
+  "qoldiqlar-dd660b77fb": {
+    "uz": "Qoldiqlar",
+    "ru": "Остатки",
+    "en": "Stock"
+  },
+  "faq-tibbiy-sugurta": {
+    "uz": "Majburiy tibbiy sug‘urta (MTS) dan qanday foydalanaman?"
+  },
+  "qandli-diabet-skriningi-maqsadida-patronajni-rejalashti-28b60b77fb": {
+    "uz": "\"Qandli diabet skriningi\" maqsadida patronajni rejalashtirish va amalga oshirish"
+  },
+  "dmed-pro-da-oddiy-retsept-yozish-2c760b77fb": {
+    "uz": "DMED Pro‘da oddiy retsept yozish",
+    "ru": "Выписка обычного рецепта в DMED Pro"
+  },
+  "shifoxona-davolovchi-13": {
+    "uz": "Chiqaruv epikrizi - yaratish va chop etish",
+    "ru": "Выписной эпикриз — создание и печать",
+    "en": "Discharge epicrisis — create and print"
+  },
+  "malumotnomani-tasdiqlash-va-uni-tuzatish-uchun-yuborish-2a060b77fb": {
+    "uz": "Ma’lumotnomani tasdiqlash va uni tuzatish uchun yuborish",
+    "ru": "Подтверждение справки и отправка на исправление"
+  },
+  "yangi-omborxona-3": {
+    "uz": "Katta hamshira",
+    "ru": "Старшая медсестра",
+    "en": "Senior nurse"
+  },
+  "faq-bepul-dori": {
+    "uz": "Bepul dori-darmonlarni qanday olaman?"
+  },
+  "qandli-diabet-skriningi-bo-yicha-hujjatlar-27e60b77fb": {
+    "uz": "Qandli diabet skriningi bo‘yicha hujjatlar",
+    "ru": "Документы по скринингу сахарного диабета"
+  },
+  "misda-reimbursatsiya-retseptini-yozish-2c760b77fb": {
+    "uz": "MISda reimbursatsiya retseptini yozish",
+    "ru": "Выписка рецепта возмещения в МИС"
+  },
+  "kasalxonaga-qabul-qilish-forma-066-toldirish-16860b77fb": {
+    "uz": "Kasalxonaga qabul qilish. Forma 066 toldirish",
+    "ru": "Приём в больницу. Заполнение формы 066",
+    "en": "Hospital admission. Fill in form 066"
+  },
+  "058-shakl-yuqumli-kasallik-haqida-shoshilinch-xabar-2cc60b77fb-3": {
+    "uz": "058-shakl - Yuqumli kasallik haqida shoshilinch xabar",
+    "ru": "Форма 058 — экстренное извещение об инфекционном заболевании"
+  },
+  "malumotnomalar-a5d60b77fb": {
+    "uz": "Ma’lumotnomalar",
+    "ru": "Справочники",
+    "en": "Directories"
+  },
+  "faq-tahlil-pdf": {
+    "uz": "Tahlil javoblarini PDF qilib olsam bo‘ladimi?"
+  },
+  "serebrovaskulyar-kasalliklarni-erta-aniqlash-sorovnomas-2aa60b77fb": {
+    "uz": "Serebrovaskulyar kasalliklarni erta aniqlash so’rovnomasi",
+    "ru": "Анкета раннего выявления цереброваскулярных заболеваний"
+  },
+  "retseptni-bekor-qilish-2c760b77fb": {
+    "uz": "Retseptni bekor qilish",
+    "ru": "Отмена рецепта"
+  },
+  "homiladorlik-va-tug-ruq-1ce60b77fb": {
+    "uz": "Homiladorlik va tug‘ruq",
+    "ru": "Беременность и роды",
+    "en": "Pregnancy and childbirth"
+  },
+  "dir-086-uz": {
+    "uz": "086-raqamli ma’lumotnomalar",
+    "ru": "Справки №086"
+  },
+  "hujjatlar-52c60b77fb": {
+    "uz": "Hujjatlar ",
+    "ru": "Документы",
+    "en": "Documents"
+  },
+  "faq-qogoz-tarix": {
+    "uz": "Eski qog‘oz tibbiy tariximni rasmga olib joylay olamanmi?"
+  },
+  "kokrak-sut-bezi-saratonini-erta-aniqlash-skriningi-27360b77fb": {
+    "uz": "Ko'krak (sut) bezi saratonini erta aniqlash skriningi",
+    "ru": "Скрининг раннего выявления рака молочной железы"
+  },
+  "shifokor-9": {
+    "uz": "Elektron hujjat aylanishi",
+    "ru": "Электронный документооборот",
+    "en": "Electronic document flow"
+  },
+  "birth-protocol-uz": {
+    "uz": "Tug‘ruq protokolini to‘ldirish",
+    "ru": "Заполнение протокола родов",
+    "en": "Fill in the birth protocol"
+  },
+  "086-aprove-uz": {
+    "uz": "086-son tibbiy ma’lumotnomalarni tasdiqlash",
+    "ru": "Подтверждение медицинских справок №086"
+  },
+  "hisob-ehtiyojlar-85d60b77fb": {
+    "uz": "Hisob/Ehtiyojlar",
+    "ru": "Учёт/Потребности"
+  },
+  "faq-tez-yordam-103": {
+    "uz": "Tez yordam (103) chaqiruvlari Dmedda ko‘rinadimi?"
+  },
+  "misda-ko-krak-bezi-saratonini-erta-aniqlash-uchun-skrin-27360b77fb": {
+    "uz": "MISda ko‘krak bezi saratonini erta aniqlash uchun skrining o‘tkazish",
+    "ru": "Скрининг рака молочной железы в МИС"
+  },
+  "mehnatga-layoqatsizlik-varaqasi-1cf60b77fb": {
+    "uz": "Mehnatga layoqatsizlik varaqasi",
+    "ru": "Лист нетрудоспособности",
+    "en": "Sick-leave certificate"
+  },
+  "096-form-uz": {
+    "uz": "096-shaklni to‘ldirish (homiladorlik va tug‘ruq bo‘yicha karta)",
+    "ru": "Заполнение формы 096 (карта беременности и родов)",
+    "en": "Fill in form 096 (pregnancy and birth card)"
+  },
+  "xavfsizlik-kamarini-taqmaslikka-ruxsat-beruvchi-tibbiy--3b960b77fb": {
+    "uz": "Xavfsizlik kamarini taqmaslikka ruxsat beruvchi tibbiy ma’lumotnoma",
+    "ru": "Справка об освобождении от ремня безопасности"
+  },
+  "hisob-talabnomalar-b1860b77fb": {
+    "uz": "Hisob/Talabnomalar ",
+    "ru": "Учёт/Заявки"
+  },
+  "faq-xususiy-klinika": {
+    "uz": "Xususiy klinikalar Dmedga qachon to‘liq ulanadi?"
+  },
+  "gelmintoz-gijja-kasalliklarni-erta-aniqlash-skriningi-27360b77fb": {
+    "uz": "Gelmintoz (gijja) kasalliklarni erta aniqlash skriningi",
+    "ru": "Скрининг раннего выявления гельминтозов"
+  },
+  "mehnatga-layoqatsizlik-varaqasini-rasmiylashtirish-uzay-1cf60b77fb": {
+    "uz": "Mehnatga layoqatsizlik varaqasini rasmiylashtirish, uzaytirish, bekor qilish va yopish",
+    "ru": "Оформление, продление, отмена и закрытие листа нетрудоспособности"
+  },
+  "097-form-uz": {
+    "uz": "097-shaklni to‘ldirish (yangi tug‘ilgan chaqaloqning rivojlanish kartasi)",
+    "ru": "Заполнение формы 097 (карта развития новорождённого)",
+    "en": "Fill in form 097 (newborn development card)"
+  },
+  "xavfsizlik-kamarini-taqmaslikka-ruxsat-beruvchi-tibbiy--3b960b77fb-4": {
+    "uz": "Xavfsizlik kamarini taqmaslikka ruxsat beruvchi tibbiy ma’lumotnomani yaratish",
+    "ru": "Создание справки об освобождении от ремня безопасности"
+  },
+  "hisob-sarflar-dd960b77fb": {
+    "uz": "Hisob/Sarflar",
+    "ru": "Учёт/Расходы"
+  },
+  "faq-shifokor-baho": {
+    "uz": "Shifokorga shikoyat yoki minnatdorchilik qoldira olamanmi?"
+  },
+  "misda-gelmintoz-kasalliklarni-erta-aniqlash-skriningini-27360b77fb": {
+    "uz": "MISda  gelmintoz kasalliklarni erta aniqlash skriningini o‘tkazish"
+  },
+  "homiladorlik-va-tug-ish-bo-yicha-mehnatga-layoqatsizlik-39c60b77fb": {
+    "uz": "Homiladorlik va tug‘ish bo‘yicha mehnatga layoqatsizlik varaqasini rasmiylashtirish, uzaytirish, bekor qilish va yopish",
+    "ru": "Оформление, продление, отмена и закрытие листа нетрудоспособности по беременности и родам"
+  },
+  "imtiyozli-yollanma-asosida-shifoxonaga-yotqizish-27660b77fb-2": {
+    "uz": "Imtiyozli yo'llanma asosida shifoxonaga yotqizish",
+    "ru": "Госпитализация по льготному направлению",
+    "en": "Hospital admission with a privileged referral"
+  },
+  "buhgalteriya-1d760b77fb": {
+    "uz": "Buhgalteriya",
+    "ru": "Бухгалтерия"
+  },
+  "hisob-qaytarilganlar-c6960b77fb": {
+    "uz": "Hisob/Qaytarilganlar ",
+    "ru": "Учёт/Возвраты"
+  },
+  "onkogematologik-kasalliklarni-erta-aniqlash-so-rovnomas-26c60b77fb": {
+    "uz": "Onkogematologik kasalliklarni erta aniqlash so‘rovnomasi",
+    "ru": "Анкета раннего выявления онкогематологических заболеваний"
+  },
+  "tasdiqlash-tuzatishga-qaytarish-mehnatga-layoqatsizlik--1cf60b77fb": {
+    "uz": "Tasdiqlash, tuzatishga qaytarish, mehnatga layoqatsizlik varaqasini chop etish",
+    "ru": "Подтверждение, возврат на исправление, печать листа нетрудоспособности"
+  },
+  "058-shakl-yuqumli-kasallik-haqida-shoshilinch-xabar-2cc60b77fb-2": {
+    "uz": "058-shakl - Yuqumli kasallik haqida shoshilinch xabar",
+    "ru": "Форма 058 — экстренное извещение об инфекционном заболевании"
+  },
+  "muolaja-turidagi-xizmatlarni-sozlash-1d760b77fb": {
+    "uz": "\"Muolaja\" turidagi xizmatlarni sozlash"
+  },
+  "hisob-qoldiqlar-ecf60b77fb": {
+    "uz": "Hisob/Qoldiqlar",
+    "ru": "Учёт/Остатки"
+  },
+  "misda-onkogematologik-kasalliklar-bo-yicha-so-rovnoma-o-26d60b77fb": {
+    "uz": "MISda onkogematologik kasalliklar bo‘yicha so‘rovnoma o‘tkazish",
+    "ru": "Анкета по онкогематологии в МИС"
+  },
+  "avval-yopilgan-mehnatga-layoqatsizlik-varaqasini-davom--1cf60b77fb": {
+    "uz": "Avval yopilgan mehnatga layoqatsizlik varaqasini davom ettirish",
+    "ru": "Продолжение ранее закрытого листа нетрудоспособности"
+  },
+  "112-integration-uz": {
+    "uz": "Statsionardagi 112 xizmati: Hodisalar haqida ogohlantirish",
+    "ru": "Служба 112 в стационаре: оповещение о событиях",
+    "en": "112 service in hospital: event alerts"
+  },
+  "ombordagi-mahsulot-narxini-sozlash-1d760b77fb": {
+    "uz": "Ombordagi mahsulot narxini sozlash",
+    "ru": "Настройка цены товара на складе"
+  },
+  "post-omborlar-talabnomalar-72e60b77fb": {
+    "uz": "Post omborlar/Talabnomalar ",
+    "ru": "Постовые склады/Заявки"
+  },
+  "onkogematologik-kasalliklarni-erta-aniqlash-skriningi-m-26c60b77fb": {
+    "uz": "\"Onkogematologik kasalliklarni erta aniqlash skriningi\" maqsadida patronaj ko’rikni rejalashtirish"
+  },
+  "mehnatga-layoqatsizlik-varaqasini-chop-etish-1cf60b77fb-2": {
+    "uz": "Mehnatga layoqatsizlik varaqasini chop etish",
+    "ru": "Печать листа нетрудоспособности"
+  },
+  "112-hospital-short-uz": {
+    "uz": "Statsionardagi 112 xizmati: qisqacha instruksiya",
+    "ru": "Служба 112 в стационаре: краткая инструкция",
+    "en": "112 service in hospital: short guide"
+  },
+  "xodim-to-g-risida-malumot-kiritish-1f460b77fb": {
+    "uz": "Xodim to‘g‘risida ma’lumot kiritish",
+    "ru": "Ввод сведений о сотруднике"
+  },
+  "post-omborlar-sarflar-f4960b77fb": {
+    "uz": "Post omborlar/Sarflar",
+    "ru": "Постовые склады/Расходы"
+  },
+  "onkogematologik-kasalliklar-so-rovnomasi-natijalari-bo--26d60b77fb": {
+    "uz": "Onkogematologik kasalliklar so‘rovnomasi natijalari bo‘yicha bemorlarni saralash",
+    "ru": "Сортировка пациентов по анкете онкогематологии"
+  },
+  "malumotnoma-yaratish-1cf60b77fb": {
+    "uz": "Ma’lumotnoma yaratish",
+    "ru": "Создание справки"
+  },
+  "mehnatga-layoqatsizlik-varaqasi-3ac60b77fb": {
+    "uz": "Mehnatga layoqatsizlik varaqasi",
+    "ru": "Лист нетрудоспособности",
+    "en": "Sick-leave certificate"
+  },
+  "attachment-to-the-brigade-and-office-uz": {
+    "uz": "Xodimni uchastka va xonaga (kabinetga) biriktirish",
+    "ru": "Прикрепление сотрудника к участку и кабинету"
+  },
+  "post-omborlar-qaytarilganlar-17960b77fb": {
+    "uz": "Post omborlar/Qaytarilganlar ",
+    "ru": "Постовые склады/Возвраты"
+  },
+  "fertillik-so-rovnomasi-21160b77fb": {
+    "uz": "Fertillik so‘rovnomasi",
+    "ru": "Анкета фертильности"
+  },
+  "elektron-hujjatlarning-haqiqiyligini-tekshirish-1cf60b77fb": {
+    "uz": "Elektron hujjatlarning haqiqiyligini tekshirish",
+    "ru": "Проверка подлинности электронных документов"
+  },
+  "mehnatga-layoqatsizlik-varaqasini-rasmiylashtirish-uzay-3ac60b77fb": {
+    "uz": "Mehnatga layoqatsizlik varaqasini rasmiylashtirish, uzaytirish, bekor qilish va yopish",
+    "ru": "Оформление, продление, отмена и закрытие листа нетрудоспособности"
+  },
+  "absentee-schedule-uz": {
+    "uz": "Xodimning ta'til jadvali to‘g‘risida ma’lumotlarni kiritish",
+    "ru": "Ввод графика отпуска сотрудника"
+  },
+  "post-omborlar-sterilizatsiya-de660b77fb": {
+    "uz": "Post omborlar/Sterilizatsiya",
+    "ru": "Постовые склады/Стерилизация"
+  },
+  "fertillik-so-rovnomasini-to-ldirish-21160b77fb": {
+    "uz": "Fertillik so‘rovnomasini to‘ldirish",
+    "ru": "Заполнение анкеты фертильности"
+  },
+  "qo-lda-kiritish-jurnallarini-to-ldirish-1cf60b77fb": {
+    "uz": "Qo‘lda kiritish jurnallarini to‘ldirish",
+    "ru": "Заполнение журналов ручного ввода"
+  },
+  "homiladorlik-va-tug-ish-bo-yicha-mehnatga-layoqatsizlik-3ac60b77fb": {
+    "uz": "Homiladorlik va tug‘ish bo‘yicha mehnatga layoqatsizlik varaqasini rasmiylashtirish, uzaytirish, bekor qilish va yopish",
+    "ru": "Оформление, продление, отмена и закрытие листа нетрудоспособности по беременности и родам"
+  },
+  "work-schedule-uz": {
+    "uz": "Xodimning ish jadvali to‘g‘risida ma’lumotlarni kiritish",
+    "ru": "Ввод графика работы сотрудника"
+  },
+  "post-omborlar-qoldiqlar-48160b77fb": {
+    "uz": "Post omborlar/Qoldiqlar ",
+    "ru": "Постовые склады/Остатки"
+  },
+  "akusher-ginekologning-doyaning-024-2-kundalik-qabul-jur-21160b77fb": {
+    "uz": "Akusher-ginekologning (doyaning) №024-2 kundalik qabul jurnalini ko‘rib chiqish",
+    "ru": "Просмотр дневного журнала приёма акушера-гинеколога (акушерки) №024-2"
+  },
+  "bi-orqali-jurnallarni-ko-rish-1cf60b77fb": {
+    "uz": "BI orqali jurnallarni ko‘rish",
+    "ru": "Просмотр журналов через BI"
+  },
+  "tasdiqlash-tuzatishga-qaytarish-mehnatga-layoqatsizlik--3ac60b77fb": {
+    "uz": "Tasdiqlash, tuzatishga qaytarish, mehnatga layoqatsizlik varaqasini chop etish",
+    "ru": "Подтверждение, возврат на исправление, печать листа нетрудоспособности"
+  },
+  "employee-position-uz": {
+    "uz": "Xodimning lavozimi to‘g‘risida ma’lumotlarni kiritish",
+    "ru": "Ввод должности сотрудника"
+  },
+  "omborxona-sterilizatsiya-7c560b77fb": {
+    "uz": "Omborxona/Sterilizatsiya",
+    "ru": "Склад/Стерилизация"
+  },
+  "039-shaklni-yuklab-olish-1cf60b77fb": {
+    "uz": "039-shaklni yuklab olish",
+    "ru": "Скачивание формы 039"
+  },
+  "avval-yopilgan-mehnatga-layoqatsizlik-varaqasini-davom--3ac60b77fb": {
+    "uz": "Avval yopilgan mehnatga layoqatsizlik varaqasini davom ettirish",
+    "ru": "Продолжение ранее закрытого листа нетрудоспособности"
+  },
+  "employee-phone-uz": {
+    "uz": "Xodimning telefon raqamini kiritish"
+  },
+  "hamshira-39060b77fb": {
+    "uz": "Hamshira",
+    "ru": "Медсестра",
+    "en": "Nurse"
+  },
+  "nikohdan-o-tish-uchun-tibbiy-ko-rik-malumotnomasi-2a060b77fb": {
+    "uz": "Nikohdan o‘tish uchun tibbiy ko‘rik ma’lumotnomasi",
+    "ru": "Справка медосмотра для вступления в брак"
+  },
+  "mehnatga-layoqatsizlik-varaqasini-chop-etish-3ac60b77fb": {
+    "uz": "Mehnatga layoqatsizlik varaqasini chop etish",
+    "ru": "Печать листа нетрудоспособности"
+  },
+  "imtiyozli-yollanma-asosida-shifoxonaga-yotqizish-27660b77fb-3": {
+    "uz": "Imtiyozli yo'llanma asosida shifoxonaga yotqizish",
+    "ru": "Госпитализация по льготному направлению",
+    "en": "Hospital admission with a privileged referral"
+  },
+  "hisob-talabnomalar-16660b77fb": {
+    "uz": "Hisob/Talabnomalar ",
+    "ru": "Учёт/Заявки"
+  },
+  "malumotnomani-yaratish-tahrirlash-va-ko-rib-chiqish-2a060b77fb": {
+    "uz": "Ma’lumotnomani yaratish, tahrirlash va ko‘rib chiqish",
+    "ru": "Создание, редактирование и просмотр справки"
+  },
+  "d-royxat-27d60b77fb-2": {
+    "uz": "D-ro’yxat",
+    "ru": "D-список",
+    "en": "D-list"
+  },
+  "hisob-qaytarilganlar-5fc60b77fb": {
+    "uz": "Hisob/Qaytarilganlar ",
+    "ru": "Учёт/Возвраты"
+  },
+  "nikoh-uchun-malumotnomalar-kichik-bo-limi-funksionali-2a060b77fb": {
+    "uz": "\"Nikoh uchun ma’lumotnomalar\" kichik bo‘limi funksionali"
+  },
+  "bemorning-d-hisobi-haqidagi-malumotlarni-kiritish-va-ko-27d60b77fb-2": {
+    "uz": "Bemorning D-hisobi haqidagi ma’lumotlarni kiritish va ko‘rish",
+    "ru": "Ввод и просмотр данных D-учёта пациента",
+    "en": "Enter and view the patient’s D-register data"
+  },
+  "hisob-sarflar-09560b77fb": {
+    "uz": "Hisob/Sarflar",
+    "ru": "Учёт/Расходы"
+  },
+  "058-shakl-yuqumli-kasallik-haqida-shoshilinch-xabar-2cc60b77fb": {
+    "uz": "058-shakl - Yuqumli kasallik haqida shoshilinch xabar",
+    "ru": "Форма 058 — экстренное извещение об инфекционном заболевании"
+  },
+  "dispanser-hisobi-jurnalini-ko-rish-030-sonli-27d60b77fb-2": {
+    "uz": "Dispanser hisobi jurnalini ko‘rish (030-sonli)",
+    "ru": "Просмотр журнала диспансерного учёта (№030)",
+    "en": "View the dispensary register journal (No. 030)"
+  },
+  "hisob-qoldiqlar-05660b77fb": {
+    "uz": "Hisob/Qoldiqlar",
+    "ru": "Учёт/Остатки"
+  },
+  "doc-086-uz": {
+    "uz": "086-raqamli ma’lumotnomalar",
+    "ru": "Справки №086"
+  },
+  "misda-bemorlarni-d-hisob-malumotlarini-ko-rish-27d60b77fb-2": {
+    "uz": "MISda bemorlarni D-hisob ma’lumotlarini ko‘rish",
+    "ru": "Просмотр D-учёта пациентов в МИС",
+    "en": "View patient D-register data in MIS"
+  },
+  "omborxona-sterilizatsiya-3a960b77fb": {
+    "uz": "Omborxona/Sterilizatsiya",
+    "ru": "Склад/Стерилизация"
+  },
+  "create-086-uz": {
+    "uz": "Tibbiy ma’lumotnoma №086",
+    "ru": "Медицинская справка №086"
+  },
+  "homiladorlik-hisobini-ochirish-3a060b77fb": {
+    "uz": "Homiladorlik hisobini o’chirish",
+    "ru": "Снятие с учёта по беременности",
+    "en": "Remove from the pregnancy register"
+  },
+  "omborxona-markazlashtirilgan-sterilizatsiya-bolimi-edf60b77fb": {
+    "uz": "Omborxona/Markazlashtirilgan sterilizatsiya bo’limi",
+    "ru": "Склад/Централизованное стерилизационное отделение"
+  },
+  "create-086-1-uz": {
+    "uz": "Tibbiy ma’lumotnoma №086-1",
+    "ru": "Медицинская справка №086-1"
+  },
+  "yangi-kassa-28d60b77fb-2": {
+    "uz": "Yangi kassa",
+    "ru": "Новая касса",
+    "en": "New cash desk"
+  },
+  "create-086-2-uz": {
+    "uz": "Tibbiy ma’lumotnoma №086-2",
+    "ru": "Медицинская справка №086-2"
+  },
+  "hisoblar-bo-limi-funksionali-28d60b77fb-2": {
+    "uz": "\"Hisoblar\" bo‘limi funksionali"
+  },
+  "haj-umra-ziyoratini-amalga-oshiruvchi-ziyoratchilar-uch-36060b77fb": {
+    "uz": "Haj / Umra ziyoratini amalga oshiruvchi ziyoratchilar uchun tibbiy ko'rikdan o'tganligi to'g'risida tibbiy ma'lumotnoma",
+    "ru": "Медицинская справка о медосмотре для паломников Хадж / Умра"
+  },
+  "depozitlar-bo-limi-funksionali-28d60b77fb-2": {
+    "uz": "\"Depozitlar\" bo‘limi funksionali"
+  },
+  "pilgrimage-medical-examination-uz": {
+    "uz": "Ziyorat vaqtida ko‘rikdan o‘tkazish jarayoni ",
+    "ru": "Процесс осмотра во время паломничества"
+  },
+  "kassirlar-smenalari-bo-limining-funksional-imkoniyatlar-28d60b77fb": {
+    "uz": "Kassirlar smenalari bo‘limining funksional imkoniyatlari"
+  },
+  "haj-umra-ziyoratini-ado-etuvchi-ziyoratchilar-uchun-tib-3ac60b77fb": {
+    "uz": "Haj / Umra ziyoratini ado etuvchi ziyoratchilar uchun tibbiy ko‘rikdan o‘tganlik to‘g‘risidagi ma’lumotnomani yaratish",
+    "ru": "Создание справки о медосмотре для паломников Хадж / Умра"
+  },
+  "hisobotlar-bo-limining-funksional-imkoniyatlari-28d60b77fb-2": {
+    "uz": "“Hisobotlar” bo‘limining funksional imkoniyatlari"
+  },
+  "safety-belt-uz": {
+    "uz": "Xavfsizlik kamarini taqmaslikka ruxsat beruvchi tibbiy ma’lumotnoma",
+    "ru": "Справка об освобождении от ремня безопасности"
+  },
+  "shartnomalar-bo-limining-funksionali-28d60b77fb-3": {
+    "uz": "\"Shartnomalar\" bo‘limining funksionali"
+  },
+  "xavfsizlik-kamarini-taqmaslikka-ruxsat-beruvchi-tibbiy--3b960b77fb-2": {
+    "uz": "Xavfsizlik kamarini taqmaslikka ruxsat beruvchi tibbiy ma’lumotnomani yaratish",
+    "ru": "Создание справки об освобождении от ремня безопасности"
+  },
+  "sug-urta-tashkilotlarini-yaratish-va-sozlash-33a60b77fb": {
+    "uz": "Sug‘urta tashkilotlarini yaratish va sozlash"
+  },
+  "xavfsizlik-kamarini-taqmaslikka-ruxsat-beruvchi-tibbiy--3b960b77fb-3": {
+    "uz": "Xavfsizlik kamarini taqmaslikka ruxsat beruvchi tibbiy ma’lumotnomani tasdiqlash",
+    "ru": "Подтверждение справки об освобождении от ремня безопасности"
+  },
+  "imtiyozli-yollanmalar-bo-limining-umumiy-funksionali-36360b77fb": {
+    "uz": "\"Imtiyozli yo’llanmalar\" bo‘limining umumiy funksionali",
+    "ru": "Общие функции раздела «Льготные направления»",
+    "en": "Privileged referrals section overview"
+  },
+  "shifokor-10": {
+    "uz": "Davolash kursini yaratish",
+    "ru": "Создание курса лечения",
+    "en": "Create a treatment course"
+  },
+  "birlamchi-bo-g-inda-yo-llanma-yaratish-41260b77fb": {
+    "uz": "Birlamchi bo‘g‘inda yo‘llanma yaratish",
+    "ru": "Создание направления на первичном уровне",
+    "en": "Create a referral at primary care"
+  },
+  "physiotherapy-uz": {
+    "uz": "Fizioterapiya",
+    "ru": "Физиотерапия",
+    "en": "Physiotherapy"
+  },
+  "physiotherapy-prescription-uz": {
+    "uz": "Fizioterapevtik muolajani tayinlash",
+    "ru": "Назначение физиотерапии"
+  },
+  "imtiyozli-yo-llanma-bo-yicha-shifoxonaga-rasmiylashtiri-bf060b77fb": {
+    "uz": "Imtiyozli yo‘llanma bo‘yicha shifoxonaga rasmiylashtirish jarayoni",
+    "ru": "Оформление в стационар по льготному направлению",
+    "en": "Hospital admission process with a privileged referral"
+  },
+  "physiotherapy-tracking-uz": {
+    "uz": "Fizioterapiya kursini o‘tkazish jarayonini kuzatish. 031-jurnalni ko‘rib chiqish",
+    "ru": "Контроль курса физиотерапии. Просмотр журнала 031"
+  },
+  "ko-p-tarmoqli-poliklinika-tomonidan-yo-llanmani-ko-rib--5b460b77fb": {
+    "uz": "Ko‘p tarmoqli poliklinika tomonidan yo‘llanmani ko‘rib chiqish",
+    "ru": "Рассмотрение направления многопрофильной поликлиникой",
+    "en": "Multidisciplinary clinic reviews the referral"
+  },
+  "vaccination-uz": {
+    "uz": "Emlash",
+    "ru": "Вакцинация",
+    "en": "Vaccination"
+  },
+  "oilaviy-shifokor-tomonidan-gospitalizatsiya-uchun-tibbi-1b160b77fb": {
+    "uz": "Oilaviy shifokor tomonidan gospitalizatsiya uchun tibbiyot muassasasini tanlash",
+    "ru": "Выбор медучреждения для госпитализации семейным врачом",
+    "en": "Family doctor chooses a facility for admission"
+  },
+  "profile-statistika-021ee81bc5": {
+    "uz": "Profile / Statistika",
+    "ru": "Профиль / Статистика",
+    "en": "Profile / Statistics"
+  },
+  "respublika-komissiyasi-tomonidan-yo-llanmani-ko-rib-chi-cb360b77fb": {
+    "uz": "Respublika komissiyasi tomonidan yo‘llanmani ko‘rib chiqish",
+    "ru": "Рассмотрение направления республиканской комиссией",
+    "en": "Republican commission reviews the referral"
+  },
+  "view-bonus-uz": {
+    "uz": "Shifokor profilida vositachilik haqi dasturi bo‘yicha to‘lovlarni ko‘rish",
+    "ru": "Просмотр выплат программы посреднического вознаграждения в профиле врача"
+  },
+  "viloyat-komissiyasi-tomonidan-yo-llanmani-ko-rib-chiqis-51a60b77fb": {
+    "uz": "Viloyat komissiyasi tomonidan yo‘llanmani ko‘rib chiqish",
+    "ru": "Рассмотрение направления областной комиссией",
+    "en": "Regional commission reviews the referral"
+  },
+  "templates-uz": {
+    "uz": "Shapka va tekshiruv shablonlarini qo‘shish",
+    "ru": "Добавление шапки и шаблонов осмотра"
+  },
+  "ambulator-operatsiya-26560b77fb": {
+    "uz": "Ambulator operatsiya",
+    "ru": "Амбулаторная операция",
+    "en": "Outpatient surgery"
+  },
+  "ambulatoriya-operatsiyasini-o-tkazish-26560b77fb": {
+    "uz": "Ambulatoriya operatsiyasini o‘tkazish",
+    "ru": "Проведение амбулаторной операции"
+  },
+  "ambulatoriya-operatsiyalarini-ro-yxatga-olish-jurnalini-26560b77fb": {
+    "uz": "Ambulatoriya operatsiyalarini ro‘yxatga olish jurnalini ko‘rish",
+    "ru": "Просмотр журнала амбулаторных операций"
+  },
+  "shifokor-maslahat-komissiyasi-majlisi-26560b77fb": {
+    "uz": "Shifokor-maslahat komissiyasi majlisi",
+    "ru": "Заседание врачебно-консультационной комиссии",
+    "en": "Doctor advisory commission meeting"
+  },
+  "shifokor-maslahat-komissiyasi-majlisini-o-tkazish-26560b77fb": {
+    "uz": "Shifokor-maslahat komissiyasi majlisini o‘tkazish",
+    "ru": "Проведение заседания врачебно-консультационной комиссии"
+  },
+  "shifokor-maslahat-komissiya-xulosalarini-ro-yxatga-olis-26560b77fb": {
+    "uz": "Shifokor-maslahat komissiya xulosalarini ro‘yxatga olish jurnalini ko‘rib chiqish",
+    "ru": "Просмотр журнала заключений ВКК"
+  },
+  "state-funded-hospitalization-uz": {
+    "uz": "Imtiyozli yo'llanma asosida shifoxonaga yotqizish",
+    "ru": "Госпитализация по льготному направлению",
+    "en": "Hospital admission with a privileged referral"
+  },
+  "d-royxat-27d60b77fb": {
+    "uz": "D-ro’yxat",
+    "ru": "D-список",
+    "en": "D-list"
+  },
+  "bemorning-d-hisobi-haqidagi-malumotlarni-kiritish-va-ko-27d60b77fb": {
+    "uz": "Bemorning D-hisobi haqidagi ma’lumotlarni kiritish va ko‘rish",
+    "ru": "Ввод и просмотр данных D-учёта пациента",
+    "en": "Enter and view the patient’s D-register data"
+  },
+  "dispanser-hisobi-jurnalini-ko-rish-030-sonli-27d60b77fb": {
+    "uz": "Dispanser hisobi jurnalini ko‘rish (030-sonli)",
+    "ru": "Просмотр журнала диспансерного учёта (№030)",
+    "en": "View the dispensary register journal (No. 030)"
+  },
+  "misda-bemorlarni-d-hisob-malumotlarini-ko-rish-27d60b77fb": {
+    "uz": "MISda bemorlarni D-hisob ma’lumotlarini ko‘rish",
+    "ru": "Просмотр D-учёта пациентов в МИС",
+    "en": "View patient D-register data in MIS"
+  },
+  "skrining-so-rovnomalar-28b60b77fb": {
+    "uz": "Skrining/So’rovnomalar",
+    "ru": "Скрининг/анкеты",
+    "en": "Screening/questionnaires"
+  },
+  "qandli-diabet-skriningi-28b60b77fb": {
+    "uz": "Qandli diabet skriningi",
+    "ru": "Скрининг сахарного диабета"
+  },
+  "misda-qandli-diabet-xavfini-aniqlash-skriningini-o-tkaz-28b60b77fb": {
+    "uz": "MISda qandli diabet xavfini aniqlash skriningini o‘tkazish",
+    "ru": "Проведение скрининга риска сахарного диабета в МИС"
+  },
+  "skrining-natijalari-bo-yicha-bemorlar-ro-yxatini-sarala-28b60b77fb": {
+    "uz": "Skrining natijalari bo‘yicha bemorlar ro‘yxatini saralash",
+    "ru": "Сортировка списка пациентов по результатам скрининга"
+  },
+  "qandli-diabet-skriningi-bo-yicha-hujjatlar-28b60b77fb-2": {
+    "uz": "Qandli diabet skriningi bo‘yicha hujjatlar",
+    "ru": "Документы по скринингу сахарного диабета"
+  },
+  "yurak-qon-tomir-kasalliklarini-erta-aniqlash-skriningi-28b60b77fb-2": {
+    "uz": "Yurak-qon tomir kasalliklarini erta aniqlash skriningi",
+    "ru": "Скрининг раннего выявления сердечно-сосудистых заболеваний"
+  },
+  "misda-yuqtk-xavfini-erta-aniqlash-skriningini-o-tkazish-28b60b77fb-2": {
+    "uz": "MISda YUQTK xavfini erta aniqlash skriningini o‘tkazish",
+    "ru": "Проведение скрининга риска ССЗ в МИС"
+  },
+  "yuqtk-skriningi-natijalari-bo-yicha-bemorlarni-saralash-28b60b77fb-2": {
+    "uz": "YuQTK skriningi natijalari bo‘yicha bemorlarni saralash",
+    "ru": "Сортировка пациентов по результатам скрининга ССЗ"
+  },
+  "051-051-1-sonli-jurnallarni-korish-28b60b77fb-2": {
+    "uz": "051, 051-1 sonli jurnallarni ko’rish",
+    "ru": "Просмотр журналов №051, 051-1"
+  },
+  "fertillik-so-rovnomasi-21160b77fb-2": {
+    "uz": "Fertillik so‘rovnomasi",
+    "ru": "Анкета фертильности"
+  },
+  "doctor-conducting-a-fertility-questionnaire-uz": {
+    "uz": "Fertillik so‘rovnomasini to‘ldirish",
+    "ru": "Заполнение анкеты фертильности"
+  },
+  "doctor-viewing-journal-024-2-uz": {
+    "uz": "Akusher-ginekologning (doyaning) №024-2 kundalik qabul jurnalini ko‘rib chiqish",
+    "ru": "Просмотр дневного журнала приёма акушера-гинеколога (акушерки) №024-2"
+  },
+  "kokrak-sut-bezi-saratonini-erta-aniqlash-skriningi-27360b77fb-2": {
+    "uz": "Ko'krak (sut) bezi saratonini erta aniqlash skriningi",
+    "ru": "Скрининг раннего выявления рака молочной железы"
+  },
+  "misda-ko-krak-bezi-saratonini-erta-aniqlash-uchun-skrin-27360b77fb-2": {
+    "uz": "MISda ko‘krak bezi saratonini erta aniqlash uchun skrining o‘tkazish",
+    "ru": "Скрининг рака молочной железы в МИС"
+  },
+  "oncogem-mis-uz": {
+    "uz": "Onkogematologik kasalliklarni erta aniqlash so‘rovnomasi",
+    "ru": "Анкета раннего выявления онкогематологических заболеваний"
+  },
+  "misda-onkogematologik-kasalliklar-bo-yicha-so-rovnoma-o-26a60b77fb": {
+    "uz": "MISda onkogematologik kasalliklar bo‘yicha so‘rovnoma o‘tkazish",
+    "ru": "Анкета по онкогематологии в МИС"
+  },
+  "onkogematologik-kasalliklar-so-rovnomasi-natijalari-bo--26a60b77fb": {
+    "uz": "Onkogematologik kasalliklar so‘rovnomasi natijalari bo‘yicha bemorlarni saralash",
+    "ru": "Сортировка пациентов по анкете онкогематологии"
+  },
+  "gelmintoz-gijja-kasalliklarni-erta-aniqlash-skriningi-27360b77fb-2": {
+    "uz": "Gelmintoz (gijja) kasalliklarni erta aniqlash skriningi",
+    "ru": "Скрининг раннего выявления гельминтозов"
+  },
+  "misda-gelmintoz-kasalliklarni-erta-aniqlash-skriningini-27360b77fb-2": {
+    "uz": "MISda  gelmintoz kasalliklarni erta aniqlash skriningini o‘tkazish"
+  },
+  "hearing-screening-uz": {
+    "uz": "Chaqaloqlarda eshitish qobiliyatini tekshirish",
+    "ru": "Проверка слуха у новорождённых",
+    "en": "Newborn hearing screening"
+  },
+  "112-integration-ambulatory-uz": {
+    "uz": "Ambulatoriyada 112 xizmati: hodisalar haqida ogohlantirish"
+  },
+  "112-ambulance-short-uz": {
+    "uz": "Ambulatoriyada 112 xizmati: qisqacha instruksiya",
+    "ru": "Служба 112 в амбулатории: краткая инструкция",
+    "en": "112 service in outpatient care: short guide"
+  },
+  "imtiyozli-yollanmalar-bo-limining-umumiy-funksionali-b8260b77fb": {
+    "uz": "\"Imtiyozli yo’llanmalar\" bo‘limining umumiy funksionali",
+    "ru": "Общие функции раздела «Льготные направления»",
+    "en": "Privileged referrals section overview"
+  },
+  "birlamchi-bo-g-inda-yo-llanma-yaratish-93960b77fb": {
+    "uz": "Birlamchi bo‘g‘inda yo‘llanma yaratish",
+    "ru": "Создание направления на первичном уровне",
+    "en": "Create a referral at primary care"
+  },
+  "imtiyozli-yo-llanma-bo-yicha-shifoxonaga-rasmiylashtiri-39560b77fb": {
+    "uz": "Imtiyozli yo‘llanma bo‘yicha shifoxonaga rasmiylashtirish jarayoni",
+    "ru": "Оформление в стационар по льготному направлению",
+    "en": "Hospital admission process with a privileged referral"
+  },
+  "ko-p-tarmoqli-poliklinika-tomonidan-yo-llanmani-ko-rib--0f460b77fb": {
+    "uz": "Ko‘p tarmoqli poliklinika tomonidan yo‘llanmani ko‘rib chiqish",
+    "ru": "Рассмотрение направления многопрофильной поликлиникой",
+    "en": "Multidisciplinary clinic reviews the referral"
+  },
+  "oilaviy-shifokor-tomonidan-gospitalizatsiya-uchun-tibbi-39560b77fb": {
+    "uz": "Oilaviy shifokor tomonidan gospitalizatsiya uchun tibbiyot muassasasini tanlash",
+    "ru": "Выбор медучреждения для госпитализации семейным врачом",
+    "en": "Family doctor chooses a facility for admission"
+  },
+  "respublika-komissiyasi-tomonidan-yo-llanmani-ko-rib-chi-f9b60b77fb": {
+    "uz": "Respublika komissiyasi tomonidan yo‘llanmani ko‘rib chiqish",
+    "ru": "Рассмотрение направления республиканской комиссией",
+    "en": "Republican commission reviews the referral"
+  },
+  "viloyat-komissiyasi-tomonidan-yo-llanmani-ko-rib-chiqis-3cf60b77fb": {
+    "uz": "Viloyat komissiyasi tomonidan yo‘llanmani ko‘rib chiqish",
+    "ru": "Рассмотрение направления областной комиссией",
+    "en": "Regional commission reviews the referral"
+  },
+  "violation-report": {
+    "uz": "Sog‘liqni saqlashdagi qoidabuzarliklar haqida murojaat",
+    "ru": "Подача обращения о нарушениях в сфере здравоохранения"
+  },
+  "electron-queue": {
+    "uz": "Elektron navbatni sozlash",
+    "ru": "Настройка электронной очереди"
+  },
+  "tech-settings": {
+    "uz": "Texnikani sozlash",
+    "ru": "Настройка техники"
+  }
+}

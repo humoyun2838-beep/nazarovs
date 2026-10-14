@@ -1,0 +1,22 @@
+DMED — 3 ta sayt nusxasi
+Sana: 2026-10-12
+
+Ichida: mijozlar katalogi, admin panel, operator chat, darslar va rasmlar.
+Bo‘limlar: 23
+Darslar: 344
+Hisoblar: 15
+Chatlar: 5964
+
+Boshqa kompyuterda:
+1. Node.js 22 o‘rnating (node -v).
+2. Shu zipni oching.
+3. Papkada terminal ochib yozing:
+   npm install
+   npm run dev
+4. Brauzerda ketma-ket:
+   http://127.0.0.1:3847/nazarov
+   http://127.0.0.1:3847/admin/login
+   http://127.0.0.1:3847/operator
+
+Login va parol shu kompyuterdagi bilan bir xil. Ular .env va data/nazarov.db ichida.
+node_modules zipda yo‘q — npm install o‘zi yuklaydi.
