@@ -20,6 +20,8 @@ function createDb() {
   sqlite.pragma("temp_store = MEMORY");
   sqlite.pragma("cache_size = -16000");
   sqlite.pragma("mmap_size = 268435456");
+  // Serialize schema inspection + ALTER across build workers and server processes.
+  return sqlite.transaction(() => {
   sqlite.exec(`
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -363,6 +365,7 @@ function createDb() {
   const drizzleDb = drizzle(sqlite, { schema });
   seedIfEmpty(sqlite, drizzleDb);
   return { db: drizzleDb, sqlite };
+  }).immediate();
 }
 
 function ensurePortalUser(
