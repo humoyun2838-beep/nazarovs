@@ -2,7 +2,7 @@ import Database from "better-sqlite3";
 import { drizzle } from "drizzle-orm/better-sqlite3";
 import fs from "node:fs";
 import path from "node:path";
-import { hashSync } from "bcryptjs";
+import { compareSync, hashSync } from "bcryptjs";
 import { groupDmedMaterials } from "@/lib/dmed-group";
 import { dataDir as resolveDataDir } from "@/lib/data-dir";
 import * as schema from "./schema";
@@ -400,6 +400,10 @@ function ensurePortalUser(
     return;
   }
 
+  // Railway's private ADMIN_PASSWORD remains authoritative after a redeploy.
+  if (role === "admin" && process.env.ADMIN_PASSWORD && !compareSync(password, existing.password_hash)) {
+    sqlite.prepare("UPDATE users SET password_hash = ? WHERE id = ?").run(hashSync(password, 12), existing.id);
+  }
   if (existing.role !== role) {
     sqlite
       .prepare(`UPDATE users SET role = ? WHERE id = ?`)
