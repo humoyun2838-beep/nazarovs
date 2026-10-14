@@ -41,7 +41,9 @@ export default async function AdminPage() {
   const categories = await getCategories();
   const materialsByCategory = categories.map((category) => ({
     category,
-    materials: getMaterialLinksByCategory(category.id),
+    materials: getMaterialLinksByCategory(category.id).map(({ id, title, slug, summary, imageUrl, hasVideo }) => ({
+      id, title, slug, summary, imageUrl, hasVideo,
+    })),
   }));
 
   return (

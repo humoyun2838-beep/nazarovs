@@ -27,7 +27,7 @@ function ListRow({
     <li className={item.cover ? "catalog-panel rounded-3xl" : undefined}>
       <Link
         href={item.href}
-        prefetch
+        prefetch={false}
         className={cn(
           "group relative isolate flex items-center gap-3.5 overflow-hidden py-3.5 transition-colors duration-200 hover:bg-[#f3f8ff] sm:py-4",
           item.cover && "min-h-36 border-l-4 border-l-transparent hover:border-l-cyan-400",

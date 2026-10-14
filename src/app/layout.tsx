@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Manrope } from "next/font/google";
 import { PageBackdrop } from "@/components/page-backdrop";
-import { DmedChat } from "@/components/dmed-chat";
+import { ClientChat } from "@/components/client-chat";
 import { VisitPulse } from "@/components/visit-pulse";
 import { htmlLang } from "@/lib/locale";
 import { getLocale } from "@/lib/locale-server";
@@ -86,7 +86,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <UiLocaleProvider locale={locale}>
         <PageBackdrop />
         <div className="page-shell">{children}</div>
-        <DmedChat locale={locale} />
+        <ClientChat locale={locale} />
         <VisitPulse />
         </UiLocaleProvider>
       </body>

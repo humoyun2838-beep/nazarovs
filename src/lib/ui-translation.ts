@@ -6,10 +6,19 @@ import { translationKey, type TranslationRow } from "@/lib/translation-format";
 const UI = ui as Record<string,TranslationRow>;
 const CATALOG = catalog as Record<string,TranslationRow>;
 const OVERRIDES = overrides as Record<string,Partial<TranslationRow>>;
-const TARGETS = Object.fromEntries((["uz","ru","en","kaa"] as Locale[]).map(locale=>[locale,new Set([...Object.values(UI),...Object.values(CATALOG)].map(row=>translationKey(row[locale])))])) as Record<Locale,Set<string>>;
+// Build only the active language index; the other three dictionaries need no work.
+const targets = new Map<Locale, Set<string>>();
+function localeTargets(locale: Locale) {
+  let index = targets.get(locale);
+  if (!index) {
+    index = new Set([...Object.values(UI), ...Object.values(CATALOG)].map(row => translationKey(row[locale])));
+    targets.set(locale, index);
+  }
+  return index;
+}
 export function translateUi(text: string, locale: Locale) {
   const key=translationKey(text);
-  if (!OVERRIDES[key]?.[locale] && TARGETS[locale].has(key)) return text;
+  if (!OVERRIDES[key]?.[locale] && localeTargets(locale).has(key)) return text;
   const translated=OVERRIDES[key]?.[locale] || (UI[key]||CATALOG[key])?.[locale];
   if (!translated) return text;
   return `${/^\s/.test(text)?" ":""}${translated}${/\s$/.test(text)?" ":""}`;

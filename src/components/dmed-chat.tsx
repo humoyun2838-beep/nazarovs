@@ -245,9 +245,9 @@ function formatClock(iso: string, locale: Lang) {
   );
 }
 
-export function DmedChat({ locale = "uz" }: { locale?: Lang }) {
+export function DmedChat({ locale = "uz", initialOpen = false }: { locale?: Lang; initialOpen?: boolean }) {
   const pathname = usePathname() || "/";
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(initialOpen);
   const [lang, setLang] = useState<Lang>(locale);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("+998");

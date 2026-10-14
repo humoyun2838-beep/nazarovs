@@ -42,6 +42,7 @@ export function AdminCatalog({
   const copy = uiCopy(locale);
   const router = useRouter();
   const [query, setQuery] = useState("");
+  const [expanded, setExpanded] = useState<Set<number>>(() => new Set());
   const [busyKey, setBusyKey] = useState("");
   const [error, setError] = useState("");
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -192,6 +193,8 @@ export function AdminCatalog({
         <div className="space-y-4">
           {filtered.map(({ category, materials }) => {
             const catIndex = groups.findIndex((g) => g.category.id === category.id);
+            const ids = materials.map((row) => row.id);
+            const isExpanded = Boolean(query.trim()) || expanded.has(category.id);
             const catBusy = busyKey === `c-${category.id}`;
             return (
             <div
@@ -222,6 +225,7 @@ export function AdminCatalog({
                     ) : (
                       <>
                         <Link
+                          prefetch={false}
                           href={`/b/${category.slug}`}
                           className="font-medium hover:underline"
                         >
@@ -288,9 +292,12 @@ export function AdminCatalog({
                   ><UiText>{" O‘chirish "}</UiText></Button>
                 </div>
               </div>
-              <ul className="space-y-2">
+              <Button type="button" variant="outline" aria-expanded={isExpanded}
+                onClick={() => setExpanded(previous => { const next = new Set(previous); if (next.has(category.id)) next.delete(category.id); else next.add(category.id); return next; })}>
+                <UiText>{"Materiallar"}</UiText> ({materials.length}) {isExpanded ? "−" : "+"}
+              </Button>
+              {isExpanded ? <ul className="mt-3 space-y-2">
                 {materials.map((material, index) => {
-                  const ids = materials.map((row) => row.id);
                   const rowBusy = busyKey === `m-${material.id}`;
                   return (
                   <li
@@ -302,6 +309,7 @@ export function AdminCatalog({
                         {index + 1}.
                       </span>
                       <Link
+                          prefetch={false}
                         href={`/m/${material.slug}`}
                         className="min-w-0 flex-1 text-sm hover:underline"
                       >
@@ -319,7 +327,7 @@ export function AdminCatalog({
                         type="button"
                         variant="outline"
                         size="sm"
-                        disabled={rowBusy || index === 0}
+                        disabled={rowBusy || index === 0 || Boolean(query.trim())}
                         onClick={() =>
                           void moveMaterial(category.id, ids, index, -1)
                         }
@@ -328,13 +336,13 @@ export function AdminCatalog({
                         type="button"
                         variant="outline"
                         size="sm"
-                        disabled={rowBusy || index === materials.length - 1}
+                        disabled={rowBusy || index === materials.length - 1 || Boolean(query.trim())}
                         onClick={() =>
                           void moveMaterial(category.id, ids, index, 1)
                         }
                       ><UiText>{" Pastga "}</UiText></Button>
                       <Button asChild variant="outline" size="sm">
-                        <Link href={`/admin/materials/${material.id}/edit`}><UiText>{" Tahrirlash "}</UiText></Link>
+                        <Link prefetch={false} href={`/admin/materials/${material.id}/edit`}><UiText>{" Tahrirlash "}</UiText></Link>
                       </Button>
                       <Button
                         type="button"
@@ -352,7 +360,7 @@ export function AdminCatalog({
                 {materials.length === 0 ? (
                   <li className="text-sm text-[#7a7166]"><UiText>{" Material yo‘q — yuqoridan qo‘shing "}</UiText></li>
                 ) : null}
-              </ul>
+              </ul> : null}
             </div>
             );
           })}

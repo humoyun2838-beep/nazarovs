@@ -37,6 +37,10 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        source: "/art/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" }],
+      },
+      {
         source: "/nazarov-bg.webp",
         headers: [
           {

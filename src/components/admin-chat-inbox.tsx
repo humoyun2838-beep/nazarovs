@@ -205,7 +205,7 @@ export function AdminChatInbox({
 
   useEffect(() => {
     loadList();
-    const id = window.setInterval(loadList, 4000);
+    const id = window.setInterval(() => { if (!document.hidden) loadList(); }, 4000);
     return () => window.clearInterval(id);
   }, []);
 
@@ -220,7 +220,7 @@ export function AdminChatInbox({
     if (!active) return;
     lastMsgId.current = 0;
     loadThread(active, false);
-    const id = window.setInterval(() => loadThread(active, true), 2500);
+    const id = window.setInterval(() => { if (!document.hidden) loadThread(active, true); }, 2500);
     return () => window.clearInterval(id);
   }, [active]);
 

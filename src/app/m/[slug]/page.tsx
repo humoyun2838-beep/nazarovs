@@ -105,9 +105,10 @@ export default async function MaterialPage({ params }: PageProps) {
   );
 
   const linkMap: Record<string, string> = {};
+  const linkedContent = `${material.content}\n${content}`.toLowerCase();
   for (const row of allMaterials) {
     for (const key of notionKeys(row.sourceUrl || "")) {
-      linkMap[key] = row.slug;
+      if (linkedContent.includes(key)) linkMap[key] = row.slug;
     }
   }
 

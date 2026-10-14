@@ -243,13 +243,13 @@ export function OperatorDesk({
 
   useEffect(() => {
     void loadList(query);
-    const timer = window.setInterval(() => void loadList(query), 8000);
+    const timer = window.setInterval(() => { if (!document.hidden) void loadList(query); }, 8000);
     return () => window.clearInterval(timer);
   }, [loadList, query]);
 
   useEffect(() => {
     if (!activeId) return;
-    const timer = window.setInterval(() => void openThread(activeId), 8000);
+    const timer = window.setInterval(() => { if (!document.hidden) void openThread(activeId); }, 8000);
     return () => window.clearInterval(timer);
   }, [activeId, openThread]);
 
