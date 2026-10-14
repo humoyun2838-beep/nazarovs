@@ -10,6 +10,7 @@ COPY . .
 RUN mkdir -p /app/seed /tmp/nazarov-build \
   && cp data/nazarov.db /app/seed/nazarov.db \
   && cp data/nazarov.db /tmp/nazarov-build/nazarov.db \
+  && DATA_DIR=/tmp/nazarov-build NODE_ENV=production node --no-warnings --loader ./scripts/alias-loader.mjs --input-type=module -e "import { sqlite } from './src/db/index.ts'; sqlite.close();" \
   && DATA_DIR=/tmp/nazarov-build NODE_ENV=production npm run build
 
 FROM node:24-bookworm-slim AS runner

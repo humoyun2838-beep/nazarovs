@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   serverExternalPackages: ["better-sqlite3"],
   experimental: {
+    // Avoid dozens of concurrent SQLite initializers on Railway build machines.
+    cpus: 2,
     proxyClientMaxBodySize: "50mb",
     staleTimes: {
       dynamic: 30,
