@@ -6,6 +6,7 @@ import { compareSync, hashSync } from "bcryptjs";
 import { groupDmedMaterials } from "@/lib/dmed-group";
 import { dataDir as resolveDataDir } from "@/lib/data-dir";
 import * as schema from "./schema";
+import { installCatalogRevision } from "./catalog-revision";
 
 const dataDir = resolveDataDir();
 const dbPath = path.join(dataDir, "nazarov.db");
@@ -365,6 +366,7 @@ function createDb() {
 
   const drizzleDb = drizzle(sqlite, { schema });
   seedIfEmpty(sqlite, drizzleDb);
+  installCatalogRevision(sqlite);
   return { db: drizzleDb, sqlite };
   }).immediate();
 }

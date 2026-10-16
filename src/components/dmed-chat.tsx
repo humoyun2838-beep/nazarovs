@@ -863,6 +863,7 @@ export function DmedChat({ locale = "uz", initialOpen = false }: { locale?: Lang
               ) : null}
               {canSend ? (
                 <form
+                  data-auto-update-busy={busy || recording}
                   className="flex items-end gap-1.5 border-t border-[#eee] px-2.5 py-3"
                   onSubmit={onSend}
                 >

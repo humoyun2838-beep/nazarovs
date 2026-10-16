@@ -83,6 +83,7 @@ export function CategoryCreateForm({ locale = "uz" }: { locale?: Locale }) {
   return (
     <form
       ref={formRef}
+      aria-busy={pending}
       className="grid gap-3 rounded-2xl border border-white/30 bg-white/95 p-5 shadow-sm"
       onSubmit={async (event) => {
         event.preventDefault();
@@ -210,6 +211,7 @@ function MaterialFields({
   return (
     <form
       encType="multipart/form-data"
+      aria-busy={pending}
       className="grid gap-4"
       onSubmit={(event) => {
         event.preventDefault();

@@ -78,6 +78,7 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith("/favicon") ||
     pathname === "/robots.txt" ||
     pathname === "/sitemap.xml" ||
+    pathname === "/api/app-version" ||
     pathname.includes(".")
   ) {
     return nextWithClientIp(request);

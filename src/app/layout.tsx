@@ -9,6 +9,8 @@ import { BRAND_APPLE_ICON, BRAND_FAVICON, BRAND_FAVICON_16, BRAND_LOGO, BRAND_MA
 import { canonicalOrigin } from "@/lib/site";
 import "./globals.css";
 import { UiLocaleProvider } from "@/components/ui-locale";
+import { AppUpdates } from "@/components/app-updates";
+import { getAppVersion } from "@/lib/app-version";
 
 const publishedOrigin = canonicalOrigin();
 
@@ -88,6 +90,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <div className="page-shell">{children}</div>
         <ClientChat locale={locale} />
         <VisitPulse />
+        <AppUpdates initialVersion={getAppVersion()} />
         </UiLocaleProvider>
       </body>
     </html>

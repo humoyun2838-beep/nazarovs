@@ -2,6 +2,7 @@ import { unstable_cache } from "next/cache";
 import { asc, eq, sql } from "drizzle-orm";
 import { db } from "@/db";
 import { categories, materials } from "@/db/schema";
+import { getCatalogRevision } from "@/lib/app-version";
 
 /** Read helpers live outside `"use server"` so list pages stay light. */
 
@@ -9,11 +10,11 @@ export function getCategories() {
   return db.select().from(categories).orderBy(asc(categories.sortOrder)).all();
 }
 
-export const getCategoriesCached = unstable_cache(
+export const getCategoriesCached = () => unstable_cache(
   async () => getCategories(),
-  ["categories"],
+  ["categories", getCatalogRevision()],
   { revalidate: 180, tags: ["catalog"] },
-);
+)();
 
 export function getCategoryBySlug(slug: string) {
   return db
@@ -27,7 +28,7 @@ export function getCategoryBySlug(slug: string) {
 export const getCategoryBySlugCached = (slug: string) =>
   unstable_cache(
     async () => getCategoryBySlug(slug),
-    ["category", slug],
+    ["category", slug, getCatalogRevision()],
     { revalidate: 180, tags: ["catalog"] },
   )();
 
@@ -67,7 +68,7 @@ export function getMaterialLinksByCategory(categoryId: number) {
 export const getMaterialLinksByCategoryCached = (categoryId: number) =>
   unstable_cache(
     async () => getMaterialLinksByCategory(categoryId),
-    ["material-links", String(categoryId)],
+    ["material-links", String(categoryId), getCatalogRevision()],
     { revalidate: 180, tags: ["catalog"] },
   )();
 
@@ -83,7 +84,7 @@ export function getMaterialBySlug(slug: string) {
 export const getMaterialBySlugCached = (slug: string) =>
   unstable_cache(
     async () => getMaterialBySlug(slug),
-    ["material", slug],
+    ["material", slug, getCatalogRevision()],
     { revalidate: 180, tags: ["catalog"] },
   )();
 
@@ -114,11 +115,11 @@ export function getMaterialSourceLinkMap() {
     .all();
 }
 
-export const getMaterialSourceLinkMapCached = unstable_cache(
+export const getMaterialSourceLinkMapCached = () => unstable_cache(
   async () => getMaterialSourceLinkMap(),
-  ["material-source-map"],
+  ["material-source-map", getCatalogRevision()],
   { revalidate: 180, tags: ["catalog"] },
-);
+)();
 
 export function getMaterialCardMap() {
   const rows = db
