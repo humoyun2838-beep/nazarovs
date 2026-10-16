@@ -21,7 +21,7 @@ jobs:
           gradle-version: '8.11.1'
       - name: Build and lint all three apps
         working-directory: mobile/android
-        run: gradle --no-daemon :app:assembleRelease :app:assembleDebug :app:lintRelease
+        run: gradle --no-daemon :app:assembleRelease :app:assembleDebug :app:lintMijozRelease :app:lintAdminRelease :app:lintOperatorRelease
       - name: Prepare unsigned APKs and signing tool
         run: |
           mkdir -p android-output
