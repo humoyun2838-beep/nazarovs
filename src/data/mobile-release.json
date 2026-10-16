@@ -1,11 +1,11 @@
 {
-  "latest_version": "1.0.0",
-  "version_code": 1,
+  "latest_version": "1.1.0",
+  "version_code": 2,
   "minimum_version": 1,
   "force_update": false,
-  "apk_url": "https://raw.githubusercontent.com/humoyun2838-beep/nazarovs/9fe7f63941cb713efa8a0cbf2d8dff406c60e60e/releases/android/DMED-Mijoz.apk",
-  "sha256": "5f6245874ca1ca87538e656396593d24c54b3ea9814ef9da95b709ded0d2fb82",
-  "apk_size": 21119,
-  "release_notes": "DMED Mijoz: darslar, videolar va yordamchi chat.",
+  "apk_url": "https://raw.githubusercontent.com/humoyun2838-beep/nazarovs/051910852c636e15054aef4668dd3d67ecf5ce3c/releases/android/DMED-Mijoz.apk",
+  "sha256": "4183ecb83d3945c0889fdcea4653c8089da5505153a5266f8d8a6edbcc293176",
+  "apk_size": 33407,
+  "release_notes": "Ilova ichidan xavfsiz APK yangilash\nYuklash foizi va qayta urinish\nMajburiy va ixtiyoriy yangilanish\nYorug‘ va qorong‘i yangilanish oynasi\nAPK SHA-256, paket, versiya va imzo tekshiruvi",
   "package_name": "uz.dmed.mobile.mijoz"
 }

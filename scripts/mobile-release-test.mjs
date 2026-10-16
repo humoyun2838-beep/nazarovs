@@ -9,10 +9,10 @@ assert.equal(updateRequired({...release, version_code:2, minimum_version:2},1),t
 assert.equal(updateRequired({...release, version_code:2, force_update:true},1),true);
 assert.equal(updateRequired({...release, version_code:2, force_update:true},2),false);
 assert.equal(updateRequired({...release, version_code:10},2),false);
-for(const [key,value] of [['version_code',0],['version_code',1.5],['version_code','2'],['minimum_version',2],['force_update','false'],['sha256','bad'],['apk_size',134217729],['release_notes',''],['package_name','evil.app'],['latest_version','latest']])assert.throws(()=>parseMobileRelease({...defaults,[key]:value}),key);
-for(const url of [defaults.apk_url.replace('https:','http:'),defaults.apk_url.replace('raw.githubusercontent.com','evil.example'),defaults.apk_url.replace('9fe7f63941cb713efa8a0cbf2d8dff406c60e60e','main'),defaults.apk_url+'?x=y',defaults.apk_url+'#x',defaults.apk_url.replace('.com/','.com:443/'),defaults.apk_url.replace('https://','https://user:password@')])assert.equal(trustedApkUrl(url),false,url);
-const apk=fs.readFileSync(process.env.APK_FIXTURE || '../../exports/dmed-android/DMED-Mijoz.apk');
-assert.deepEqual(inspectApk(apk),{packageName:'uz.dmed.mobile.mijoz',versionCode:Number(process.env.APK_CODE||1),versionName:process.env.APK_VERSION||'1.0.0',debuggable:false});
+for(const [key,value] of [['version_code',0],['version_code',1.5],['version_code','2'],['minimum_version',defaults.version_code+1],['force_update','false'],['sha256','bad'],['apk_size',134217729],['release_notes',''],['package_name','evil.app'],['latest_version','latest']])assert.throws(()=>parseMobileRelease({...defaults,[key]:value}),key);
+for(const url of [defaults.apk_url.replace('https:','http:'),defaults.apk_url.replace('raw.githubusercontent.com','evil.example'),defaults.apk_url.replace(/\/[a-f0-9]{40}\//,'/main/'),defaults.apk_url+'?x=y',defaults.apk_url+'#x',defaults.apk_url.replace('.com/','.com:443/'),defaults.apk_url.replace('https://','https://user:password@')])assert.equal(trustedApkUrl(url),false,url);
+const apk=fs.readFileSync(process.env.APK_FIXTURE || 'releases/android/DMED-Mijoz.apk');
+assert.deepEqual(inspectApk(apk),{packageName:'uz.dmed.mobile.mijoz',versionCode:Number(process.env.APK_CODE||defaults.version_code),versionName:process.env.APK_VERSION||defaults.latest_version,debuggable:false});
 assert.throws(()=>inspectApk(Buffer.from('not an APK')));
 assert.throws(()=>inspectApk(apk.subarray(0,apk.length-30)));
 console.log('PASS: version codes, force/minimum rules, URL allowlist, release input validation, real APK binary manifest, truncated/corrupt APKs');

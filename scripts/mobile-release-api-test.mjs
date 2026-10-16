@@ -13,7 +13,7 @@ r=await fetch(base+'/api/admin/mobile-release',{headers:admin});assert.equal(r.s
 r=await fetch(base+'/api/admin/mobile-release',{method:'PUT',headers:{...admin,Origin:'https://evil.example'},body:JSON.stringify(defaults)});assert.equal(r.status,403);
 r=await fetch(base+'/api/admin/mobile-release',{method:'PUT',headers:admin,body:JSON.stringify({...defaults,apk_url:'http://127.0.0.1/private.apk'})});assert.equal(r.status,400);
 r=await fetch(base+'/api/admin/mobile-release',{method:'PUT',headers:admin,body:JSON.stringify({...defaults,sha256:'0'.repeat(64)})});assert.equal(r.status,400);assert.match((await r.json()).error,/SHA-256/);
-r=await fetch(base+'/api/admin/mobile-release',{method:'PUT',headers:admin,body:JSON.stringify({...defaults,version_code:2,latest_version:'1.1.0'})});assert.equal(r.status,400);assert.match((await r.json()).error,/versiya/);
+r=await fetch(base+'/api/admin/mobile-release',{method:'PUT',headers:admin,body:JSON.stringify({...defaults,version_code:defaults.version_code+1,latest_version:'9.9.9'})});assert.equal(r.status,400);assert.match((await r.json()).error,/versiya/);
 r=await fetch(base+'/api/admin/mobile-release',{method:'PUT',headers:admin,body:JSON.stringify(defaults)});assert.equal(r.status,200,await r.text());
 r=await fetch(base+'/api/mobile-release');const saved=await r.json();assert.equal(saved.sha256,defaults.sha256);assert.equal(saved.version_code,defaults.version_code);
 console.log('PASS: public metadata, admin-only control, CSRF origin, untrusted URL, bad SHA, mismatched APK version, verified release save');

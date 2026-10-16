@@ -65,6 +65,8 @@ PY
     adb shell svc wifi disable
     adb shell svc data disable
     adb shell cmd connectivity airplane-mode enable
+    sleep 5
+    adb shell dumpsys connectivity > android-output/offline-connectivity.txt
     adb shell input tap "$update_x" "$update_y"
     sleep 23
     dump_ui android-output/update-offline.xml

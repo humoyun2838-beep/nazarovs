@@ -1,0 +1,16 @@
+DMED Mijoz 1.1.0 (versionCode 2)
+
+1. DMED-Mijoz.apk faylini Android telefoningizda oching.
+2. Android so‘rasa, brauzerdan APK o‘rnatishga ruxsat bering.
+3. Eski DMED Mijoz ilovasini o‘chirmasdan ustiga o‘rnating.
+4. Ilovadagi ↑ tugmasi APK yangilanishlarini tekshiradi.
+5. Keyingi versiya chiqqanda oyna ochiladi: Hozir yangilash yoki Keyinroq.
+6. Keyingi APKni ilovaning o‘zidan o‘rnatishda Android shu ilovadan o‘rnatishga ruxsat so‘rashi mumkin.
+
+Saytdagi dars va dizayn avtomatik yangilanadi. APK yangilanishini Android oynasida foydalanuvchi tasdiqlaydi.
+Internet kerak. Android 8 yoki yangiroq.
+Paket nomi va imzo avvalgi ilova bilan bir xil.
+
+Admin: https://nazarovs-production.up.railway.app/admin/app-updates
+Emulyator sinovi: https://github.com/humoyun2838-beep/nazarovs/actions/runs/38888926209
+Haqiqiy telefondagi o‘rnatish, login, video va mikrofon hali alohida tekshirilmagan.
