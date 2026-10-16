@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 mkdir -p android-output
+dmed_adb_executable="$(command -v adb)"
+adb(){ timeout 45s "$dmed_adb_executable" "$@"; }
 package=uz.dmed.mobile.mijoz
 trap 'adb logcat -d > android-output/offline-diagnostics.log; adb exec-out screencap -p > android-output/offline-last-screen.png' EXIT
 sleep 20
@@ -18,16 +20,12 @@ for attempt in $(seq 1 12); do
   adb logcat -d -s DMED_OFFLINE_TEST:I > android-output/offline-first-launch.log
   if grep -q 'DMED_OFFLINE_READY:26:711' android-output/offline-first-launch.log; then break;fi
 done
-adb shell uiautomator dump /sdcard/offline.xml
-adb pull /sdcard/offline.xml android-output/offline-first-launch.xml
 adb logcat -d -s DMED_OFFLINE_TEST:I > android-output/offline-first-launch.log
 grep -q 'DMED_OFFLINE_READY:26:711' android-output/offline-first-launch.log
 adb exec-out screencap -p > android-output/offline-first-launch.png
 adb shell am force-stop "$package"
 adb shell am start -W -n "$package/uz.dmed.mobile.MainActivity" --ez offline_test true --es offline_lesson login-to-system-uz
 sleep 12
-adb shell uiautomator dump /sdcard/offline.xml
-adb pull /sdcard/offline.xml android-output/offline-text.xml
 adb logcat -d -s DMED_OFFLINE_TEST:I > android-output/offline-text.log
 grep -q 'DMED_OFFLINE_TEXT:Tizimga kirish' android-output/offline-text.log
 adb exec-out screencap -p > android-output/offline-text.png
