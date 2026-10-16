@@ -2,6 +2,16 @@
 set -euo pipefail
 mkdir -p android-output
 adb logcat -c
+dump_ui() {
+  local target="$1"
+  adb shell rm -f /sdcard/dmed-update-ui.xml
+  for attempt in 1 2 3 4; do
+    adb shell uiautomator dump --compressed /sdcard/dmed-update-ui.xml
+    if adb pull /sdcard/dmed-update-ui.xml "$target" && [ -s "$target" ]; then return 0; fi
+    sleep 2
+  done
+  return 1
+}
 trap 'adb logcat -d -s DMED:E chromium:E AndroidRuntime:E > android-output/web-errors.txt; adb exec-out screencap -p > android-output/last-screen.png' EXIT
 curl -IL --max-time 30 'https://nazarovs-production.up.railway.app/nazarov?lang=uz' > android-output/server-headers.txt
 adb shell cmd connectivity airplane-mode disable
@@ -17,8 +27,7 @@ for role in mijoz admin operator; do
   adb shell am start -W -n "$package/uz.dmed.mobile.MainActivity"
   sleep 18
   adb shell dumpsys activity activities | grep -F "$package"
-  adb shell uiautomator dump /sdcard/window.xml
-  adb pull /sdcard/window.xml "android-output/$role-ui.xml"
+  dump_ui "android-output/$role-ui.xml"
   if grep -q 'Sahifa ochilmadi' "android-output/$role-ui.xml"; then echo "Network error: $role"; exit 1; fi
   adb exec-out screencap -p > "android-output/$role-screen.png"
   adb logcat -d -s DMED_SMOKE:I > "android-output/$role-dom-check.txt"
@@ -28,14 +37,12 @@ done
 for required in false true; do
   adb shell am start -W -n uz.dmed.mobile.mijoz/uz.dmed.mobile.MainActivity --ez update_preview true --ez update_required "$required"
   sleep 4
-  adb shell uiautomator dump /sdcard/update.xml
-  adb pull /sdcard/update.xml "android-output/update-$required.xml"
+  dump_ui "android-output/update-$required.xml"
   grep -q 'Hozir yangilash' "android-output/update-$required.xml"
   if [ "$required" = false ]; then grep -q 'Keyinroq' "android-output/update-$required.xml"; else
     if grep -q 'Keyinroq' "android-output/update-$required.xml"; then exit 1; fi
     adb shell input keyevent KEYCODE_BACK
-    adb shell uiautomator dump /sdcard/update-required-back.xml
-    adb pull /sdcard/update-required-back.xml android-output/update-required-back.xml
+    dump_ui android-output/update-required-back.xml
     grep -q 'Hozir yangilash' android-output/update-required-back.xml
   fi
   adb exec-out screencap -p > "android-output/update-$required.png"
@@ -50,8 +57,7 @@ PY
     )
     adb shell input tap "$update_x" "$update_y"
     sleep 15
-    adb shell uiautomator dump /sdcard/update-rejected.xml
-    adb pull /sdcard/update-rejected.xml android-output/update-rejected.xml
+    dump_ui android-output/update-rejected.xml
     grep -q 'APK paketi yoki versiyasi mos emas' android-output/update-rejected.xml
     grep -q 'Qayta urinish' android-output/update-rejected.xml
     adb exec-out screencap -p > android-output/update-rejected.png
@@ -61,8 +67,7 @@ PY
     adb shell cmd connectivity airplane-mode enable
     adb shell input tap "$update_x" "$update_y"
     sleep 23
-    adb shell uiautomator dump /sdcard/update-offline.xml
-    adb pull /sdcard/update-offline.xml android-output/update-offline.xml
+    dump_ui android-output/update-offline.xml
     grep -q 'Internet va telefondagi' android-output/update-offline.xml
     grep -q 'Qayta urinish' android-output/update-offline.xml
     adb exec-out screencap -p > android-output/update-offline.png
