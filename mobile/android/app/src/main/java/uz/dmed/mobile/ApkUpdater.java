@@ -13,6 +13,8 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
+import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -71,7 +73,7 @@ public final class ApkUpdater {
         io.execute(()->{
             try {
                 HttpsURLConnection c=(HttpsURLConnection)new URL(MainActivity.ORIGIN+"/api/mobile-release").openConnection();connection=c;
-                c.setInstanceFollowRedirects(false);c.setConnectTimeout(10000);c.setReadTimeout(10000);c.setRequestProperty("Cache-Control","no-cache");
+                c.setInstanceFollowRedirects(false);c.setUseCaches(false);c.setConnectTimeout(10000);c.setReadTimeout(10000);c.setRequestProperty("Cache-Control","no-cache");
                 String json;
                 try {if(c.getResponseCode()!=200)throw new Exception("Server javob bermadi.");try(InputStream in=c.getInputStream();ByteArrayOutputStream out=new ByteArrayOutputStream()){byte[] b=new byte[2048];int n;while((n=in.read(b))!=-1){if(out.size()+n>16000)throw new Exception("Javob juda katta.");out.write(b,0,n);}json=out.toString("UTF-8");}}
                 finally {c.disconnect();connection=null;}
@@ -114,7 +116,7 @@ public final class ApkUpdater {
         box.addView(text("YANGILIKLAR",11,blue));
         TextView notes=text(shown.notes,14,foreground);ScrollView notesScroll=new ScrollView(activity);notesScroll.addView(notes);box.addView(notesScroll,new LinearLayout.LayoutParams(-1,dp(140)));
         progress=new ProgressBar(activity,null,android.R.attr.progressBarStyleHorizontal);progress.setMax(100);progress.setProgressTintList(ColorStateList.valueOf(blue));progress.setVisibility(View.GONE);box.addView(progress,new LinearLayout.LayoutParams(-1,dp(7)));
-        status=text(String.format(java.util.Locale.ROOT,"%.1f MB · SHA-256 va imzo tekshiriladi",shown.size/1048576.0),12,muted);box.addView(status);
+        status=text((shown.size<1048576?String.format(java.util.Locale.ROOT,"%.0f KB",shown.size/1024.0):String.format(java.util.Locale.ROOT,"%.1f MB",shown.size/1048576.0))+" · SHA-256 va imzo tekshiriladi",12,muted);box.addView(status);
         update=new Button(activity);update.setText("Hozir yangilash");update.setAllCaps(false);update.setTextColor(Color.WHITE);update.setTextSize(16);update.setBackground(rounded(blue,16));LinearLayout.LayoutParams button=new LinearLayout.LayoutParams(-1,dp(52));button.topMargin=dp(12);box.addView(update,button);update.setOnClickListener(v->{try{File ready=readyFile();if(ready.isFile())verifyAndInstall();else download();}catch(Exception e){showError("Telefonda bo‘sh joyni tekshiring.");}});
         later=new Button(activity);later.setText("Keyinroq");later.setAllCaps(false);later.setTextColor(muted);later.setBackgroundColor(Color.TRANSPARENT);later.setVisibility(required?View.GONE:View.VISIBLE);box.addView(later,new LinearLayout.LayoutParams(-1,dp(44)));later.setOnClickListener(v->{cancelled=true;if(connection!=null)connection.disconnect();preferences.edit().putInt("later_code",shown.code).putLong("later_until",System.currentTimeMillis()+86400000L).apply();dialog.dismiss();dialog=null;});
         dialog=new AlertDialog.Builder(activity).setView(box).create();dialog.setCancelable(false);dialog.setCanceledOnTouchOutside(false);dialog.show();
@@ -128,6 +130,9 @@ public final class ApkUpdater {
         else Toast.makeText(activity,message,Toast.LENGTH_LONG).show();
     }
     private void download(){
+        ConnectivityManager network=(ConnectivityManager)activity.getSystemService(Activity.CONNECTIVITY_SERVICE);
+        NetworkCapabilities capabilities=network==null?null:network.getNetworkCapabilities(network.getActiveNetwork());
+        if(capabilities==null||!capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)){showError("Internet va telefondagi bo‘sh joyni tekshiring, so‘ng qayta urining.");return;}
         if(working||shown==null)return;working=true;cancelled=false;update.setEnabled(false);later.setEnabled(false);progress.setVisibility(View.VISIBLE);progress.setProgress(0);status.setText("APK yuklanmoqda… 0%");
         UpdatePolicy release=shown;
         io.execute(()->{
@@ -135,7 +140,7 @@ public final class ApkUpdater {
             try {
                 readyFile();
                 if(!UpdatePolicy.trustedUrl(release.url))throw new Exception("Ishonchsiz APK manbasi.");
-                HttpsURLConnection c=(HttpsURLConnection)new URL(release.url).openConnection();connection=c;c.setInstanceFollowRedirects(false);c.setConnectTimeout(15000);c.setReadTimeout(20000);
+                HttpsURLConnection c=(HttpsURLConnection)new URL(release.url).openConnection();connection=c;c.setInstanceFollowRedirects(false);c.setUseCaches(false);c.setRequestProperty("Cache-Control","no-cache");c.setConnectTimeout(15000);c.setReadTimeout(20000);
                 long total=0;int last=-1;
                 try {
                     if(c.getResponseCode()!=200)throw new Exception("APK yuklanmadi. Havolani tekshiring.");
