@@ -1,0 +1,20 @@
+DMED — 3 ta Android ilova
+
+1. DMED-Mijoz.apk — o‘quv materiallari va mijoz chati.
+2. DMED-Admin.apk — admin paneli. Admin login va paroli kerak.
+3. DMED-Operator.apk — operator chati. Admin bergan operator hisobi kerak.
+
+Android 8.0 yoki yangiroq telefonlarda ishlaydi. Internet kerak.
+Uchala ilovani bir telefonga alohida-alohida o‘rnatish mumkin.
+
+APK faylni telefoningizga ko‘chiring va faylni oching.
+Telefon so‘rasa, shu faylni ochayotgan dasturga ilova o‘rnatish ruxsatini bering.
+Keyin “O‘rnatish / Установить / Install” tugmasini bosing.
+
+Mijoz ilovasida darslar login talab qilmaydi.
+Admin va operator hisobi odatdagi sayt hisoblari bilan ishlaydi.
+Ovozli xabar yuborishda mikrofon ruxsati so‘raladi.
+Orqaga, bosh sahifa va yangilash tugmalari yuqorida joylashgan.
+
+Saytdagi darslar va boshqa ma’lumotlar serverdan yangilanadi.
+Bu Android APKlar iPhone’da o‘rnatilmaydi.
