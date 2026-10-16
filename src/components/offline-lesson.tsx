@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { parseContent } from "./material-body";
 
-export function OfflineLesson({title,slug,content,linkMap,locale}:{title:string;slug:string;content:string;linkMap:Record<string,string>;locale:string}) {
+export function OfflineLesson({title,slug,content,linkMap,locale,coverImage}:{title:string;slug:string;content:string;linkMap:Record<string,string>;locale:string;coverImage?:string}) {
   const [busy,setBusy]=useState(false),[status,setStatus]=useState("");
   async function save() {
     setBusy(true);
@@ -14,7 +14,7 @@ export function OfflineLesson({title,slug,content,linkMap,locale}:{title:string;
       await navigator.serviceWorker.register('/dmed-offline-sw.js',{scope:'/'});
       await navigator.serviceWorker.ready;
       await navigator.storage?.persist?.();
-      const blocks=parseContent(content,linkMap), media=await caches.open('dmed-offline-media-v1');
+      const blocks=parseContent(coverImage?`IMAGE::${coverImage}\n${content}`:content,linkMap), media=await caches.open('dmed-offline-media-v1');
       const saved=await caches.open(cacheName);
       let count=0;
       for (const block of blocks) {

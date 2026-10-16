@@ -107,7 +107,7 @@ function toPlayableSrc(raw: string, { proxy = false } = {}) {
     return hiResUrl(src);
   }
 
-  if (src.startsWith("/stickers/") || src.startsWith("/ai-") || src.startsWith("/nazarov-")) {
+  if (src.startsWith("/") && !src.startsWith("//")) {
     return src;
   }
 

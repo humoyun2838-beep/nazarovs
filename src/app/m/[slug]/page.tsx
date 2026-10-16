@@ -168,6 +168,8 @@ export default async function MaterialPage({ params }: PageProps) {
           </div>
 
           <LessonContent
+            key={`${material.slug}:${locale}`}
+            coverImage={material.imageUrl || undefined}
             needsTranslation={!localized.translated}
             tools={{slug:material.slug,title,locale,signedIn:Boolean(session),
               prev:prev?{slug:prev.slug,title:localizeCatalogTitle(prev.slug,prev.title,locale)}:null,
