@@ -149,7 +149,7 @@ public final class ApkUpdater {
                 verifyFile(part,release);
                 Files.move(part.toPath(),readyFile().toPath(),StandardCopyOption.REPLACE_EXISTING);
                 ui(()->{working=false;update.setEnabled(true);later.setEnabled(true);update.setText("O‘rnatish");status.setText("APK tekshirildi. O‘rnatishni telefonda tasdiqlang.");install();});
-            }catch(Exception e){part.delete();ui(()->{if(!cancelled)showError(e.getMessage()==null?"Yuklash tugamadi. Internetni tekshiring.":e.getMessage());else working=false;});}
+            }catch(Exception e){part.delete();ui(()->{if(!cancelled)showError(e instanceof java.io.IOException || e.getMessage()==null?"Yuklash tugamadi. Internet va telefondagi bo‘sh joyni tekshiring, so‘ng qayta urining.":e.getMessage());else working=false;});}
         });
     }
     private static byte[] digest(File file)throws Exception {MessageDigest digest=MessageDigest.getInstance("SHA-256");try(InputStream in=new FileInputStream(file)){byte[] b=new byte[32768];int n;while((n=in.read(b))!=-1)digest.update(b,0,n);}return digest.digest();}

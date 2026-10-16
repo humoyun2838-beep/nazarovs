@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
         s.setAllowFileAccess(false); s.setAllowContentAccess(true);
         s.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         s.setMediaPlaybackRequiresUserGesture(true);
-        s.setUserAgentString(s.getUserAgentString() + " DMEDAndroid/1.0 " + BuildConfig.FLAVOR);
+        s.setUserAgentString(s.getUserAgentString() + " DMEDAndroid/" + BuildConfig.VERSION_NAME + " DMEDCode/" + BuildConfig.VERSION_CODE + " " + BuildConfig.FLAVOR);
         CookieManager.getInstance().setAcceptCookie(true);
         CookieManager.getInstance().setAcceptThirdPartyCookies(web, false);
         WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG);

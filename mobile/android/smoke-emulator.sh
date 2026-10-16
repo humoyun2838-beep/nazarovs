@@ -39,6 +39,38 @@ for required in false true; do
     grep -q 'Hozir yangilash' android-output/update-required-back.xml
   fi
   adb exec-out screencap -p > "android-output/update-$required.png"
+  if [ "$required" = false ]; then
+    read -r update_x update_y < <(python3 - <<'PY'
+import xml.etree.ElementTree as ET,re
+root=ET.parse('android-output/update-false.xml')
+button=next(n for n in root.iter('node') if n.get('text')=='Hozir yangilash')
+x1,y1,x2,y2=map(int,re.findall(r'\d+',button.get('bounds')))
+print((x1+x2)//2,(y1+y2)//2)
+PY
+    )
+    adb shell input tap "$update_x" "$update_y"
+    sleep 15
+    adb shell uiautomator dump /sdcard/update-rejected.xml
+    adb pull /sdcard/update-rejected.xml android-output/update-rejected.xml
+    grep -q 'APK paketi yoki versiyasi mos emas' android-output/update-rejected.xml
+    grep -q 'Qayta urinish' android-output/update-rejected.xml
+    adb exec-out screencap -p > android-output/update-rejected.png
+    adb shell run-as uz.dmed.mobile.mijoz test ! -f cache/updates/update.apk
+    adb shell svc wifi disable
+    adb shell svc data disable
+    adb shell cmd connectivity airplane-mode enable
+    adb shell input tap "$update_x" "$update_y"
+    sleep 23
+    adb shell uiautomator dump /sdcard/update-offline.xml
+    adb pull /sdcard/update-offline.xml android-output/update-offline.xml
+    grep -q 'Internet va telefondagi' android-output/update-offline.xml
+    grep -q 'Qayta urinish' android-output/update-offline.xml
+    adb exec-out screencap -p > android-output/update-offline.png
+    adb shell cmd connectivity airplane-mode disable
+    adb shell svc wifi enable
+    adb shell svc data enable
+    sleep 8
+  fi
   adb shell am force-stop uz.dmed.mobile.mijoz
 done
 adb shell cmd uimode night yes
