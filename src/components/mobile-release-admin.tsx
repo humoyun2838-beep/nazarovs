@@ -19,10 +19,12 @@ export function MobileReleaseAdmin({ initial, locale }: { initial: MobileRelease
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
+  const [dark, setDark] = useState(false);
   function field(key: keyof MobileRelease, value: string | number | boolean) { setDraft(current => ({ ...current, [key]: value })); setMessage(""); }
   const inputStyle = "mt-2 min-h-12 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-base text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100";
   return (
-    <div className="space-y-6">
+    <div className={`${dark ? 'dark ' : ''}space-y-6`}>
+      <div className="flex justify-end"><button type="button" aria-pressed={dark} onClick={()=>setDark(value=>!value)} className="rounded-full border border-blue-200 bg-white px-4 py-2 text-sm font-medium text-blue-900">{dark ? '☀ ' : '☾ '}{({uz:dark?'Yorug‘ rejim':'Qorong‘i rejim',ru:dark?'Светлая тема':'Тёмная тема',en:dark?'Light mode':'Dark mode',kaa:dark?'Jarıq rejim':'Qarańǵı rejim'})[locale]}</button></div>
       <section className="rounded-3xl bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-600 p-6 text-white shadow-xl sm:p-8">
         <Smartphone className="mb-4 size-10 rounded-2xl bg-white/15 p-2" />
         <p className="text-sm text-blue-100">{t[0]}</p>

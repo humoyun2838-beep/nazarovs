@@ -21,3 +21,10 @@ Mavjud volume bazasi qayta deploy vaqtida almashtirilmaydi.
 
 Node.js 24 bilan `npm ci --ignore-scripts=false`, `npm run build`, `npm start`.
 `.env.example` asosida shaxsiy `.env` tayyorlang. Maxfiy fayllar GitHub‘ga yuborilmaydi.
+
+## Android yangilanishlari
+
+Admin boshqaruvi: `/admin/app-updates`. Ommaviy nashr API: `/api/mobile-release`.
+Sayt versiyasi va APK versiyasi alohida tekshiriladi. Android 1.1.0 va keyingi
+mijoz ilovalari native yangilash oynasi, hash va imzo tekshiruvini qo'llaydi.
+Yig'ish, imzolash va keyingi nashrlar: [Android release guide](mobile/android/RELEASE-GUIDE.md).
