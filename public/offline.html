@@ -1,0 +1,21 @@
+<!doctype html><html lang="uz"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DMED • Saqlangan darslar</title><style>body{margin:0;background:linear-gradient(130deg,#eff6ff,#f0fdfa);color:#12294b;font:17px system-ui}main{max-width:850px;margin:auto;padding:24px}a{color:#135cc7}header,article,section{background:white;border:1px solid #cde1ff;border-radius:22px;padding:22px;margin:16px 0;box-shadow:0 12px 35px #163f6c0c}h1{font-size:30px}img,video{max-width:100%;border-radius:14px}video{width:100%;background:#101b31}p{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7}button{border:0;border-radius:12px;background:#e7efff;color:#164b95;padding:12px;cursor:pointer}small{display:block;color:#527095;margin:12px 0}</style><main><header><a href="/nazarov">DMED Akademiya</a> · <a href="/offline.html">Saqlangan darslar</a><h1>Internetsiz ta’lim</h1><p>Dars, rasm va videolar shu qurilmaga saqlanadi. Xabar yuborish uchun internet kerak.</p></header><div id="content" role="status">Ochilyapti…</div></main><script>
+(async()=>{
+const root=document.getElementById('content'),index=await caches.open('dmed-offline-index-v1');
+const records=[];for(const key of await index.keys()){const response=await index.match(key);records.push(await response.json());}
+root.replaceChildren();const slug=location.pathname.startsWith('/m/')?decodeURIComponent(location.pathname.slice(3)):null;
+const locale=new URLSearchParams(location.search).get('lang')||'uz';
+const record=records.find(r=>r.slug===slug&&r.locale===locale)||records.find(r=>r.slug===slug);
+function el(tag,text){const node=document.createElement(tag);if(text)node.textContent=text;return node;}
+if(record){const article=el('article');article.append(el('h1',record.title),el('small','Saqlangan: '+new Date(record.savedAt).toLocaleString()));
+for(const block of record.blocks){let node;
+if(block.type==='image'){node=el('img');node.src=block.src;node.alt='Dars rasmi';}
+else if(block.type==='video'){node=el('video');node.src=block.src;node.controls=true;node.playsInline=true;node.preload='metadata';}
+else if(block.type==='heading'){node=el('h'+block.level,block.value);}
+else if(block.type==='internal'||block.type==='external'){node=el('a',block.label);const url=new URL(block.href,location.origin);if(['http:','https:'].includes(url.protocol)){node.href=url.pathname.startsWith('/m/')?url.pathname+'?lang='+record.locale:url.href;}else node.removeAttribute('href');}
+else node=el('p',block.value);article.append(node);}
+root.append(article);
+}else{if(slug)root.append(el('p','Bu dars hali saqlanmagan. Internet bilan ochib, saqlash tugmasini bosing.'));
+if(!records.length)root.append(el('section','Saqlangan darslar yo‘q. Internet bilan darsni ochib, “Internetsiz ko‘rish uchun saqlash” tugmasini bosing.'));
+for(const record of records){const card=el('section'),link=el('a',record.title);link.href='/m/'+encodeURIComponent(record.slug)+'?lang='+record.locale;card.append(link,el('small',record.locale.toUpperCase()+' · '+new Date(record.savedAt).toLocaleString()));const button=el('button','Qurilmadan o‘chirish');button.onclick=async()=>{button.disabled=true;const media=await caches.open('dmed-offline-media-v1'),assets=await caches.open(record.cacheName);for(const key of await assets.keys())await media.delete(key);await caches.delete(record.cacheName);await index.delete('/offline-record/'+encodeURIComponent(record.slug)+'?lang='+record.locale);card.remove();};card.append(button);root.append(card);}}
+})().catch(()=>{document.getElementById('content').textContent='Saqlash xotirasi ochilmadi. Oddiy brauzerda qayta oching.'});
+</script></html>

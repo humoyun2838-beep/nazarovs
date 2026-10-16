@@ -1,3 +1,4 @@
+import { OfflineLibrary } from "@/components/offline-library";
 
 import { UiText } from "@/components/ui-locale";
 import { Headset } from "lucide-react";
@@ -57,6 +58,7 @@ export default async function MaterialsPage() {
     <>
       <SiteHeader username={session?.username} role={session?.role} locale={locale} />
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 pt-7 pb-28 sm:px-6 sm:pt-10">
+        <OfflineLibrary />
         <div className="page-enter space-y-6">
           <header className="catalog-hero relative z-0 rounded-[1.85rem] p-5 sm:p-8">
             <p className="relative z-10 inline-flex rounded-full bg-[#0a5ad4]/10 px-3 py-1 text-[11px] font-semibold tracking-[0.22em] text-[#0a5ad4] uppercase"><UiText>{" DMED "}</UiText></p>

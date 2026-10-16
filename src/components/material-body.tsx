@@ -140,13 +140,13 @@ function cleanContent(content: string) {
     .replace(/^Manba:\s*https?:\/\/\S+\s*$/gim, "")
     .replace(/^Video dars:\s*$/gim, "")
     .replace(/^\s*image\.png\s*$/gim, "")
-    .replace(/^\s*\S+\.(?:png|jpe?g|webp|gif)\s*$/gim, "")
+    .replace(/^(?!\s*(?:IMAGE|VIDEO|FILE)::)\s*\S+\.(?:png|jpe?g|webp|gif)\s*$/gim, "")
     .replace(/\u00a0/g, " ")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 }
 
-function parseContent(
+export function parseContent(
   content: string,
   linkMap: Record<string, string>,
 ): Block[] {

@@ -124,7 +124,7 @@ async function proxySigned(signed: string, req: NextRequest) {
     headers: range ? { Range: range } : undefined,
     cache: image ? "force-cache" : "no-store",
     ...(image ? { next: { revalidate: 86400 } } : {}),
-    signal: AbortSignal.timeout(20000),
+    signal: AbortSignal.timeout(req.nextUrl.searchParams.get("download") === "1" ? 600000 : 20000),
   });
 
   if (!upstream.ok && upstream.status !== 206) {

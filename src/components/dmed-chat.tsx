@@ -383,6 +383,7 @@ export function DmedChat({ locale = "uz", initialOpen = false }: { locale?: Lang
 
   async function onStart(event: React.FormEvent) {
     event.preventDefault();
+    if (!navigator.onLine) { setError(({uz:"Xabar yuborish uchun internetni yoqing.",ru:"Для отправки сообщения включите интернет.",en:"Connect to the internet to send a message.",kaa:"Xabar jiberiw ushın internettı qosıń."})[lang]); return; }
     setBusy(true);
     setError("");
     setFieldErrors({});
@@ -444,6 +445,7 @@ export function DmedChat({ locale = "uz", initialOpen = false }: { locale?: Lang
 
   async function onSend(event?: React.FormEvent) {
     event?.preventDefault();
+    if (!navigator.onLine) { setError(({uz:"Xabar yuborish uchun internetni yoqing.",ru:"Для отправки сообщения включите интернет.",en:"Connect to the internet to send a message.",kaa:"Xabar jiberiw ushın internettı qosıń."})[lang]); return; }
     const body = text.trim();
     if (!body || busy || !canSend) return;
     const now = new Date().toISOString();
@@ -492,6 +494,7 @@ export function DmedChat({ locale = "uz", initialOpen = false }: { locale?: Lang
   }
 
   async function sendMedia(file: Blob, filename: string) {
+    if (!navigator.onLine) { setError(({uz:"Xabar yuborish uchun internetni yoqing.",ru:"Для отправки сообщения включите интернет.",en:"Connect to the internet to send a message.",kaa:"Xabar jiberiw ushın internettı qosıń."})[lang]); return; }
     if (busy || !canSend || recording) return;
     const localUrl = URL.createObjectURL(file);
     const caption = text.trim();

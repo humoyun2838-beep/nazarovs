@@ -1,3 +1,4 @@
+import { OfflineLibrary } from "@/components/offline-library";
 
 import { UiText } from "@/components/ui-locale";
 import Link from "next/link";
@@ -107,6 +108,7 @@ export default async function CategoryPage({ params }: PageProps) {
       <TopicBackdrop wash={sectionWash(category.slug)} mark={art} />
       <SiteHeader username={session?.username} role={session?.role} locale={locale} />
       <main className="relative z-10 mx-auto w-full max-w-3xl flex-1 px-4 py-8 sm:px-6 sm:py-12">
+        <OfflineLibrary />
         <div className="page-enter space-y-6">
           <div className="catalog-hero space-y-4 rounded-[1.85rem] p-5 sm:p-7">
             {art ? (

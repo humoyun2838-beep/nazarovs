@@ -62,9 +62,9 @@ export async function GET(req: NextRequest) {
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         Referer: "https://www.notion.so/",
       },
-      cache: range?"no-store":"force-cache",
-      ...(range?{}:{next:{revalidate:86400}}),
-      signal: AbortSignal.timeout(20000),
+      cache: range || req.nextUrl.searchParams.get("download") === "1" ? "no-store":"force-cache",
+      ...(range || req.nextUrl.searchParams.get("download") === "1" ? {}:{next:{revalidate:86400}}),
+      signal: AbortSignal.timeout(req.nextUrl.searchParams.get("download") === "1" ? 600000 : 20000),
     }).catch(() => null);
     if (!upstream?.ok) {
       return NextResponse.json(
