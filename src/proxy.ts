@@ -80,6 +80,7 @@ export async function proxy(request: NextRequest) {
     pathname === "/sitemap.xml" ||
     pathname === "/api/app-version" ||
     pathname === "/api/mobile-release" ||
+    pathname === "/api/offline-catalog" ||
     pathname.includes(".")
   ) {
     return nextWithClientIp(request);
