@@ -20,11 +20,9 @@ for role in mijoz admin operator; do
   adb shell uiautomator dump /sdcard/window.xml
   adb pull /sdcard/window.xml "android-output/$role-ui.xml"
   if grep -q 'Sahifa ochilmadi' "android-output/$role-ui.xml"; then echo "Network error: $role"; exit 1; fi
-  case "$role" in
-    mijoz) grep -q 'Materiallar' "android-output/$role-ui.xml" ;;
-    *) grep -q 'Parol' "android-output/$role-ui.xml" ;;
-  esac
   adb exec-out screencap -p > "android-output/$role-screen.png"
+  adb logcat -d -s DMED_SMOKE:I > "android-output/$role-dom-check.txt"
+  grep -q "$role:true" "android-output/$role-dom-check.txt"
   adb shell am force-stop "$package"
 done
 adb logcat -d -b crash > android-output/crash-log.txt

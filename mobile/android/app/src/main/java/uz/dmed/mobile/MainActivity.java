@@ -102,7 +102,12 @@ public class MainActivity extends Activity {
                 openExternal(url); return true;
             }
             @Override public void onPageStarted(WebView v, String url, android.graphics.Bitmap icon) { progress.setVisibility(View.VISIBLE); error.setVisibility(View.GONE); }
-            @Override public void onPageFinished(WebView v, String url) { CookieManager.getInstance().flush(); progress.setVisibility(View.GONE); }
+            @Override public void onPageFinished(WebView v, String url) { CookieManager.getInstance().flush(); progress.setVisibility(View.GONE);
+                if(BuildConfig.DEBUG && trusted(Uri.parse(url))) {
+                    String word = "mijoz".equals(BuildConfig.FLAVOR) ? "material" : "parol";
+                    v.evaluateJavascript("document.querySelector('main') !== null && document.body.innerText.toLowerCase().includes('" + word + "')", value -> android.util.Log.i("DMED_SMOKE", BuildConfig.FLAVOR + ":" + value));
+                }
+            }
             @Override public void onReceivedError(WebView v, WebResourceRequest request, WebResourceError e) { if(request.isForMainFrame()) { if(BuildConfig.DEBUG) android.util.Log.e("DMED", "Page error " + e.getErrorCode() + ": " + e.getDescription()); showError(); } }
             @Override public void onReceivedHttpError(WebView v, WebResourceRequest request, WebResourceResponse response) { if(request.isForMainFrame() && response.getStatusCode() >= 500) { if(BuildConfig.DEBUG) android.util.Log.e("DMED", "HTTP error " + response.getStatusCode()); showError(); } }
         });
