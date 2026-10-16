@@ -178,7 +178,7 @@ public class MainActivity extends Activity {
     @Override public void onBackPressed() { goBack(); }
     @Override protected void onSaveInstanceState(Bundle state) { web.saveState(state);super.onSaveInstanceState(state); }
     @Override protected void onPause() { if(updater!=null)updater.pause();web.onPause();CookieManager.getInstance().flush();super.onPause(); }
-    @Override protected void onResume() { super.onResume();if(web!=null)web.onResume();if(updater!=null)updater.resume(); }
+    @Override protected void onResume() { super.onResume();if(web!=null)web.onResume();if(updater!=null)updater.resume();if(offline!=null)offline.syncCatalog(); }
     @Override protected void onActivityResult(int code,int result,Intent data) {
         super.onActivityResult(code,result,data);
         if(code==100 && fileCallback!=null) {

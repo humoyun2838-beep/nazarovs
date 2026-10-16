@@ -26,16 +26,21 @@ final class OfflineStore {
     private volatile JSONObject index;
     private volatile String status="Dars matnlari internetsiz tayyor. Rasm va videolarni bir marta yuklab oling.";
     private volatile boolean busy;
+    private volatile boolean syncing;
+    private volatile boolean catalogCached;
+    private volatile String catalogVersion="2026-10-16";
+    private long lastSync;
     private static OfflineStore instance;
     static synchronized OfflineStore get(Context context){if(instance==null)instance=new OfflineStore(context);return instance;}
     private OfflineStore(Context context) {
         this.context=context.getApplicationContext();directory=new File(context.getFilesDir(),"offline-media");
         if(!directory.isDirectory()&&!directory.mkdirs())throw new IllegalStateException("Saqlash xotirasi ochilmadi");
+        try{File cached=new File(directory,"catalog.json");if(cached.isFile()){JSONObject data=new JSONObject(read(new FileInputStream(cached),20000000));catalogVersion=data.getString("version");catalogCached=true;}}catch(Exception ignored){catalogVersion="2026-10-16";}
         try{index=new JSONObject(read(new FileInputStream(new File(directory,"index.json")),2000000));}catch(Exception e){index=new JSONObject();}
     }
     static boolean isLocal(Uri uri){return "https".equals(uri.getScheme())&&HOST.equals(uri.getHost())&&(uri.getPort()==-1||uri.getPort()==443);}
     boolean online(){ConnectivityManager cm=(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);NetworkCapabilities caps=cm==null?null:cm.getNetworkCapabilities(cm.getActiveNetwork());return caps!=null&&caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);}
-    private InputStream catalog() throws IOException {return new java.util.zip.GZIPInputStream(context.getAssets().open("offline/catalog.json.gz"));}
+    private InputStream catalog() throws IOException {File latest=new File(directory,"catalog.json");return catalogCached&&latest.isFile()?new FileInputStream(latest):new java.util.zip.GZIPInputStream(context.getAssets().open("offline/catalog.json.gz"));}
     WebResourceResponse serve(WebResourceRequest request){
         if(!isLocal(request.getUrl()))return null;
         try {
@@ -44,7 +49,7 @@ final class OfflineStore {
             if("/index.html".equals(path)||"/".equals(path))return response("text/html",context.getAssets().open("offline/index.html"));
             if("/catalog.json".equals(path))return response("application/json",catalog());
             if("/state.json".equals(path)) {
-                JSONObject state=new JSONObject();state.put("busy",busy);state.put("status",status);state.put("files",index);state.put("online",online());
+                JSONObject state=new JSONObject();state.put("busy",busy);state.put("status",status);state.put("files",index);state.put("online",online());state.put("catalogVersion",catalogVersion);
                 return response(200,"application/json",state.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
             }
             if(path!=null&&path.matches("/media/[a-f0-9]{64}")) {
@@ -86,6 +91,7 @@ final class OfflineStore {
         throw new IOException("Qo‘llanmaydigan fayl manzili");
     }
     synchronized void download(String slug) {
+        if(slug==null||slug.length()>300){status="Dars topilmadi";return;}
         if(busy){status="Yuklash davom etmoqda. Tugashini kuting.";return;}
         if(!online()){status="Rasm va video yuklash uchun internetni yoqing. Matnlar oflayn ochiladi.";return;}
         busy=true;status="Fayllar tayyorlanmoqda…";
@@ -102,6 +108,20 @@ final class OfflineStore {
             }catch(Exception e){status=e instanceof IOException?e.getMessage():"Yuklash uzildi. Internet va bo‘sh joyni tekshirib qayta urining.";}
             finally{busy=false;}
         });
+    }
+    
+    synchronized void syncCatalog(){
+        if(syncing||!online()||System.currentTimeMillis()-lastSync<60000)return;syncing=true;lastSync=System.currentTimeMillis();
+        io.execute(()->{HttpsURLConnection connection=null;try{
+            connection=(HttpsURLConnection)new URL(MainActivity.ORIGIN+"/api/offline-catalog").openConnection();connection.setInstanceFollowRedirects(false);connection.setUseCaches(false);connection.setConnectTimeout(10000);connection.setReadTimeout(25000);
+            android.content.SharedPreferences prefs=context.getSharedPreferences("offline-catalog",Context.MODE_PRIVATE);String etag=prefs.getString("etag","");File current=new File(directory,"catalog.json");if(catalogCached&&current.isFile()&&!etag.isEmpty())connection.setRequestProperty("If-None-Match",etag);
+            int code=connection.getResponseCode();if(code==304)return;if(code!=200)return;
+            String raw=read(connection.getInputStream(),20000000);JSONObject data=new JSONObject(raw);JSONArray categories=data.getJSONArray("categories"),materials=data.getJSONArray("materials");if(categories.length()==0||categories.length()>10000||materials.length()==0||materials.length()>20000)return;
+            for(int i=0;i<categories.length();i++){categories.getJSONObject(i).getInt("id");categories.getJSONObject(i).getString("title");}
+            for(int i=0;i<materials.length();i++){JSONObject m=materials.getJSONObject(i);m.getString("slug");m.getString("title");m.getString("content");m.getInt("categoryId");}
+            File temp=new File(directory,"catalog.tmp");try(FileOutputStream out=new FileOutputStream(temp)){out.write(raw.getBytes(java.nio.charset.StandardCharsets.UTF_8));out.getFD().sync();}if(!temp.renameTo(current))return;
+            catalogCached=true;catalogVersion=data.getString("version");prefs.edit().putString("etag",connection.getHeaderField("ETag")).putString("version",catalogVersion).apply();
+        }catch(Exception ignored){/* The last valid catalog and bundled data remain available. */}finally{if(connection!=null)connection.disconnect();syncing=false;}});
     }
     private void downloadFile(String raw,String id,int number,int count)throws Exception {
         File part=new File(directory,id+".part");HttpsURLConnection connection=(HttpsURLConnection)new URL(mediaUrl(raw)).openConnection();

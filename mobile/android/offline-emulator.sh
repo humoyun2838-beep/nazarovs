@@ -2,6 +2,9 @@
 set -euo pipefail
 mkdir -p android-output
 package=uz.dmed.mobile.mijoz
+trap 'adb logcat -d > android-output/offline-diagnostics.log; adb exec-out screencap -p > android-output/offline-last-screen.png' EXIT
+sleep 20
+adb shell am force-stop com.google.android.apps.nexuslauncher
 adb logcat -c
 adb shell svc wifi disable
 adb shell svc data disable
@@ -10,7 +13,11 @@ sleep 5
 adb install -r mobile/android/app/build/outputs/apk/mijoz/debug/app-mijoz-debug.apk
 adb shell am force-stop "$package"
 adb shell am start -W -n "$package/uz.dmed.mobile.MainActivity"
-sleep 12
+for attempt in $(seq 1 12); do
+  sleep 5
+  adb logcat -d -s DMED_OFFLINE_TEST:I > android-output/offline-first-launch.log
+  if grep -q 'DMED_OFFLINE_READY:26:711' android-output/offline-first-launch.log; then break;fi
+done
 adb shell uiautomator dump /sdcard/offline.xml
 adb pull /sdcard/offline.xml android-output/offline-first-launch.xml
 adb logcat -d -s DMED_OFFLINE_TEST:I > android-output/offline-first-launch.log
