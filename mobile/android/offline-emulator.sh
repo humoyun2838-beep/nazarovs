@@ -4,9 +4,12 @@ mkdir -p android-output
 dmed_adb_executable="$(command -v adb)"
 adb(){ timeout 45s "$dmed_adb_executable" "$@"; }
 package=uz.dmed.mobile.mijoz
-trap 'adb logcat -d > android-output/offline-diagnostics.log; adb exec-out screencap -p > android-output/offline-last-screen.png' EXIT
+dmed_log_pid=""
+trap 'if [ -n "$dmed_log_pid" ];then kill "$dmed_log_pid" 2>/dev/null || true;fi; sudo dmesg | tail -80 > android-output/host-memory.txt; free -m > android-output/host-memory-summary.txt; adb logcat -d > android-output/offline-diagnostics.log; adb exec-out screencap -p > android-output/offline-last-screen.png' EXIT
 sleep 20
 adb shell am force-stop com.google.android.apps.nexuslauncher
+"$dmed_adb_executable" logcat -v time > android-output/offline-live.log &
+dmed_log_pid=$!
 adb logcat -c
 adb shell svc wifi disable
 adb shell svc data disable
