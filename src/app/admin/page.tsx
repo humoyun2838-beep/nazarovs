@@ -77,6 +77,9 @@ export default async function AdminPage() {
               <Button asChild size="sm" variant="outline">
                 <Link href="#ai-yordamchi"><UiText>{"AI"}</UiText></Link>
               </Button>
+              <Button asChild size="sm" variant="outline">
+                <Link href={withLang("/admin/app-updates", locale)}>{({ uz: "Ilova yangilanishlari", ru: "Обновления приложения", en: "App updates", kaa: "Qosımsha jańalanıwları" })[locale]}</Link>
+              </Button>
             </div>
           </header>
 

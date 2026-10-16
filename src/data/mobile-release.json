@@ -1,0 +1,11 @@
+{
+  "latest_version": "1.0.0",
+  "version_code": 1,
+  "minimum_version": 1,
+  "force_update": false,
+  "apk_url": "https://raw.githubusercontent.com/humoyun2838-beep/nazarovs/9fe7f63941cb713efa8a0cbf2d8dff406c60e60e/releases/android/DMED-Mijoz.apk",
+  "sha256": "5f6245874ca1ca87538e656396593d24c54b3ea9814ef9da95b709ded0d2fb82",
+  "apk_size": 21119,
+  "release_notes": "DMED Mijoz: darslar, videolar va yordamchi chat.",
+  "package_name": "uz.dmed.mobile.mijoz"
+}

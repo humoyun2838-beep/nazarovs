@@ -79,6 +79,7 @@ export async function proxy(request: NextRequest) {
     pathname === "/robots.txt" ||
     pathname === "/sitemap.xml" ||
     pathname === "/api/app-version" ||
+    pathname === "/api/mobile-release" ||
     pathname.includes(".")
   ) {
     return nextWithClientIp(request);
