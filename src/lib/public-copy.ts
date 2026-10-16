@@ -2,8 +2,8 @@ import type { Locale } from "@/lib/locale";
 
 const COPY = {
   uz: {
-    materialsTitle: "O‘quv materiallari",
-    materialsLead: "DMED o‘quv materiallari kasb va vazifa bo‘yicha.",
+    materialsTitle: "DMED Akademiya",
+    materialsLead: "Kasbingizga mos darslar, video yo‘riqnomalar va amaliy bilimlar — bir joyda.",
     help: "Yordam",
     helpBody: "Savolni pastdagi chat orqali yozing.",
     sections: "Bo‘limlar",
@@ -53,9 +53,9 @@ const COPY = {
     screenNote: "",
   },
   ru: {
-    materialsTitle: "Учебные материалы",
+    materialsTitle: "Академия DMED",
     materialsLead:
-      "Учебные материалы DMED по профессиям и задачам. Вход не обязателен.",
+      "Уроки по вашей профессии, видеоинструкции и практические знания — в одном месте.",
     help: "Помощь",
     helpBody: "Напишите вопрос в чат внизу.",
     sections: "Разделы",
@@ -105,8 +105,8 @@ const COPY = {
     screenNote: "Скриншоты интерфейса DMED — как в исходной системе.",
   },
   en: {
-    materialsTitle: "Learning materials",
-    materialsLead: "DMED lessons by role and task. No login required.",
+    materialsTitle: "DMED Academy",
+    materialsLead: "Lessons for your role, video guides and practical knowledge — all in one place.",
     help: "Help",
     helpBody: "Ask in the chat below.",
     sections: "Sections",
@@ -156,8 +156,8 @@ const COPY = {
     screenNote: "Screenshots show the original DMED interface.",
   },
   kaa: {
-    materialsTitle: "Oqıw materialları",
-    materialsLead: "DMED oqıw materialları kásip hám wazıypa boyınsha. Login shárt emes.",
+    materialsTitle: "DMED Akademiya",
+    materialsLead: "Kásibińizge sáykes sabaqlar, video qollanbalar hám ámeliy bilimler — bir jerde.",
     help: "Járdem",
     helpBody: "Sorawdı tómendegi chat arqalı jazıń.",
     sections: "Bólimler",

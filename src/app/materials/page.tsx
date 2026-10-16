@@ -60,7 +60,7 @@ export default async function MaterialsPage() {
         <div className="page-enter space-y-6">
           <header className="catalog-hero relative z-0 rounded-[1.85rem] p-5 sm:p-8">
             <p className="relative z-10 inline-flex rounded-full bg-[#0a5ad4]/10 px-3 py-1 text-[11px] font-semibold tracking-[0.22em] text-[#0a5ad4] uppercase"><UiText>{" DMED "}</UiText></p>
-            <h1 className="relative z-10 mt-3 font-heading text-[clamp(2.2rem,6.5vw,3.25rem)] leading-[1.04] font-semibold tracking-tight text-[#071428]">
+            <h1 className="relative z-10 mt-3 bg-gradient-to-r from-[#0756c9] via-[#5047bc] to-[#087f96] bg-clip-text font-heading text-[clamp(2.2rem,6.5vw,3.25rem)] leading-[1.12] font-semibold tracking-tight text-transparent">
               <UiText>{t.materialsTitle}</UiText>
             </h1>
             <p className="relative z-10 mt-3 max-w-xl text-base font-medium leading-relaxed text-[#12315f] sm:text-lg">

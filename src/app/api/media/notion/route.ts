@@ -44,7 +44,9 @@ async function signOnceAttempt(blockId: string, fileId: string, filename: string
         {
           url: attachment,
           permissionRecord: { table: "block", id: blockId },
-          useS3Url: true,
+          // Notion's file CDN serves byte ranges close to the viewer. Direct
+          // S3 URLs bypass that edge and were much slower on mobile networks.
+          useS3Url: false,
         },
       ],
     }),
@@ -185,7 +187,7 @@ export async function GET(req: NextRequest) {
     if (proxy) {
       return proxySigned(signed, req);
     }
-    // Keep redirect for non-JS clients; the player uses fmt=json + S3.
+    // Keep redirect for non-JS clients; the player uses fmt=json + file CDN.
     return NextResponse.redirect(signed, 302);
   } catch {
     return NextResponse.json({ error: "Video proxy xatosi" }, { status: 502 });
