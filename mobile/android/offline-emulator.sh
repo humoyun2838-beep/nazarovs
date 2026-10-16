@@ -28,7 +28,8 @@ adb shell am start -W -n "$package/uz.dmed.mobile.MainActivity" --ez offline_tes
 sleep 12
 adb shell uiautomator dump /sdcard/offline.xml
 adb pull /sdcard/offline.xml android-output/offline-text.xml
-grep -q 'Tizimga kirish' android-output/offline-text.xml
+adb logcat -d -s DMED_OFFLINE_TEST:I > android-output/offline-text.log
+grep -q 'DMED_OFFLINE_TEXT:Tizimga kirish' android-output/offline-text.log
 adb exec-out screencap -p > android-output/offline-text.png
 adb shell am force-stop "$package"
 adb shell cmd connectivity airplane-mode disable
@@ -48,6 +49,21 @@ import json
 files=json.load(open('android-output/offline-files.json'));assert files;assert any(x['size']>1000000 and x['mime'].startswith('video/') for x in files.values())
 PY
 adb shell am force-stop "$package"
+adb shell am start -W -n "$package/uz.dmed.mobile.MainActivity" --ez offline_test true --ez offline_download true --es offline_lesson bemor-1fd60b77fb
+ready=false
+for attempt in $(seq 1 40); do
+  sleep 5
+  adb shell run-as "$package" cat files/offline-media/index.json > android-output/offline-files.json
+  if python3 -c 'import json;d=json.load(open("android-output/offline-files.json"));assert any(x["mime"].startswith("image/") for x in d.values())';then ready=true;break;fi
+done
+if [ "$ready" != true ]; then exit 1;fi
+sleep 5
+adb shell run-as "$package" cat files/offline-media/catalog.json > android-output/synced-catalog.json
+python3 - <<'PY'
+import json
+d=json.load(open('android-output/synced-catalog.json'));assert len(d['materials'])>=711 and d['version']!='2026-10-16';print('PASS: native catalog synchronization',d['version'])
+PY
+adb shell am force-stop "$package"
 adb shell svc wifi disable
 adb shell svc data disable
 adb shell cmd connectivity airplane-mode enable
@@ -63,6 +79,18 @@ v=json.loads(m[1]);assert v['video'] and v['time']>30 and v['duration']>60 and v
 print('PASS: APK first launch without internet; bundled 26 sections/711 lessons; full download; process restart; offline video playback and seek',v)
 PY
 adb exec-out screencap -p > android-output/offline-video.png
+adb shell am force-stop "$package"
+adb logcat -c
+adb shell am start -W -n "$package/uz.dmed.mobile.MainActivity" --ez offline_test true --es offline_lesson bemor-1fd60b77fb
+sleep 15
+adb logcat -d -s DMED_OFFLINE_TEST:I > android-output/offline-image.log
+python3 - <<'PY'
+import json,re
+text=open('android-output/offline-image.log').read();m=re.search(r'DMED_OFFLINE_IMAGE:(\{[^\n]+\})',text);assert m,text
+image=json.loads(m[1]);assert image['complete'] and image['width']>0,image
+print('PASS: private downloaded image after offline process restart',image)
+PY
+adb exec-out screencap -p > android-output/offline-image.png
 adb shell am force-stop "$package"
 adb shell cmd connectivity airplane-mode disable
 adb shell svc wifi enable
