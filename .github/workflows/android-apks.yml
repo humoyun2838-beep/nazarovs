@@ -22,6 +22,11 @@ jobs:
       - name: Build and lint all three apps
         working-directory: mobile/android
         run: gradle --no-daemon :app:assembleRelease :app:assembleDebug :app:lintMijozRelease :app:lintAdminRelease :app:lintOperatorRelease
+      - name: Test update version and URL policy
+        run: |
+          mkdir -p /tmp/dmed-policy-tests
+          javac -d /tmp/dmed-policy-tests mobile/android/app/src/main/java/uz/dmed/mobile/UpdatePolicy.java mobile/android/tests/UpdatePolicyTest.java
+          java -cp /tmp/dmed-policy-tests uz.dmed.mobile.UpdatePolicyTest
       - name: Prepare unsigned APKs and signing tool
         run: |
           mkdir -p android-output

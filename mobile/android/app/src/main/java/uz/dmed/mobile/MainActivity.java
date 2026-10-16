@@ -40,6 +40,7 @@ public class MainActivity extends Activity {
     private PermissionRequest pendingAudio;
     private View fullVideo;
     private WebChromeClient.CustomViewCallback videoCallback;
+    private ApkUpdater updater;
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -70,6 +71,12 @@ public class MainActivity extends Activity {
         Button refresh = control("↻", "Yangilash");
         refresh.setOnClickListener(v -> { error.setVisibility(View.GONE); web.reload(); });
         toolbar.addView(refresh, new LinearLayout.LayoutParams(dp(48), dp(48)));
+        if("mijoz".equals(BuildConfig.FLAVOR)) {
+            updater=new ApkUpdater(this);
+            Button updates=control("↑", "Ilova yangilanishlari");
+            updates.setOnClickListener(v -> updater.check(true));
+            toolbar.addView(updates,new LinearLayout.LayoutParams(dp(48),dp(48)));
+        }
         root.addView(toolbar);
         progress = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
         root.addView(progress, new LinearLayout.LayoutParams(-1, dp(3)));
@@ -137,6 +144,7 @@ public class MainActivity extends Activity {
         });
         web.setDownloadListener((url, userAgent, disposition, type, length) -> openExternal(Uri.parse(url)));
         if(state==null || web.restoreState(state)==null) loadHome();
+        if(BuildConfig.DEBUG&&updater!=null&&getIntent().getBooleanExtra("update_preview",false))updater.showPreview(getIntent().getBooleanExtra("update_required",false));
     }
     private boolean trusted(Uri uri) { return "https".equals(uri.getScheme()) && HOST.equals(uri.getHost()) && (uri.getPort()==-1 || uri.getPort()==443); }
     private void loadHome() { web.loadUrl(ORIGIN + BuildConfig.START_PATH); }
@@ -152,8 +160,8 @@ public class MainActivity extends Activity {
     private void goBack() { if(fullVideo!=null)hideVideo();else if(web.canGoBack())web.goBack();else finish(); }
     @Override public void onBackPressed() { goBack(); }
     @Override protected void onSaveInstanceState(Bundle state) { web.saveState(state);super.onSaveInstanceState(state); }
-    @Override protected void onPause() { web.onPause();CookieManager.getInstance().flush();super.onPause(); }
-    @Override protected void onResume() { super.onResume();if(web!=null)web.onResume(); }
+    @Override protected void onPause() { if(updater!=null)updater.pause();web.onPause();CookieManager.getInstance().flush();super.onPause(); }
+    @Override protected void onResume() { super.onResume();if(web!=null)web.onResume();if(updater!=null)updater.resume(); }
     @Override protected void onActivityResult(int code,int result,Intent data) {
         super.onActivityResult(code,result,data);
         if(code==100 && fileCallback!=null) {
@@ -168,5 +176,5 @@ public class MainActivity extends Activity {
             if(results.length>0 && results[0]==PackageManager.PERMISSION_GRANTED && trusted(pendingAudio.getOrigin())) pendingAudio.grant(new String[]{PermissionRequest.RESOURCE_AUDIO_CAPTURE});else pendingAudio.deny();pendingAudio=null;
         }
     }
-    @Override protected void onDestroy() { if(pendingAudio!=null)pendingAudio.deny();if(fileCallback!=null)fileCallback.onReceiveValue(null);hideVideo();if(web!=null){((ViewGroup)web.getParent()).removeView(web);web.destroy();}super.onDestroy(); }
+    @Override protected void onDestroy() { if(updater!=null)updater.destroy();if(pendingAudio!=null)pendingAudio.deny();if(fileCallback!=null)fileCallback.onReceiveValue(null);hideVideo();if(web!=null){((ViewGroup)web.getParent()).removeView(web);web.destroy();}super.onDestroy(); }
 }
