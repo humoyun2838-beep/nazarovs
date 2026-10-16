@@ -1,0 +1,35 @@
+DMED iPhone / iPad — 3 ta web-ilova
+
+Bu App Store/IPA ilovasi emas. Saytlar internet orqali ishlaydi.
+Apple Developer hisobi kerak emas. Profil faqat bosh ekran belgilarini qo‘shadi.
+VPN, qurilma boshqaruvi, sertifikat yoki parol qo‘shilmaydi.
+
+O‘RNATISH
+1. iPhone Safari brauzerida DMED-3-iPhone.mobileconfig faylini oching.
+2. Profilni yuklashga Allow / Ruxsat berish tugmasini bosing.
+3. Settings / Sozlamalar → Profile Downloaded / Profil yuklandi → Install.
+   Topilmasa: General → VPN & Device Management → DMED — 3 ta web-ilova.
+4. Telefon ekran qulfi kodini telefonda kiriting va o‘rnatishni tasdiqlang.
+5. Bosh ekranda DMED Mijoz, DMED Admin, DMED Operator paydo bo‘ladi.
+
+Faqat bitta ilova kerak bo‘lsa, tegishli alohida profilni o‘rnating.
+Birlashtirilgan profil bilan alohida profillarni birga o‘rnatmang — belgilar takrorlanadi.
+Profil imzolanmagan: iOS tekshirilmagan profil ekanini ko‘rsatishi mumkin.
+O‘chirish: Settings → General → VPN & Device Management → DMED → Remove Profile.
+
+PROFILSIZ VARIANT
+Safari’da kerakli manzilni oching → Share → Add to Home Screen.
+Nomini DMED Mijoz / DMED Admin / DMED Operator qilib saqlang.
+Open as Web App tugmasi bo‘lsa, yoqing.
+
+MANZILLAR
+DMED Mijoz: https://nazarovs-production.up.railway.app/nazarov?lang=uz
+DMED Admin: https://nazarovs-production.up.railway.app/admin/login?lang=uz
+DMED Operator: https://nazarovs-production.up.railway.app/operator?lang=uz
+
+TEKSHIRUV
+Profil tarkibi, URLlar, PNG ikonka va ZIP yaxlitligi avtomatik tekshiriladi.
+Haqiqiy iPhone’da o‘rnatish, mikrofon, video va login hali sinovdan o‘tkazilmagan.
+Sayt yangilanishlari avtomatik ko‘rinadi. Internet bo‘lmasa darslar ochilmaydi.
+
+Apple yo‘riqnomasi: https://support.apple.com/en-my/102400
