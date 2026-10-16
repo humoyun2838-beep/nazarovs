@@ -1,4 +1,4 @@
-const SHELL = 'dmed-offline-shell-v1';
+const SHELL = 'dmed-offline-shell-v2';
 self.addEventListener('install', event => event.waitUntil(caches.open(SHELL).then(cache => cache.add('/offline.html')).then(() => self.skipWaiting())));
 self.addEventListener('activate', event => event.waitUntil(self.clients.claim()));
 function clientPath(path) { return path === '/nazarov' || path === '/materials' || path.startsWith('/m/') || path.startsWith('/b/'); }

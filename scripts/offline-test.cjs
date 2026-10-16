@@ -12,7 +12,7 @@ async function request(path,range,method='GET',mode='cors'){let promise;listener
 const media=await caches.open('dmed-offline-media-v1');await media.put('/offline-media/test',new Response('0123456789',{headers:{'content-type':'video/mp4'}}));
 for(const [range,status,body] of [[null,200,'0123456789'],['bytes=2-4',206,'234'],['bytes=7-',206,'789'],['bytes=-3',206,'789'],['bytes=20-',416,''],['bytes=8-2',416,''],['bytes=0-0,4-5',416,'']]){const res=await request('/offline-media/test',range);assert.equal(res.status,status);assert.equal(await res.text(),body);}
 assert.equal((await request('/offline-media/missing')).status,404);
-const shell=await caches.open('dmed-offline-shell-v1');await shell.put('/offline.html',new Response('offline reader'));
+const shell=await caches.open('dmed-offline-shell-v2');await shell.put('/offline.html',new Response('offline reader'));
 for(const path of ['/m/example','/b/shifokor','/nazarov'])assert.equal(await(await request(path,null,'GET','navigate')).text(),'offline reader');
 for(const path of ['/admin','/operator','/api/chat','/api/admin/chat','/api/mobile-release'])assert.equal(await request(path,null,'GET','navigate'),undefined);
 assert.equal(await request('/api/chat',null,'POST'),undefined);

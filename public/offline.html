@@ -2,7 +2,7 @@
 (async()=>{
 const root=document.getElementById('content'),index=await caches.open('dmed-offline-index-v1');
 const records=[];for(const key of await index.keys()){const response=await index.match(key);records.push(await response.json());}
-root.replaceChildren();const slug=location.pathname.startsWith('/m/')?decodeURIComponent(location.pathname.slice(3)):null;
+root.replaceChildren();const slug=location.pathname.startsWith('/m/')?decodeURIComponent(location.pathname.slice(3)):new URLSearchParams(location.search).get('lesson');
 const locale=new URLSearchParams(location.search).get('lang')||'uz';
 const record=records.find(r=>r.slug===slug&&r.locale===locale)||records.find(r=>r.slug===slug);
 function el(tag,text){const node=document.createElement(tag);if(text)node.textContent=text;return node;}
@@ -16,6 +16,6 @@ else node=el('p',block.value);article.append(node);}
 root.append(article);
 }else{if(slug)root.append(el('p','Bu dars hali saqlanmagan. Internet bilan ochib, saqlash tugmasini bosing.'));
 if(!records.length)root.append(el('section','Saqlangan darslar yo‘q. Internet bilan darsni ochib, “Internetsiz ko‘rish uchun saqlash” tugmasini bosing.'));
-for(const record of records){const card=el('section'),link=el('a',record.title);link.href='/m/'+encodeURIComponent(record.slug)+'?lang='+record.locale;card.append(link,el('small',record.locale.toUpperCase()+' · '+new Date(record.savedAt).toLocaleString()));const button=el('button','Qurilmadan o‘chirish');button.onclick=async()=>{button.disabled=true;const media=await caches.open('dmed-offline-media-v1'),assets=await caches.open(record.cacheName);for(const key of await assets.keys())await media.delete(key);await caches.delete(record.cacheName);await index.delete('/offline-record/'+encodeURIComponent(record.slug)+'?lang='+record.locale);card.remove();};card.append(button);root.append(card);}}
+for(const record of records){const card=el('section'),link=el('a',record.title);link.href='/offline.html?lesson='+encodeURIComponent(record.slug)+'&lang='+record.locale;card.append(link,el('small',record.locale.toUpperCase()+' · '+new Date(record.savedAt).toLocaleString()));const button=el('button','Qurilmadan o‘chirish');button.onclick=async()=>{button.disabled=true;const media=await caches.open('dmed-offline-media-v1'),assets=await caches.open(record.cacheName);for(const key of await assets.keys())await media.delete(key);await caches.delete(record.cacheName);await index.delete('/offline-record/'+encodeURIComponent(record.slug)+'?lang='+record.locale);card.remove();};card.append(button);root.append(card);}}
 })().catch(()=>{document.getElementById('content').textContent='Saqlash xotirasi ochilmadi. Oddiy brauzerda qayta oching.'});
 </script></html>
