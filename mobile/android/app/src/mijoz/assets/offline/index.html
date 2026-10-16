@@ -21,5 +21,5 @@ function show(){list.replaceChildren();const term=search.value.trim().toLowerCas
 else{list.append(el('h2',catalog.categories.length+' ta bo‘lim · '+catalog.materials.length+' ta dars'));for(const c of catalog.categories){const link=el('a','✦ '+c.title);link.className='card';link.href='#section='+c.id;link.append(el('small',catalog.materials.filter(m=>m.categoryId===c.id).length+' ta dars • Matnlar oflayn'));list.append(link);}list.append(el('small','Ichki katalog: '+catalog.version));}}search.oninput=show;show();}}
 async function poll(){try{state=await(await fetch('/state.json')).json();status.textContent=state.status;if(state.catalogVersion&&state.catalogVersion!==catalog.version&&!location.hash){location.reload();return;}updateMedia();}catch{status.textContent='Saqlangan darslar qurilmadan ochilmoqda.';}}
 await poll();await render();console.log("DMED_OFFLINE_READY:"+catalog.categories.length+":"+catalog.materials.length);addEventListener('hashchange',()=>render());setInterval(poll,1000);
-})().catch(()=>{document.getElementById('content').textContent='Ma’lumot ochilmadi. Ilovani qayta oching.'});
+})().catch(error=>{console.log('DMED_OFFLINE_ERROR:'+String(error));document.getElementById('content').textContent='Ma’lumot ochilmadi. Ilovani qayta oching.'});
 </script></html>

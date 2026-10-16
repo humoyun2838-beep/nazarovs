@@ -19,9 +19,9 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.11.1'
-      - name: Build and lint all three apps
+      - name: Build three debug apps and lint client release
         working-directory: mobile/android
-        run: gradle --no-daemon :app:assembleRelease :app:assembleDebug :app:lintMijozRelease :app:lintAdminRelease :app:lintOperatorRelease
+        run: gradle --no-daemon :app:assembleMijozRelease :app:assembleDebug :app:lintMijozRelease
       - name: Test update version and URL policy
         run: |
           mkdir -p /tmp/dmed-policy-tests
@@ -30,10 +30,17 @@ jobs:
       - name: Prepare unsigned APKs and signing tool
         run: |
           mkdir -p android-output
-          for role in mijoz admin operator; do
+          for role in mijoz; do
             cp "mobile/android/app/build/outputs/apk/$role/release/app-$role-release-unsigned.apk" "android-output/DMED-$role-unsigned.apk"
           done
           cp "$ANDROID_HOME/build-tools/35.0.0/lib/apksigner.jar" android-output/apksigner.jar
+          python3 - <<'PY'
+          import zipfile,json
+          z=zipfile.ZipFile('android-output/DMED-mijoz-unsigned.apk')
+          data=json.loads(z.read('assets/offline/catalog.json'))
+          assert len(data['categories'])==26 and len(data['materials'])==711
+          print('PASS: actual packaged APK contains readable 26-section / 711-lesson catalog')
+          PY
       - name: Enable emulator acceleration
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules

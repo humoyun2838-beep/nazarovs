@@ -40,7 +40,7 @@ final class OfflineStore {
     }
     static boolean isLocal(Uri uri){return "https".equals(uri.getScheme())&&HOST.equals(uri.getHost())&&(uri.getPort()==-1||uri.getPort()==443);}
     boolean online(){ConnectivityManager cm=(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);NetworkCapabilities caps=cm==null?null:cm.getNetworkCapabilities(cm.getActiveNetwork());return caps!=null&&caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);}
-    private InputStream catalog() throws IOException {File latest=new File(directory,"catalog.json");return catalogCached&&latest.isFile()?new FileInputStream(latest):new java.util.zip.GZIPInputStream(context.getAssets().open("offline/catalog.json.gz"));}
+    private InputStream catalog() throws IOException {File latest=new File(directory,"catalog.json");return catalogCached&&latest.isFile()?new FileInputStream(latest):context.getAssets().open("offline/catalog.json");}
     WebResourceResponse serve(WebResourceRequest request){
         if(!isLocal(request.getUrl()))return null;
         try {
