@@ -2,6 +2,10 @@
 set -euo pipefail
 mkdir -p android-output
 adb logcat -c
+trap 'adb logcat -d -s DMED:E chromium:E AndroidRuntime:E > android-output/web-errors.txt; adb exec-out screencap -p > android-output/last-screen.png' EXIT
+curl -IL --max-time 30 'https://nazarovs-production.up.railway.app/nazarov?lang=uz' > android-output/server-headers.txt
+adb shell date > android-output/device-date.txt
+adb shell getprop net.dns1 > android-output/device-dns.txt
 for role in mijoz admin operator; do
   package="uz.dmed.mobile.$role"
   adb install -r "mobile/android/app/build/outputs/apk/$role/debug/app-$role-debug.apk"
