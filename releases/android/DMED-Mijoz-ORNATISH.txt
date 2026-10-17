@@ -1,0 +1,12 @@
+DMED Mijoz 1.2.0 — Android oflayn ilova
+
+1. DMED-Mijoz.apk faylini ochib, eski ilova ustiga o‘rnating. Eski ilovani o‘chirmang.
+2. Internet o‘chiq bo‘lsa, oflayn katalog avtomatik ochiladi.
+3. Internet yoqilgan paytda yuqoridagi ↓ tugmasi “Internetsiz darslar”ni ochadi.
+4. 26 ta bo‘lim va 711 ta dars matni APK ichiga kiritilgan. Birinchi ochishda ham internet talab qilmaydi.
+5. Rasm va video kerak bo‘lsa, darsga kirib “Rasm va videolarni yuklab olish”ni bosing. “Tayyor!” yozuvini kuting. Yuklash paytida ilovani ochiq qoldiring.
+6. Yuklangan fayllar telefonning ilovaga ajratilgan xotirasida qoladi; ilovani qayta ochganda ham ko‘rinadi.
+7. Internet bo‘lganda katalog matnlari serverdan yangilanadi. Onlayn sayt va chat havolasi asosiy saytni ochadi. Xabarlar uchun internet kerak.
+
+Android 8 va yangiroq. Paket: uz.dmed.mobile.mijoz.
+Ilovani o‘chirish yoki Android sozlamalarida ilova ma’lumotlarini tozalash saqlangan fayllarni ham o‘chiradi.

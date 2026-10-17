@@ -41,6 +41,7 @@ public class MainActivity extends Activity {
     private View fullVideo;
     private WebChromeClient.CustomViewCallback videoCallback;
     private ApkUpdater updater;
+    private OfflineStore offline;
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -72,6 +73,10 @@ public class MainActivity extends Activity {
         refresh.setOnClickListener(v -> { error.setVisibility(View.GONE); web.reload(); });
         toolbar.addView(refresh, new LinearLayout.LayoutParams(dp(48), dp(48)));
         if("mijoz".equals(BuildConfig.FLAVOR)) {
+            offline=OfflineStore.get(this);
+            Button saved=control("↓", "Internetsiz darslar");
+            saved.setOnClickListener(v -> web.loadUrl(OfflineStore.HOME));
+            toolbar.addView(saved,new LinearLayout.LayoutParams(dp(48),dp(48)));
             updater=new ApkUpdater(this);
             Button updates=control("↑", "Ilova yangilanishlari");
             updates.setOnClickListener(v -> updater.check(true));
@@ -104,10 +109,16 @@ public class MainActivity extends Activity {
         web.setWebViewClient(new WebViewClient() {
             @Override public boolean shouldOverrideUrlLoading(WebView v, WebResourceRequest request) {
                 Uri url = request.getUrl();
+                if(offline!=null&&OfflineStore.isLocal(url)){
+                    if(request.isForMainFrame()&&"/download".equals(url.getPath())){if(OfflineStore.isLocal(Uri.parse(web.getUrl()==null?"":web.getUrl())))offline.download(url.getQueryParameter("slug"));return true;}
+                    if(request.isForMainFrame()&&"/play".equals(url.getPath())){if(OfflineStore.isLocal(Uri.parse(web.getUrl()==null?"":web.getUrl())))openOfflineVideo(url.getQueryParameter("id"),false);return true;}
+                    return false;
+                }
                 if (trusted(url)) return false;
                 if (!request.isForMainFrame()) return true;
                 openExternal(url); return true;
             }
+            @Override public WebResourceResponse shouldInterceptRequest(WebView v,WebResourceRequest request){return offline==null?null:offline.serve(request);}
             @Override public void onPageStarted(WebView v, String url, android.graphics.Bitmap icon) { progress.setVisibility(View.VISIBLE); error.setVisibility(View.GONE); }
             @Override public void onPageFinished(WebView v, String url) { CookieManager.getInstance().flush(); progress.setVisibility(View.GONE);
                 if(BuildConfig.DEBUG && trusted(Uri.parse(url))) {
@@ -119,6 +130,7 @@ public class MainActivity extends Activity {
             @Override public void onReceivedHttpError(WebView v, WebResourceRequest request, WebResourceResponse response) { if(request.isForMainFrame() && response.getStatusCode() >= 500) { if(BuildConfig.DEBUG) android.util.Log.e("DMED", "HTTP error " + response.getStatusCode()); showError(); } }
         });
         web.setWebChromeClient(new WebChromeClient() {
+            @Override public boolean onConsoleMessage(android.webkit.ConsoleMessage message){if(BuildConfig.DEBUG&&message.message().startsWith("DMED_OFFLINE"))android.util.Log.i("DMED_OFFLINE_TEST",message.message());return false;}
             @Override public void onProgressChanged(WebView v,int value) { progress.setProgress(value); }
             @Override public boolean onShowFileChooser(WebView v, ValueCallback<Uri[]> callback, FileChooserParams params) {
                 if (!trusted(Uri.parse(web.getUrl() == null ? "" : web.getUrl()))) return false;
@@ -144,11 +156,23 @@ public class MainActivity extends Activity {
         });
         web.setDownloadListener((url, userAgent, disposition, type, length) -> openExternal(Uri.parse(url)));
         if(state==null || web.restoreState(state)==null) loadHome();
+        if(BuildConfig.DEBUG && offline!=null && getIntent().getBooleanExtra("offline_test",false)) {
+            String slug=getIntent().getStringExtra("offline_lesson");
+            web.getSettings().setMediaPlaybackRequiresUserGesture(false);
+            if(slug!=null){web.loadUrl(OfflineStore.HOME+"#lesson="+Uri.encode(slug));if(getIntent().getBooleanExtra("offline_download",false))offline.download(slug);}
+            if(slug!=null&&getIntent().getBooleanExtra("offline_play",false)){
+                try{openOfflineVideo(offline.lessonVideo(slug),true);}catch(Exception e){android.util.Log.e("DMED_OFFLINE_TEST","Offline play failed",e);}
+            }
+            web.postDelayed(()->web.evaluateJavascript("(async()=>{console.log('DMED_OFFLINE_TEXT:'+document.querySelector('article h2')?.textContent);const image=document.querySelector('img');if(image)console.log('DMED_OFFLINE_IMAGE:'+JSON.stringify({width:image.naturalWidth,complete:image.complete}));const v=document.querySelector('video');if(!v)return JSON.stringify({video:false});v.currentTime=30;await v.play();await new Promise(r=>setTimeout(r,2000));console.log('DMED_OFFLINE_VIDEO:'+JSON.stringify({video:true,time:v.currentTime,duration:v.duration,ready:v.readyState,error:v.error?.code||0}));})()",value->android.util.Log.i("DMED_OFFLINE_TEST",value)),10000);
+        }
         if(BuildConfig.DEBUG&&updater!=null&&getIntent().getBooleanExtra("update_preview",false))updater.showPreview(getIntent().getBooleanExtra("update_required",false));
     }
+    private void openOfflineVideo(String id,boolean test){
+        try{offline.videoFile(id);Intent intent=new Intent(this,OfflineVideoActivity.class).putExtra("media_id",id);if(BuildConfig.DEBUG&&test)intent.putExtra("offline_test",true);startActivity(intent);}catch(Exception e){Toast.makeText(this,"Video hali saqlanmagan. Internet bilan yuklab oling.",Toast.LENGTH_LONG).show();}
+    }
     private boolean trusted(Uri uri) { return "https".equals(uri.getScheme()) && HOST.equals(uri.getHost()) && (uri.getPort()==-1 || uri.getPort()==443); }
-    private void loadHome() { web.loadUrl(ORIGIN + BuildConfig.START_PATH); }
-    private void showError() { progress.setVisibility(View.GONE); error.setVisibility(View.VISIBLE); }
+    private void loadHome() { web.loadUrl(offline!=null&&!offline.online()?OfflineStore.HOME:ORIGIN + BuildConfig.START_PATH); }
+    private void showError() { progress.setVisibility(View.GONE); if(offline!=null&&!OfflineStore.isLocal(Uri.parse(web.getUrl()==null?"":web.getUrl()))){web.loadUrl(OfflineStore.HOME);return;}error.setVisibility(View.VISIBLE); }
     private Button control(String text,String label) { Button b=new Button(this);b.setText(text);b.setTextColor(Color.WHITE);b.setTextSize(24);b.setBackgroundColor(Color.TRANSPARENT);b.setContentDescription(label);return b; }
     private int dp(int value) { return Math.round(value*getResources().getDisplayMetrics().density); }
     private void openExternal(Uri url) {
@@ -161,7 +185,7 @@ public class MainActivity extends Activity {
     @Override public void onBackPressed() { goBack(); }
     @Override protected void onSaveInstanceState(Bundle state) { web.saveState(state);super.onSaveInstanceState(state); }
     @Override protected void onPause() { if(updater!=null)updater.pause();web.onPause();CookieManager.getInstance().flush();super.onPause(); }
-    @Override protected void onResume() { super.onResume();if(web!=null)web.onResume();if(updater!=null)updater.resume(); }
+    @Override protected void onResume() { super.onResume();if(web!=null)web.onResume();if(updater!=null)updater.resume();if(offline!=null)offline.syncCatalog(); }
     @Override protected void onActivityResult(int code,int result,Intent data) {
         super.onActivityResult(code,result,data);
         if(code==100 && fileCallback!=null) {

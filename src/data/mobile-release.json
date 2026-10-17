@@ -1,11 +1,11 @@
 {
-  "latest_version": "1.1.0",
-  "version_code": 2,
+  "latest_version": "1.2.0",
+  "version_code": 3,
   "minimum_version": 1,
   "force_update": false,
-  "apk_url": "https://raw.githubusercontent.com/humoyun2838-beep/nazarovs/051910852c636e15054aef4668dd3d67ecf5ce3c/releases/android/DMED-Mijoz.apk",
-  "sha256": "4183ecb83d3945c0889fdcea4653c8089da5505153a5266f8d8a6edbcc293176",
-  "apk_size": 33407,
-  "release_notes": "Ilova ichidan xavfsiz APK yangilash\nYuklash foizi va qayta urinish\nMajburiy va ixtiyoriy yangilanish\nYorug‘ va qorong‘i yangilanish oynasi\nAPK SHA-256, paket, versiya va imzo tekshiruvi",
+  "apk_url": "https://raw.githubusercontent.com/humoyun2838-beep/nazarovs/1f0876237a7c57bbcb15b56fd035283b275cea97/releases/android/DMED-Mijoz.apk",
+  "sha256": "cabaad75ac7261b2c3e4e6227e79303bbfd49d772d4319345ee92a21be75cacf",
+  "apk_size": 865039,
+  "release_notes": "26 ta bo‘lim va 711 ta dars matni APK ichida\nRasm va videolarni telefon xotirasiga saqlash\nInternetsiz ochilish va qidiruv\nAndroid pleyerida oflayn video\nInternet kelganda katalogni yangilash",
   "package_name": "uz.dmed.mobile.mijoz"
 }

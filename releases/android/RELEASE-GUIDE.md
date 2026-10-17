@@ -45,3 +45,13 @@ Nashr ixtiyoriy holatda chiqarilishi tavsiya etiladi. `minimum_version` qiymatin
 - Emulyator: uchta ilova ochilishi, ixtiyoriy/majburiy oyna, Back bloklash, dark mode, noto'g'ri APKni rad etish, internet uzilishi va retry.
 
 Haqiqiy telefondagi Android o'rnatish oynasini foydalanuvchi o'zi tasdiqlaydi. Server ishlamasa, oxirgi ishonchli nashr keshidan foydalaniladi; keshlangan majburiy yangilanishni internet xatosi chetlab o'tmaydi. Birinchi tekshiruv internet bo'lmasa, ilova yangi siyosatni bila olmaydi va mavjud saytni ochishga harakat qiladi.
+
+## Android 1.2.0 — oflayn mijoz
+
+Mijoz flavori APK ichida 26 bo‘lim / 711 darsdan iborat ochiq katalogni oladi. `catalog.json.gz` manba assetini Android AAPT `assets/offline/catalog.json` sifatida ochib joylaydi; buildning o‘zi APK ichidagi JSONni tekshiradi.
+
+Native `OfflineStore` faqat `https://offline.dmed.invalid` manzilidagi o‘z HTML, katalog va xususiy media fayllarini `shouldInterceptRequest` orqali beradi. JavaScript bridge, file:// va qo‘shimcha storage ruxsatlari ishlatilmaydi. Rasm/video to‘liq yuklangach va fayl hajmi tekshirilgach atomar tarzda ro‘yxatga kiritiladi; ilova qayta ochilganda saqlanadi. Video fayli OfflineVideoActivity orqali Android pleyerida telefon xotirasidan bevosita ochiladi. Bo‘sh joy yetmasa yoki tarmoq uzilsa, yarim fayl tayyor deb belgilanmaydi.
+
+Internet mavjud bo‘lganda `/api/offline-catalog` ochiq darslar bilan katalogni yangilaydi. ETag 304 takror yuklashni tejaydi; noto‘g‘ri/uzilgan javob oldingi nusxani almashtirmaydi. Foydalanuvchi, akkaunt va chat ma’lumotlari ushbu katalogga kiritilmaydi.
+
+`offline-emulator.sh` samolyot rejimida birinchi ochilish, dars matni, video va rasmni to‘liq yuklash, katalog sinxronlash, process restart va oflayn video seek/ijroni tekshiradi. Release ilovada debug intentlari ishlamaydi.
