@@ -76,7 +76,7 @@ adb logcat -d -s DMED_OFFLINE_TEST:I > android-output/offline-video.log
 python3 - <<'PY'
 import re,json
 text=open('android-output/offline-video.log').read();m=re.search(r'DMED_OFFLINE_VIDEO:(\{[^\n]+\})',text);assert m,text
-v=json.loads(m[1]);assert v['video'] and v['time']>30 and v['duration']>60 and v['ready']>=2 and v['error']==0,v
+v=json.loads(m[1]);assert v['video'] and 20<v['time']<45 and v['duration']>60 and v['ready']>=2 and v['error']==0,v
 print('PASS: APK first launch without internet; bundled 26 sections/711 lessons; full download; process restart; offline video playback and seek',v)
 PY
 adb exec-out screencap -p > android-output/offline-video.png
