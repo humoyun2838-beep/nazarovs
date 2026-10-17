@@ -1,0 +1,59 @@
+name: Prepare tested APK for local signing
+on:
+  push:
+    branches: [codex/android-apps]
+    paths: ['.github/workflows/android-signing-parts.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  split:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 39059358859
+          name: DMED-complete-offline-APK
+          path: tested
+      - name: Split exact tested unsigned APK without modifying its bytes
+        run: |
+          python3 - <<'PY'
+          import pathlib,hashlib,json,shutil
+          source=pathlib.Path('tested/android-output/DMED-mijoz-unsigned.apk')
+          out=pathlib.Path('signing-parts');out.mkdir()
+          chunk_size=384*1024*1024;parts=[]
+          with source.open('rb') as f:
+              for number in [1,2]:
+                  directory=out/str(number);directory.mkdir()
+                  chunk=directory/('DMED-mijoz-unsigned.apk.part'+str(number))
+                  with chunk.open('wb') as target:
+                      remaining=chunk_size
+                      while remaining:
+                          data=f.read(min(1048576,remaining))
+                          if not data:break
+                          target.write(data);remaining-=len(data)
+                  with chunk.open('rb') as target:sha=hashlib.file_digest(target,'sha256').hexdigest()
+                  parts.append(dict(file=chunk.name,size=chunk.stat().st_size,sha256=sha))
+              assert not f.read(1)
+          with source.open('rb') as f:sha=hashlib.file_digest(f,'sha256').hexdigest()
+          record=dict(source_run=39059358859,source_commit='52d513810d0be4e49a78c701e5e62189df0f1fea',unsigned_bytes=source.stat().st_size,unsigned_sha256=sha,parts=parts)
+          (out/'2'/'parts.json').write_text(json.dumps(record,indent=2))
+          for file in pathlib.Path('tested/android-output').iterdir():
+              if file.name!='DMED-mijoz-unsigned.apk':shutil.copyfile(file,out/'2'/file.name)
+          print(json.dumps(record))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DMED-offline-signing-1
+          path: signing-parts/1/
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DMED-offline-signing-2
+          path: signing-parts/2/
+          compression-level: 0
+          retention-days: 7
