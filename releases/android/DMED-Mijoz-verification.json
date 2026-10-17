@@ -1,0 +1,8 @@
+{
+  "file": "DMED-Mijoz.apk",
+  "version_name": "1.2.0",
+  "version_code": 3,
+  "bytes": 865039,
+  "sha256": "cabaad75ac7261b2c3e4e6227e79303bbfd49d772d4319345ee92a21be75cacf",
+  "verification": "Verifies\nVerified using v1 scheme (JAR signing): false\nVerified using v2 scheme (APK Signature Scheme v2): true\nVerified using v3 scheme (APK Signature Scheme v3): true\nVerified using v3.1 scheme (APK Signature Scheme v3.1): false\nVerified using v4 scheme (APK Signature Scheme v4): false\nVerified for SourceStamp: false\nNumber of signers: 1\nSigner #1 certificate DN: CN=DMED Mobile\nSigner #1 certificate SHA-256 digest: 623788e1acb9f40975c24a406fd84443951e38ea085fd02092936478b58d41af\nSigner #1 certificate SHA-1 digest: 6edf5455a6e61b3e2499474b92901c9ef4f01561\nSigner #1 certificate MD5 digest: b801c8078d3a6256a90fc7eb79d7f77c\nSigner #1 key algorithm: RSA\nSigner #1 key size (bits): 3072\nSigner #1 public key SHA-256 digest: 7cb1cbdb67be1a0a4987fc685b0f78e4eb84353ec9aa7e74f0f5cbd418ea1fa4\nSigner #1 public key SHA-1 digest: fd077f89df322518e34fceef8c10e42d7b691abb\nSigner #1 public key MD5 digest: 6699360eb2ff7b430a27d267915d94f5\n"
+}

@@ -1,0 +1,29 @@
+{
+  "version": "1.2.0",
+  "version_code": 3,
+  "source_commit": "db08c0706f662c897f51f10dcc7f13fc10dd7338",
+  "workflow": "https://github.com/humoyun2838-beep/nazarovs/actions/runs/39054137853",
+  "result": "success",
+  "platform": "Android 15 emulator",
+  "checks": {
+    "first_launch_without_internet": true,
+    "bundled_categories": 26,
+    "bundled_lessons": 711,
+    "offline_text": true,
+    "offline_video_after_process_restart": {
+      "video": true,
+      "time": 28.48,
+      "duration": 285.66,
+      "ready": 4,
+      "error": 0
+    },
+    "offline_image_after_process_restart": {
+      "width": 1920,
+      "complete": true
+    },
+    "catalog_sync": true,
+    "three_apps_online_launch": true,
+    "optional_required_apk_update_retry_and_back": true
+  },
+  "physical_device_tested": false
+}
