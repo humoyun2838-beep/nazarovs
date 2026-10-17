@@ -14,7 +14,7 @@ public final class OfflineMediaProvider extends ContentProvider {
         if(!"r".equals(mode)||uri.getPathSegments().size()!=1)throw new FileNotFoundException();
         String id=uri.getLastPathSegment();
         if(id==null||!id.matches("[a-f0-9]{64}")||getContext()==null)throw new FileNotFoundException();
-        try{return getContext().getAssets().openFd("offline/media/"+id+".bin");}
+        try{return getContext().getAssets().openFd(OfflineStore.get(getContext()).bundledAsset(id));}
         catch(java.io.IOException e){throw new FileNotFoundException("Bundled media unavailable");}
     }
     @Override public String getType(Uri uri){return getContext()==null?null:OfflineStore.get(getContext()).bundledMime(uri.getLastPathSegment());}

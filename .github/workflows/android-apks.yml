@@ -1,8 +1,5 @@
 name: DMED Android APKs
 on:
-  push:
-    branches: [codex/android-apps]
-    paths: ['mobile/android/**', '.github/workflows/android-apks.yml']
   workflow_dispatch:
 permissions:
   contents: read

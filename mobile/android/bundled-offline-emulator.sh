@@ -44,5 +44,18 @@ import re
 s=open('android-output/private-media-files.txt').read();assert not re.search(r'^[a-f0-9]{64}$',s,re.M),s
 print('PASS: no downloaded or duplicated video/image files; player reads APK assets directly')
 PY
+pdf_slug=$(python3 - <<'PYDOC'
+import gzip,json
+c=json.loads(gzip.decompress(open('mobile/android/app/src/mijoz/assets/offline/catalog.json.gz','rb').read()))
+print(next(m['slug'] for m in c['materials'] if 'FILE::' in m['content']))
+PYDOC
+)
+adb shell am force-stop "$package"
+adb logcat -c
+adb shell am start -W -n "$package/uz.dmed.mobile.MainActivity" --ez offline_test true --ez offline_document true --es offline_lesson "$pdf_slug"
+sleep 15
+adb logcat -d -s DMED_OFFLINE_TEST:I > android-output/bundled-pdf.log
+grep -q 'DMED_OFFLINE_PDF:' android-output/bundled-pdf.log
+adb exec-out screencap -p > android-output/bundled-pdf.png
 adb logcat -d -b crash > android-output/bundled-crashes.log
 if grep -q 'FATAL EXCEPTION' android-output/bundled-crashes.log;then exit 1;fi

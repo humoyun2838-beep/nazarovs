@@ -34,7 +34,12 @@ def prepare(pair):
             if raw.startswith('notion:'):
                 b,f,n=raw[7:].split('|',2)
                 with request(ORIGIN+'/api/media/notion?'+urllib.parse.urlencode(dict(b=b,f=f,n=n,fmt='json'))) as response:url=json.load(response)['url']
-            else:url=urllib.parse.urljoin(ORIGIN,raw)
+            else:
+                url=urllib.parse.urljoin(ORIGIN,raw)
+                parsed=urllib.parse.urlsplit(url)
+                if parsed.hostname in ('www.notion.so','notion.so') and parsed.path.startswith('/image/'):
+                    direct=urllib.parse.unquote(parsed.path[len('/image/'):])
+                    if direct.startswith('https://'):url=direct
             with request(url) as response,source.open('wb') as output:
                 mime=response.headers.get('Content-Type','').split(';')[0];expected=int(response.headers.get('Content-Length',0));count=0
                 while chunk:=response.read(1024*1024):output.write(chunk);count+=len(chunk)
@@ -77,6 +82,7 @@ if __name__=='__main__':
             (DEST/'progress.json').write_text(json.dumps(report));(DEST/'results.json').write_text(json.dumps(results))
             print(json.dumps(report),flush=True)
     missing=[key for key,item in results.items() if 'error' in item]
+    if shards>1:sys.exit(0)
     if missing or limit:sys.exit('Not ready for packaging: incomplete collection or sample run')
     if shards>1:sys.exit(0)
     if sum(x['size'] for x in results.values())>3700000000:sys.exit('Not ready: exceeds safe single-APK media budget')

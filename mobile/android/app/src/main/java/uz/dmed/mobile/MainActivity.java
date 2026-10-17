@@ -161,6 +161,7 @@ public class MainActivity extends Activity {
             String slug=getIntent().getStringExtra("offline_lesson");
             web.getSettings().setMediaPlaybackRequiresUserGesture(false);
             if(slug!=null){web.loadUrl(OfflineStore.HOME+"#lesson="+Uri.encode(slug));if(getIntent().getBooleanExtra("offline_download",false))offline.download(slug);}
+            if(slug!=null&&getIntent().getBooleanExtra("offline_document",false)){try{startActivity(new Intent(this,OfflineDocumentActivity.class).putExtra("media_id",offline.lessonDocument(slug)));}catch(Exception e){android.util.Log.e("DMED_OFFLINE_TEST","Offline PDF failed",e);}}
             if(slug!=null&&getIntent().getBooleanExtra("offline_play",false)){
                 try{openOfflineVideo(offline.lessonVideo(slug),true);}catch(Exception e){android.util.Log.e("DMED_OFFLINE_TEST","Offline play failed",e);}
             }

@@ -30,7 +30,8 @@ public final class OfflineDocumentActivity extends Activity {
         worker.execute(()->{try{
             if(id==null||!id.matches("[a-f0-9]{64}")||!"application/pdf".equals(OfflineStore.get(this).bundledMime(id)))throw new IOException();
             File file=new File(getCacheDir(),"document-"+id+".pdf");
-            if(!file.isFile())try(InputStream in=getAssets().open("offline/media/"+id+".bin");FileOutputStream out=new FileOutputStream(file)){byte[] b=new byte[65536];int n;while((n=in.read(b))!=-1)out.write(b,0,n);}
+            File partial=new File(getCacheDir(),"document-"+id+".tmp");
+            if(!file.isFile()){try(InputStream in=getAssets().open(OfflineStore.get(this).bundledAsset(id));FileOutputStream out=new FileOutputStream(partial)){byte[] b=new byte[65536];int n;while((n=in.read(b))!=-1)out.write(b,0,n);out.getFD().sync();}if(!partial.renameTo(file))throw new IOException("PDF saqlanmadi");}
             PdfRenderer pdf=new PdfRenderer(ParcelFileDescriptor.open(file,ParcelFileDescriptor.MODE_READ_ONLY));
             runOnUiThread(()->{if(isDestroyed()){pdf.close();return;}renderer=pdf;render();});
         }catch(Exception e){runOnUiThread(()->{if(!isDestroyed())status.setText("PDF ochilmadi.");});}});
@@ -40,7 +41,7 @@ public final class OfflineDocumentActivity extends Activity {
         try(PdfRenderer.Page current=renderer.openPage(page)){
             int width=Math.min(1600,Math.max(640,getResources().getDisplayMetrics().widthPixels));int height=(int)((long)width*current.getHeight()/current.getWidth());
             Bitmap next=Bitmap.createBitmap(width,Math.min(height,4000),Bitmap.Config.ARGB_8888);next.eraseColor(Color.WHITE);current.render(next,null,null,PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
-            image.setImageBitmap(next);if(bitmap!=null)bitmap.recycle();bitmap=next;status.setText("PDF • "+(page+1)+" / "+renderer.getPageCount()+" • Oflayn");
+            image.setImageBitmap(next);if(bitmap!=null)bitmap.recycle();bitmap=next;status.setText("PDF • "+(page+1)+" / "+renderer.getPageCount()+" • Oflayn");if(BuildConfig.DEBUG)android.util.Log.i("DMED_OFFLINE_TEST","DMED_OFFLINE_PDF:"+renderer.getPageCount()+":"+width);
         }catch(Exception e){status.setText("Sahifa ochilmadi.");}
     }
     @Override protected void onDestroy(){worker.shutdown();if(renderer!=null)renderer.close();if(bitmap!=null){image.setImageDrawable(null);bitmap.recycle();}super.onDestroy();}
