@@ -84,7 +84,7 @@ public final class ApkUpdater {
     }
     public void showPreview(boolean required){
         if(!BuildConfig.DEBUG)return;
-        ui(()->offer(new UpdatePolicy("1.3.0",4,required?4:1,required,
+        ui(()->offer(new UpdatePolicy("1.4.0",5,required?4:1,required,
             "https://raw.githubusercontent.com/humoyun2838-beep/nazarovs/9fe7f63941cb713efa8a0cbf2d8dff406c60e60e/releases/android/DMED-Mijoz.apk",
             "5f6245874ca1ca87538e656396593d24c54b3ea9814ef9da95b709ded0d2fb82",21119,
             "Xavfsiz APK yangilash\nYuklash foizi\nMajburiy va ixtiyoriy yangilanish"),true));

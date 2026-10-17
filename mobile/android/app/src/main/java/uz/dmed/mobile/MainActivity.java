@@ -111,6 +111,7 @@ public class MainActivity extends Activity {
                 Uri url = request.getUrl();
                 if(offline!=null&&OfflineStore.isLocal(url)){
                     if(request.isForMainFrame()&&"/download".equals(url.getPath())){if(OfflineStore.isLocal(Uri.parse(web.getUrl()==null?"":web.getUrl())))offline.download(url.getQueryParameter("slug"));return true;}
+                    if(request.isForMainFrame()&&"/document".equals(url.getPath())){if(OfflineStore.isLocal(Uri.parse(web.getUrl()==null?"":web.getUrl()))){String id=url.getQueryParameter("id");if("application/pdf".equals(offline.bundledMime(id)))startActivity(new Intent(MainActivity.this,OfflineDocumentActivity.class).putExtra("media_id",id));}return true;}
                     if(request.isForMainFrame()&&"/play".equals(url.getPath())){if(OfflineStore.isLocal(Uri.parse(web.getUrl()==null?"":web.getUrl())))openOfflineVideo(url.getQueryParameter("id"),false);return true;}
                     return false;
                 }
@@ -168,10 +169,10 @@ public class MainActivity extends Activity {
         if(BuildConfig.DEBUG&&updater!=null&&getIntent().getBooleanExtra("update_preview",false))updater.showPreview(getIntent().getBooleanExtra("update_required",false));
     }
     private void openOfflineVideo(String id,boolean test){
-        try{offline.videoFile(id);Intent intent=new Intent(this,OfflineVideoActivity.class).putExtra("media_id",id);if(BuildConfig.DEBUG&&test)intent.putExtra("offline_test",true);startActivity(intent);}catch(Exception e){Toast.makeText(this,"Video hali saqlanmagan. Internet bilan yuklab oling.",Toast.LENGTH_LONG).show();}
+        try{offline.videoUri(id);Intent intent=new Intent(this,OfflineVideoActivity.class).putExtra("media_id",id);if(BuildConfig.DEBUG&&test)intent.putExtra("offline_test",true);startActivity(intent);}catch(Exception e){Toast.makeText(this,"Video hali saqlanmagan. Internet bilan yuklab oling.",Toast.LENGTH_LONG).show();}
     }
     private boolean trusted(Uri uri) { return "https".equals(uri.getScheme()) && HOST.equals(uri.getHost()) && (uri.getPort()==-1 || uri.getPort()==443); }
-    private void loadHome() { web.loadUrl(offline!=null&&!offline.online()?OfflineStore.HOME:ORIGIN + BuildConfig.START_PATH); }
+    private void loadHome() { web.loadUrl(offline!=null&&(offline.hasBundle()||!offline.online())?OfflineStore.HOME:ORIGIN + BuildConfig.START_PATH); }
     private void showError() { progress.setVisibility(View.GONE); if(offline!=null&&!OfflineStore.isLocal(Uri.parse(web.getUrl()==null?"":web.getUrl()))){web.loadUrl(OfflineStore.HOME);return;}error.setVisibility(View.VISIBLE); }
     private Button control(String text,String label) { Button b=new Button(this);b.setText(text);b.setTextColor(Color.WHITE);b.setTextSize(24);b.setBackgroundColor(Color.TRANSPARENT);b.setContentDescription(label);return b; }
     private int dp(int value) { return Math.round(value*getResources().getDisplayMetrics().density); }
