@@ -5,6 +5,7 @@ root=pathlib.Path(os.environ.get('DMED_MEDIA_DEST','media-output'))
 assets=prepare.ASSETS;media=assets/'media';media.mkdir(exist_ok=True)
 index={};failures=[];recovered=0;unique={}
 allowed=json.loads((assets/'unavailable-media.json').read_text()) if (assets/'unavailable-media.json').exists() else {}
+aliases=json.loads((assets/'media-aliases.json').read_text()) if (assets/'media-aliases.json').exists() else {}
 by_file={}
 for raw in prepare.sources:
     if raw.startswith('notion:'):
@@ -19,8 +20,19 @@ for raw,kind in prepare.sources.items():
             shutil.copyfile(root/other,file);shutil.copyfile(root/(other+'.json'),meta);recovered+=1;break
     else:pending.append((raw,kind))
 print(json.dumps(dict(recovered_aliases=recovered,retry_sources=len(pending))),flush=True)
+def repair(pair):
+    raw,kind=pair;key=hashlib.sha256(raw.encode()).hexdigest();errors=[]
+    candidates=aliases.get(key,[])+[raw]+by_file.get(raw.split('|')[1] if raw.startswith('notion:') else '',[])
+    for candidate in dict.fromkeys(candidates):
+        other,result=prepare.prepare((candidate,kind))
+        if 'error' not in result:
+            if other!=key:shutil.copyfile(root/other,root/key);shutil.copyfile(root/(other+'.json'),root/(key+'.json'))
+            return key,result
+        errors.append(result['error'])
+    error=next((e for e in errors if 'HTTP Error 404' in e),errors[-1])
+    return key,dict(kind=kind,error=error)
 with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
-    for number,(key,result) in enumerate(pool.map(prepare.prepare,pending),1):
+    for number,(key,result) in enumerate(pool.map(repair,pending),1):
         if 'error' not in result:recovered+=1
         elif result['kind']=='IMAGE' and 'HTTP Error 404' in result['error']:
             # The user chose to package available files. Keep an explicit

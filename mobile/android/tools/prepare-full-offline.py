@@ -1,5 +1,5 @@
 """Resume-safe public lesson media preparation; refuses to package missing files."""
-import concurrent.futures, gzip, hashlib, io, json, os, pathlib, re, ssl, subprocess, sys, time, urllib.parse, urllib.request
+import concurrent.futures, gzip, hashlib, io, json, os, pathlib, re, ssl, subprocess, sys, tempfile, time, urllib.parse, urllib.request, zipfile
 ROOT=pathlib.Path(os.environ.get('DMED_PROJECT_ROOT',pathlib.Path(__file__).resolve().parent.parent))
 sys.path.insert(0,str(ROOT/'.mobile-tools/media-runtime'))
 from PIL import Image, ImageOps
@@ -16,6 +16,8 @@ for lesson in catalog['materials']:
     for kind,raw in re.findall(r'(?m)^(IMAGE|VIDEO|FILE)::([^\r\n]+)',lesson['content']):sources[raw.strip()]=kind
     for raw in re.findall(r'!\[[^\]]*\]\(([^)]+)\)',lesson['content']):sources[raw]='IMAGE'
     for raw in re.findall(r'\[[^\]]*\]\((https://[^)]+\.mp4(?:\?[^)]*)?)\)',lesson['content']):sources[raw]='VIDEO'
+for raw in sources:
+    if urllib.parse.unquote(raw).split('?',1)[0].lower().endswith(('.pdf','.docx')):sources[raw]='FILE'
 
 def request(url):
     p=urllib.parse.urlsplit(url)
@@ -57,7 +59,16 @@ def prepare(pair):
                 with Image.open(partial) as image:image.verify()
                 mime='image/webp'
             else:
-                if not source.read_bytes().startswith(b'%PDF-'):raise ValueError('Expected PDF attachment')
+                if not source.read_bytes().startswith(b'%PDF-'):
+                    if not zipfile.is_zipfile(source):raise ValueError('Unsupported lesson document')
+                    with zipfile.ZipFile(source) as archive:
+                        if 'word/document.xml' not in archive.namelist():raise ValueError('Invalid Word document')
+                    with tempfile.TemporaryDirectory(prefix='dmed-docx-',dir=DEST) as temp:
+                        folder=pathlib.Path(temp).resolve();document=folder/'lesson.docx';source.replace(document)
+                        result=subprocess.run(['libreoffice','-env:UserInstallation='+ (folder/'profile').as_uri(),'--headless','--convert-to','pdf','--outdir',str(folder),str(document)],capture_output=True,text=True,timeout=180)
+                        converted=folder/'lesson.pdf'
+                        if result.returncode or not converted.exists() or not converted.read_bytes().startswith(b'%PDF-'):raise ValueError('Word to PDF conversion failed')
+                        converted.replace(source)
                 source.replace(partial);mime='application/pdf'
             partial.replace(target)
             item=dict(size=target.stat().st_size,mime=mime,sha256=hashlib.sha256(target.read_bytes()).hexdigest(),kind=kind)
