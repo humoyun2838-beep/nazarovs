@@ -25,18 +25,18 @@ public final class OfflineVideoActivity extends Activity {
         FrameLayout stage=new FrameLayout(this);video=new VideoView(this);FrameLayout.LayoutParams layout=new FrameLayout.LayoutParams(-1,-1,Gravity.CENTER);stage.addView(video,layout);root.addView(stage,new LinearLayout.LayoutParams(-1,0,1));
         status=new TextView(this);status.setText("Saqlangan video ochilmoqda… Internet kerak emas.");status.setTextColor(Color.WHITE);status.setPadding(24,24,24,24);root.addView(status);setContentView(root);
         try{
-            File file=OfflineStore.get(this).videoFile(getIntent().getStringExtra("media_id"));
+            android.net.Uri source=OfflineStore.get(this).videoUri(getIntent().getStringExtra("media_id"));
             if(state!=null)position=state.getInt("position",0);
             MediaController controls=new MediaController(this);controls.setAnchorView(video);video.setMediaController(controls);
             video.setOnErrorListener((player,what,extra)->{failed=true;status.setText("Video ochilmadi. Darsga qaytib videoni qayta yuklab oling.");if(BuildConfig.DEBUG)android.util.Log.e("DMED_OFFLINE_TEST","Native video error "+what+":"+extra);return true;});
             video.setOnPreparedListener(player->{
-                status.setText("✓ Oflayn video • Telefon xotirasidan");
+                status.setText("✓ Oflayn video • Internet talab qilinmaydi");
                 boolean test=BuildConfig.DEBUG&&getIntent().getBooleanExtra("offline_test",false);
                 if(test)position=30000;
                 if(position>0)video.seekTo(position);video.start();controls.show(3000);
                 if(test)video.postDelayed(()->{try{org.json.JSONObject result=new org.json.JSONObject();result.put("video",true);result.put("time",video.getCurrentPosition()/1000.0);result.put("duration",video.getDuration()/1000.0);result.put("ready",video.isPlaying()?4:1);result.put("error",failed?1:0);android.util.Log.i("DMED_OFFLINE_TEST","DMED_OFFLINE_VIDEO:"+result);}catch(Exception ignored){}},3500);
             });
-            video.setVideoPath(file.getAbsolutePath());
+            video.setVideoURI(source);
         }catch(Exception e){failed=true;status.setText("Video hali saqlanmagan. Darsga qaytib internet bilan yuklab oling.");}
     }
     @Override protected void onPause(){resume=video!=null&&video.isPlaying();if(video!=null){position=video.getCurrentPosition();video.pause();}super.onPause();}

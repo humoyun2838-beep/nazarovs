@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <application>
+        <activity android:name="uz.dmed.mobile.OfflineDocumentActivity" android:exported="false" />
+        <provider android:name="uz.dmed.mobile.OfflineMediaProvider" android:authorities="${applicationId}.offline" android:exported="false" android:grantUriPermissions="false" />
         <activity android:name="uz.dmed.mobile.OfflineVideoActivity" android:exported="false" android:configChanges="orientation|screenSize|keyboardHidden" />
         <provider android:name="uz.dmed.mobile.UpdateFileProvider" android:authorities="${applicationId}.updates" android:exported="false" android:grantUriPermissions="true" />
     </application>

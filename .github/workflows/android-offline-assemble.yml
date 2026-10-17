@@ -1,0 +1,92 @@
+name: Assemble verified complete offline APK
+on:
+  push:
+    branches: [codex/android-apps]
+    paths: ['.github/workflows/android-offline-assemble.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install imageio-ffmpeg==0.6.0 pillow==12.0.0
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 39056790366
+          pattern: offline-media-*
+          path: media-output
+          merge-multiple: true
+      - name: Install offline Word document converter
+        run: |
+          if ! command -v libreoffice >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends libreoffice-writer
+          fi
+      - name: Refuse missing media and assemble all verified APK assets
+        env:
+          DMED_PROJECT_ROOT: ${{ github.workspace }}
+          DMED_ASSETS: mobile/android/app/src/mijoz/assets/offline
+          DMED_MEDIA_DEST: media-output
+        run: python3 mobile/android/tools/assemble-full-offline.py
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+      - working-directory: mobile/android
+        run: gradle --no-daemon :app:assembleMijozRelease :app:assembleMijozDebug :app:lintMijozRelease
+      - name: Verify actual APK includes every media file as seekable asset
+        run: |
+          mkdir -p android-output
+          cp mobile/android/app/build/outputs/apk/mijoz/release/app-mijoz-release-unsigned.apk android-output/DMED-mijoz-unsigned.apk
+          cp "$ANDROID_HOME/build-tools/35.0.0/lib/apksigner.jar" android-output/apksigner.jar
+          cp media-completeness.json android-output/
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging android-output/DMED-mijoz-unsigned.apk > android-output/apk-badging.txt
+          python3 - <<'PY'
+          import zipfile,json,hashlib
+          badging=open('android-output/apk-badging.txt').read();assert "name='uz.dmed.mobile.mijoz'" in badging and "versionCode='4'" in badging and "versionName='1.3.0'" in badging
+          with zipfile.ZipFile('android-output/DMED-mijoz-unsigned.apk') as z:
+              data=json.loads(z.read('assets/offline/catalog.json'));assert len(data['materials'])==711
+              index=json.loads(z.read('assets/offline/media-index.json'));assert len(index)==6326 and sum(bool(x.get('unavailable')) and x['kind']=='VIDEO' for x in index.values())==2
+              report=json.load(open('media-completeness.json'));assert len(report['section_images'])==26
+              for section in report['section_images']:assert hashlib.sha256(z.read('assets/offline/sections/'+section['slug']+'.webp')).hexdigest()==section['sha256']
+              for key,item in index.items():
+                  if item.get('unavailable'):continue
+                  info=z.getinfo('assets/offline/media/'+item['asset']+'.bin');assert info.compress_type==0 and info.file_size==item['size']
+                  with z.open(info) as f:assert hashlib.file_digest(f,'sha256').hexdigest()==item['sha256']
+              print('PASS: all',len(index),'media files embedded and verified')
+          PY
+      - run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - working-directory: mobile/android
+        run: gradle --stop
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          emulator-options: -no-window -gpu swiftshader -feature -Vulkan,-HardwareDecoder -cores 2 -memory 2048 -no-snapshot -noaudio -no-boot-anim
+          disable-animations: true
+          script: bash mobile/android/bundled-offline-emulator.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: DMED-complete-offline-APK
+          path: |
+            android-output/
+            media-completeness.json
+          compression-level: 0
+          retention-days: 30

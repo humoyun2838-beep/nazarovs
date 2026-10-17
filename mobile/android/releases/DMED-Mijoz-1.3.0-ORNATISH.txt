@@ -1,0 +1,10 @@
+DMED Mijoz 1.3.0 — to‘liq oflayn materiallar
+
+1. DMED-Mijoz.apk faylini ochib, eski ilova ustiga o‘rnating. Paket: uz.dmed.mobile.mijoz, versionCode: 4.
+2. Android o‘rnatishga ruxsat so‘rasa, tasdiqlang.
+3. 26 bo‘lim, 711 dars matni, 336 ta 360p video va mavjud rasmlar APK ichida. Birinchi ochishda internet kerak emas; alohida media yuklash talab qilinmaydi.
+4. Hujjatlar ilovaning ichida oflayn ochiladi. Word hujjati PDFga aylantirilgan.
+5. Chat uchun “Onlayn sayt va chat” havolasini oching va internetni yoqing.
+6. Manbasi ochilmayotgan 2 eski video va 19 rasm tegishli darslarda belgilangan. Dars matnlari saqlangan.
+
+Android 15 emulyatorida tekshirilgan. APK avvalgi imzo sertifikati bilan imzolangan.

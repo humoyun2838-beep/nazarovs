@@ -55,3 +55,16 @@ Native `OfflineStore` faqat `https://offline.dmed.invalid` manzilidagi o‘z HTM
 Internet mavjud bo‘lganda `/api/offline-catalog` ochiq darslar bilan katalogni yangilaydi. ETag 304 takror yuklashni tejaydi; noto‘g‘ri/uzilgan javob oldingi nusxani almashtirmaydi. Foydalanuvchi, akkaunt va chat ma’lumotlari ushbu katalogga kiritilmaydi.
 
 `offline-emulator.sh` samolyot rejimida birinchi ochilish, dars matni, video va rasmni to‘liq yuklash, katalog sinxronlash, process restart va oflayn video seek/ijroni tekshiradi. Release ilovada debug intentlari ishlamaydi.
+
+
+## Android 1.3.0 — APK ichidagi mavjud media
+
+To‘liq oflayn APK GitHub Releases orqali tarqatiladi: [DMED Mijoz 1.3.0](https://github.com/humoyun2838-beep/nazarovs/releases/tag/android-v1.3.0-offline). Paket `uz.dmed.mobile.mijoz`, versionCode 4, avvalgi sertifikat bilan imzolangan. 26 bo‘lim / 711 dars matni, 336 ta 360p video, 5964 ta mavjud rasm havolasi, 26 bo‘lim muqovasi va 3 ta hujjat APK ichida. 2 eski video va 19 rasm manbasi ochilmaydi; dars ichida belgilangan.
+
+`android-full-offline.yml` ommaviy materiallarni guruhlarda tayyorlaydi. Yakuniy yig‘ish bir xil Notion fayliga tegishli havolalarni tiklaydi, takroriy rasmlarni bir nusxada saqlaydi, noto‘g‘ri IMAGE belgisi qo‘yilgan PDFlarni hujjat sifatida ko‘rsatadi va Word hujjatini LibreOffice bilan PDFga aylantiradi. `.bin` media assetlari ZIPda siqilmaydi; xususiy OfflineMediaProvider videoni AssetFileDescriptor orqali APK ichidan Android pleyeriga beradi. Video va rasmlar telefon xotirasiga qayta ko‘chirilmaydi. PDF ko‘rish uchun ilovaning yopiq keshidan foydalaniladi.
+
+Samolyot rejimida birinchi o‘rnatish, matn, video seek/ijro, rasm va PDF/Word sahifalari Android 15 emulyatorida tekshirilgan. Haqiqiy telefonda sinov o‘tkazilmagan. Sinov va yaxlitlik hisobotlari `mobile/android/releases/` ichida.
+
+Imzolash kaliti mahalliy `.mobile-signing` katalogida qoladi. Ommaviy imzo baytlari bilan `apply-public-signing-patch.py` aynan tekshirilgan unsigned APKdan imzolangan nusxani tiklaydi; unsigned va signed SHA-256 mosligi tekshiriladi. `android-offline-publish.yml` muvaffaqiyatli emulyator sinovi va asl sertifikatni tekshirib GitHub Release yaratadi.
+
+1.3.0 katta APKni Releases havolasi orqali o‘rnating. Mavjud admin APK nashri validatori 128 MB va avvalgi raw GitHub URL formatiga sozlangan; katta APK uchun avtomatik nashr transporti alohida yangilanishi kerak. Ochiq katalogning internet kelganda sinxronlanishi saqlangan.

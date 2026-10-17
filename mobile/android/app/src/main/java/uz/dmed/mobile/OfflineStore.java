@@ -24,6 +24,7 @@ final class OfflineStore {
     private final File directory;
     private final ExecutorService io=Executors.newSingleThreadExecutor();
     private volatile JSONObject index;
+    private JSONObject bundled=new JSONObject();
     private volatile String status="Dars matnlari internetsiz tayyor. Rasm va videolarni bir marta yuklab oling.";
     private volatile boolean busy;
     private volatile boolean syncing;
@@ -36,6 +37,7 @@ final class OfflineStore {
         this.context=context.getApplicationContext();directory=new File(context.getFilesDir(),"offline-media");
         if(!directory.isDirectory()&&!directory.mkdirs())throw new IllegalStateException("Saqlash xotirasi ochilmadi");
         try{File cached=new File(directory,"catalog.json");if(cached.isFile()){JSONObject data=new JSONObject(read(new FileInputStream(cached),20000000));catalogVersion=data.getString("version");catalogCached=true;}}catch(Exception ignored){catalogVersion="2026-10-16";}
+        try{bundled=new JSONObject(read(context.getAssets().open("offline/media-index.json"),4000000));status="Darslar va mavjud rasm/videolar APK ichida. Internet talab qilinmaydi.";}catch(IOException ignored){}catch(org.json.JSONException e){throw new IllegalStateException("Bundled media index invalid",e);}
         try{index=new JSONObject(read(new FileInputStream(new File(directory,"index.json")),2000000));}catch(Exception e){index=new JSONObject();}
     }
     static boolean isLocal(Uri uri){return "https".equals(uri.getScheme())&&HOST.equals(uri.getHost())&&(uri.getPort()==-1||uri.getPort()==443);}
@@ -47,13 +49,15 @@ final class OfflineStore {
             String path=request.getUrl().getPath();
             if(!"GET".equals(request.getMethod()))return response(405,"text/plain",new byte[0]);
             if("/index.html".equals(path)||"/".equals(path))return response("text/html",context.getAssets().open("offline/index.html"));
+            if(path!=null&&path.matches("/sections/[a-z0-9-]+\\.webp"))return response("image/webp",context.getAssets().open("offline"+path));
             if("/catalog.json".equals(path))return response("application/json",catalog());
             if("/state.json".equals(path)) {
-                JSONObject state=new JSONObject();state.put("busy",busy);state.put("status",status);state.put("files",index);state.put("online",online());state.put("catalogVersion",catalogVersion);
+                syncCatalog();
+                JSONObject state=new JSONObject();state.put("busy",busy);state.put("status",status);JSONObject files=new JSONObject(index.toString());java.util.Iterator<String> ids=bundled.keys();while(ids.hasNext()){String id=ids.next();files.put(id,bundled.get(id));}state.put("files",files);state.put("bundled",hasBundle());state.put("online",online());state.put("catalogVersion",catalogVersion);
                 return response(200,"application/json",state.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
             }
             if(path!=null&&path.matches("/media/[a-f0-9]{64}")) {
-                String key=path.substring(7);JSONObject meta=index.optJSONObject(key);File file=new File(directory,key);
+                String key=path.substring(7);JSONObject asset=bundled.optJSONObject(key);if(asset!=null)return response(asset.optString("mime","application/octet-stream"),context.getAssets().open("offline/media/"+asset.optString("asset",key)+".bin"));JSONObject meta=index.optJSONObject(key);File file=new File(directory,key);
                 if(meta==null||!file.isFile()||file.length()!=meta.optLong("size"))return response(404,"text/plain",new byte[0]);
                 String mime=meta.optString("mime","application/octet-stream");long size=file.length(),start=0,end=size-1;
                 String range=request.getRequestHeaders().get("Range");if(range==null)range=request.getRequestHeaders().get("range");
@@ -123,15 +127,25 @@ final class OfflineStore {
             catalogCached=true;catalogVersion=data.getString("version");prefs.edit().putString("etag",connection.getHeaderField("ETag")).putString("version",catalogVersion).apply();
         }catch(Exception ignored){/* The last valid catalog and bundled data remain available. */}finally{if(connection!=null)connection.disconnect();syncing=false;}});
     }
+    boolean hasBundle(){return bundled.length()>0;}
+    String bundledAsset(String id)throws IOException{JSONObject meta=id==null?null:bundled.optJSONObject(id);String asset=meta==null?null:meta.optString("asset",id);if(asset==null||!asset.matches("[a-f0-9]{64}"))throw new IOException("Media topilmadi");return "offline/media/"+asset+".bin";}
+    String bundledMime(String id){JSONObject meta=id==null?null:bundled.optJSONObject(id);return meta==null?null:meta.optString("mime");}
+    Uri videoUri(String id)throws IOException {
+        if(id==null||!id.matches("[a-f0-9]{64}"))throw new IOException("Video topilmadi");
+        String mime=bundledMime(id);if(mime!=null&&mime.startsWith("video/"))return Uri.parse("content://"+context.getPackageName()+".offline/"+id);
+        return Uri.fromFile(videoFile(id));
+    }
     File videoFile(String id)throws IOException {
         if(id==null||!id.matches("[a-f0-9]{64}"))throw new IOException("Video topilmadi");
         JSONObject meta=index.optJSONObject(id);File file=new File(directory,id);
         if(meta==null||!file.isFile()||file.length()!=meta.optLong("size")||!(meta.optString("mime").startsWith("video/")||meta.optString("mime").startsWith("application/octet-stream")))throw new IOException("Video saqlanmagan");
         return file;
     }
-    String lessonVideo(String slug)throws Exception {
+    String lessonDocument(String slug)throws Exception{return lessonMedia(slug,"FILE");}
+    String lessonVideo(String slug)throws Exception{return lessonMedia(slug,"VIDEO");}
+    private String lessonMedia(String slug,String kind)throws Exception {
         JSONArray materials=new JSONObject(read(catalog(),20000000)).getJSONArray("materials");
-        for(int i=0;i<materials.length();i++){JSONObject lesson=materials.getJSONObject(i);if(slug.equals(lesson.getString("slug"))){java.util.regex.Matcher marker=java.util.regex.Pattern.compile("(?m)^VIDEO::(.+)$").matcher(lesson.getString("content"));if(marker.find()){String id=key(marker.group(1).trim());videoFile(id);return id;}}}
+        for(int i=0;i<materials.length();i++){JSONObject lesson=materials.getJSONObject(i);if(slug.equals(lesson.getString("slug"))){java.util.regex.Matcher marker=java.util.regex.Pattern.compile("(?m)^"+kind+"::(.+)$").matcher(lesson.getString("content"));if(marker.find()){String id=key(marker.group(1).trim());if("VIDEO".equals(kind))videoUri(id);return id;}}}
         throw new IOException("Video topilmadi");
     }
     private void downloadFile(String raw,String id,int number,int count)throws Exception {
