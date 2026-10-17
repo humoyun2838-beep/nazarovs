@@ -70,7 +70,7 @@ adb shell svc data disable
 adb shell cmd connectivity airplane-mode enable
 sleep 5
 adb logcat -c
-adb shell am start -W -n "$package/uz.dmed.mobile.MainActivity" --ez offline_test true --es offline_lesson login-to-system-uz
+adb shell am start -W -n "$package/uz.dmed.mobile.MainActivity" --ez offline_test true --ez offline_play true --es offline_lesson login-to-system-uz
 sleep 18
 adb logcat -d -s DMED_OFFLINE_TEST:I > android-output/offline-video.log
 python3 - <<'PY'

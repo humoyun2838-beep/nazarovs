@@ -123,6 +123,17 @@ final class OfflineStore {
             catalogCached=true;catalogVersion=data.getString("version");prefs.edit().putString("etag",connection.getHeaderField("ETag")).putString("version",catalogVersion).apply();
         }catch(Exception ignored){/* The last valid catalog and bundled data remain available. */}finally{if(connection!=null)connection.disconnect();syncing=false;}});
     }
+    File videoFile(String id)throws IOException {
+        if(id==null||!id.matches("[a-f0-9]{64}"))throw new IOException("Video topilmadi");
+        JSONObject meta=index.optJSONObject(id);File file=new File(directory,id);
+        if(meta==null||!file.isFile()||file.length()!=meta.optLong("size")||!(meta.optString("mime").startsWith("video/")||meta.optString("mime").startsWith("application/octet-stream")))throw new IOException("Video saqlanmagan");
+        return file;
+    }
+    String lessonVideo(String slug)throws Exception {
+        JSONArray materials=new JSONObject(read(catalog(),20000000)).getJSONArray("materials");
+        for(int i=0;i<materials.length();i++){JSONObject lesson=materials.getJSONObject(i);if(slug.equals(lesson.getString("slug"))){java.util.regex.Matcher marker=java.util.regex.Pattern.compile("(?m)^VIDEO::(.+)$").matcher(lesson.getString("content"));if(marker.find()){String id=key(marker.group(1).trim());videoFile(id);return id;}}}
+        throw new IOException("Video topilmadi");
+    }
     private void downloadFile(String raw,String id,int number,int count)throws Exception {
         File part=new File(directory,id+".part");HttpsURLConnection connection=(HttpsURLConnection)new URL(mediaUrl(raw)).openConnection();
         connection.setInstanceFollowRedirects(false);connection.setUseCaches(false);connection.setConnectTimeout(20000);connection.setReadTimeout(60000);connection.setRequestProperty("Accept-Encoding","identity");

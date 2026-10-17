@@ -111,6 +111,7 @@ public class MainActivity extends Activity {
                 Uri url = request.getUrl();
                 if(offline!=null&&OfflineStore.isLocal(url)){
                     if(request.isForMainFrame()&&"/download".equals(url.getPath())){if(OfflineStore.isLocal(Uri.parse(web.getUrl()==null?"":web.getUrl())))offline.download(url.getQueryParameter("slug"));return true;}
+                    if(request.isForMainFrame()&&"/play".equals(url.getPath())){if(OfflineStore.isLocal(Uri.parse(web.getUrl()==null?"":web.getUrl())))openOfflineVideo(url.getQueryParameter("id"),false);return true;}
                     return false;
                 }
                 if (trusted(url)) return false;
@@ -159,9 +160,15 @@ public class MainActivity extends Activity {
             String slug=getIntent().getStringExtra("offline_lesson");
             web.getSettings().setMediaPlaybackRequiresUserGesture(false);
             if(slug!=null){web.loadUrl(OfflineStore.HOME+"#lesson="+Uri.encode(slug));if(getIntent().getBooleanExtra("offline_download",false))offline.download(slug);}
+            if(slug!=null&&getIntent().getBooleanExtra("offline_play",false)){
+                try{openOfflineVideo(offline.lessonVideo(slug),true);}catch(Exception e){android.util.Log.e("DMED_OFFLINE_TEST","Offline play failed",e);}
+            }
             web.postDelayed(()->web.evaluateJavascript("(async()=>{console.log('DMED_OFFLINE_TEXT:'+document.querySelector('article h2')?.textContent);const image=document.querySelector('img');if(image)console.log('DMED_OFFLINE_IMAGE:'+JSON.stringify({width:image.naturalWidth,complete:image.complete}));const v=document.querySelector('video');if(!v)return JSON.stringify({video:false});v.currentTime=30;await v.play();await new Promise(r=>setTimeout(r,2000));console.log('DMED_OFFLINE_VIDEO:'+JSON.stringify({video:true,time:v.currentTime,duration:v.duration,ready:v.readyState,error:v.error?.code||0}));})()",value->android.util.Log.i("DMED_OFFLINE_TEST",value)),10000);
         }
         if(BuildConfig.DEBUG&&updater!=null&&getIntent().getBooleanExtra("update_preview",false))updater.showPreview(getIntent().getBooleanExtra("update_required",false));
+    }
+    private void openOfflineVideo(String id,boolean test){
+        try{offline.videoFile(id);Intent intent=new Intent(this,OfflineVideoActivity.class).putExtra("media_id",id);if(BuildConfig.DEBUG&&test)intent.putExtra("offline_test",true);startActivity(intent);}catch(Exception e){Toast.makeText(this,"Video hali saqlanmagan. Internet bilan yuklab oling.",Toast.LENGTH_LONG).show();}
     }
     private boolean trusted(Uri uri) { return "https".equals(uri.getScheme()) && HOST.equals(uri.getHost()) && (uri.getPort()==-1 || uri.getPort()==443); }
     private void loadHome() { web.loadUrl(offline!=null&&!offline.online()?OfflineStore.HOME:ORIGIN + BuildConfig.START_PATH); }
