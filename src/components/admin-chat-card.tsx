@@ -1,3 +1,4 @@
+import { AdminIllustratedHeading } from "@/components/admin-section-art";
 
 import { UiText } from "@/components/ui-locale";
 import Link from "next/link";
@@ -27,6 +28,7 @@ export function AdminChatCard({ locale = "uz" }: { locale?: Locale }) {
       className="space-y-4 rounded-[1.6rem] border border-[#d5e4f6] bg-white p-5 shadow-[0_16px_40px_-28px_rgba(11,42,85,0.35)]"
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
+        <AdminIllustratedHeading kind="chat" compact>
         <div className="space-y-1">
           <p className="text-xs font-medium tracking-[0.22em] text-[#1a6fd4] uppercase"><UiText>{" Chat "}</UiText></p>
           <h2 className="font-heading text-2xl font-semibold text-[#071428]">
@@ -36,6 +38,7 @@ export function AdminChatCard({ locale = "uz" }: { locale?: Locale }) {
             <UiText>{copy.chatCardLead}</UiText>
           </p>
         </div>
+        </AdminIllustratedHeading>
         <Button asChild className="bg-[#1a6fd4] text-white hover:bg-[#155bb0]">
           <Link href={withLang("/admin/chat", locale)}>
             <UiText>{copy.chatCardTitle}</UiText>

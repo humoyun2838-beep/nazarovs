@@ -1,4 +1,5 @@
 "use client";
+import { AdminIllustratedHeading } from "@/components/admin-section-art";
 import { UiText } from "@/components/ui-locale";
 
 
@@ -301,6 +302,7 @@ export function AdminChatDashboard({ locale = "uz" }: { locale?: Locale }) {
       className="mb-5 space-y-5 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6"
     >
       <div className="flex flex-wrap items-end justify-between gap-3">
+        <AdminIllustratedHeading kind="analytics" compact>
         <div>
           <p className="text-xs font-semibold tracking-[0.22em] text-[#1a6fd4] uppercase"><UiText>{" Admin · Analitika "}</UiText></p>
           <h2 className="font-heading text-2xl font-semibold tracking-tight text-[#051530]">
@@ -310,6 +312,7 @@ export function AdminChatDashboard({ locale = "uz" }: { locale?: Locale }) {
             <UiText>{copy.dashLead}</UiText>
           </p>
         </div>
+        </AdminIllustratedHeading>
         <form
           className="flex flex-wrap items-end gap-2"
           onSubmit={applyFilter}

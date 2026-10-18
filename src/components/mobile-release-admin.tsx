@@ -1,4 +1,5 @@
 "use client";
+import { AdminIllustratedHeading } from "@/components/admin-section-art";
 import { useState } from "react";
 import { ArrowUpCircle, CheckCircle2, ShieldCheck, Smartphone } from "lucide-react";
 import type { MobileRelease } from "@/lib/mobile-release-policy";
@@ -26,10 +27,12 @@ export function MobileReleaseAdmin({ initial, locale }: { initial: MobileRelease
     <div className={`${dark ? 'dark ' : ''}space-y-6`}>
       <div className="flex justify-end"><button type="button" aria-pressed={dark} onClick={()=>setDark(value=>!value)} className="rounded-full border border-blue-200 bg-white px-4 py-2 text-sm font-medium text-blue-900">{dark ? '☀ ' : '☾ '}{({uz:dark?'Yorug‘ rejim':'Qorong‘i rejim',ru:dark?'Светлая тема':'Тёмная тема',en:dark?'Light mode':'Dark mode',kaa:dark?'Jarıq rejim':'Qarańǵı rejim'})[locale]}</button></div>
       <section className="rounded-3xl bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-600 p-6 text-white shadow-xl sm:p-8">
+        <AdminIllustratedHeading kind="updates" priority>
         <Smartphone className="mb-4 size-10 rounded-2xl bg-white/15 p-2" />
         <p className="text-sm text-blue-100">{t[0]}</p>
         <h1 className="mt-2 text-3xl font-semibold">{mobileUpdateTitles[locale]}</h1>
         <p className="mt-3 max-w-xl text-sm leading-relaxed text-blue-50">{t[1]}</p>
+        </AdminIllustratedHeading>
         <div className="mt-5 flex flex-wrap gap-3 text-sm">
           <span className="rounded-xl bg-white/15 px-3 py-2">{t[2]}: <strong>{saved.latest_version}</strong> · #{saved.version_code}</span>
           <span className="rounded-xl bg-white/15 px-3 py-2">{t[4]}: <strong>#{saved.minimum_version}</strong></span>

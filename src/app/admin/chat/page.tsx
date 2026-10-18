@@ -1,3 +1,4 @@
+import { AdminIllustratedHeading } from "@/components/admin-section-art";
 
 import { UiText } from "@/components/ui-locale";
 import { requireStaffChat } from "@/lib/client-access";
@@ -42,6 +43,7 @@ export default async function AdminChatPage({
             data-admin-chat="hero"
             className="mb-5 flex flex-wrap items-end justify-between gap-3 catalog-hero rounded-3xl p-5"
           >
+            <AdminIllustratedHeading kind="chat" priority>
             <div className="relative z-10 space-y-1">
               <p className="text-xs font-semibold tracking-[0.22em] text-[#1a6fd4] uppercase">
                 <UiText>{copy.chatLoginKicker}</UiText>
@@ -54,6 +56,7 @@ export default async function AdminChatPage({
                 {staffName ? ` (${staffName})` : ""}
               </p>
             </div>
+        </AdminIllustratedHeading>
             <Button asChild size="sm" variant="outline" className="border-[#9dbbe8] text-[#0b4fa8]">
               <Link href={withLang("/admin", locale)}><UiText>{copy.materials}</UiText></Link>
             </Button>

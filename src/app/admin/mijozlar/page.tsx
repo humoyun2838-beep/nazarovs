@@ -1,3 +1,4 @@
+import { AdminIllustratedHeading } from "@/components/admin-section-art";
 
 import { UiText } from "@/components/ui-locale";
 import { redirect } from "next/navigation";
@@ -31,6 +32,7 @@ export default async function AdminClientsPage() {
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:px-6">
         <div className="page-enter space-y-8">
           <header className="catalog-hero space-y-3 rounded-[1.85rem] p-5 sm:p-7">
+            <AdminIllustratedHeading kind="clients" priority>
             <p className="relative z-10 text-xs font-semibold tracking-[0.22em] text-[#1a6fd4] uppercase">
               <UiText>{copy.adminPanel}</UiText>
             </p>
@@ -43,6 +45,7 @@ export default async function AdminClientsPage() {
             <Button asChild size="sm" variant="outline" className="relative z-10">
               <Link href={withLang("/admin", locale)}><UiText>{copy.backMaterials}</UiText></Link>
             </Button>
+          </AdminIllustratedHeading>
           </header>
 
           <AdminClients initial={requests} locale={locale} />
@@ -53,12 +56,12 @@ export default async function AdminClientsPage() {
           </section>
 
           <section id="dashboard" className="catalog-panel space-y-4 rounded-3xl p-5">
-            <h2 className="font-heading text-2xl font-semibold text-[#071a38]"><UiText>{" Dashboard "}</UiText></h2>
+            <AdminIllustratedHeading kind="analytics" compact><h2 className="font-heading text-2xl font-semibold text-[#071a38]"><UiText>{" Dashboard "}</UiText></h2></AdminIllustratedHeading>
             <AdminDashboardBoard />
           </section>
 
           <section id="kirishlar" className="catalog-panel space-y-4 rounded-3xl p-5">
-            <h2 className="font-heading text-2xl font-semibold text-[#071a38]"><UiText>{" Kirishlar "}</UiText></h2>
+            <AdminIllustratedHeading kind="visits" compact><h2 className="font-heading text-2xl font-semibold text-[#071a38]"><UiText>{" Kirishlar "}</UiText></h2></AdminIllustratedHeading>
             <AdminVisitsList locale={locale} />
           </section>
         </div>

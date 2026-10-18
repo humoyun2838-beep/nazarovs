@@ -1,4 +1,5 @@
 "use client";
+import { AdminIllustratedHeading } from "@/components/admin-section-art";
 import { UiText } from "@/components/ui-locale";
 
 
@@ -309,7 +310,7 @@ export function AdminAiChat({ locale = "uz" }: { locale?: Locale }) {
       id="ai-yordamchi"
       className="space-y-3 rounded-2xl border border-[#1a6fd4]/20 bg-white/95 p-5 shadow-sm"
     >
-      <div className="space-y-1">
+      <AdminIllustratedHeading kind="assistant" compact>      <div className="space-y-1">
         <p className="text-xs font-medium tracking-[0.22em] text-[#1a6fd4] uppercase">
           <UiText>{copy.aiKicker}</UiText>
         </p>
@@ -317,7 +318,7 @@ export function AdminAiChat({ locale = "uz" }: { locale?: Locale }) {
           <UiText>{copy.aiTitle}</UiText>
         </h2>
         <p className="text-sm text-[#5a5248]"><UiText>{copy.aiLead}</UiText></p>
-      </div>
+      </div></AdminIllustratedHeading>
       {openaiLinked && !replaceKey ? (
         <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl bg-[#eaf3ff] px-3 py-2">
           <p className="text-sm font-medium text-[#0b4fa8]">

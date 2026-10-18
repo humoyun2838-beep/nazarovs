@@ -1,3 +1,4 @@
+import { AdminIllustratedHeading } from "@/components/admin-section-art";
 
 import { UiText } from "@/components/ui-locale";
 import { redirect } from "next/navigation";
@@ -52,6 +53,7 @@ export default async function AdminPage() {
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10 sm:px-6 sm:py-14">
         <div className="page-enter space-y-8">
           <header className="catalog-hero space-y-3 rounded-[1.85rem] p-5 sm:p-7">
+            <AdminIllustratedHeading kind="learning" priority>
             <p className="relative z-10 text-xs font-semibold tracking-[0.22em] text-[#1a6fd4] uppercase">
               <UiText>{copy.adminPanel}</UiText>
             </p>
@@ -81,6 +83,7 @@ export default async function AdminPage() {
                 <Link href={withLang("/admin/app-updates", locale)}>{({ uz: "Ilova yangilanishlari", ru: "Обновления приложения", en: "App updates", kaa: "Qosımsha jańalanıwları" })[locale]}</Link>
               </Button>
             </div>
+          </AdminIllustratedHeading>
           </header>
 
           <AdminChatCard locale={locale} />
@@ -88,9 +91,9 @@ export default async function AdminPage() {
           <AdminAiChat locale={locale} />
 
           <section className="catalog-panel space-y-3 rounded-3xl p-5">
-            <h2 className="font-heading text-xl font-semibold text-[#0b2a55]">
+            <AdminIllustratedHeading kind="learning" compact><h2 className="font-heading text-xl font-semibold text-[#0b2a55]">
               <UiText>{copy.newLesson}</UiText>
-            </h2>
+            </h2></AdminIllustratedHeading>
             <MaterialCreateForm
               locale={locale}
               categories={categories.map((c) => ({ id: c.id, title: c.title }))}
@@ -98,9 +101,9 @@ export default async function AdminPage() {
           </section>
 
           <section className="catalog-panel space-y-3 rounded-3xl p-5">
-            <h2 className="font-heading text-xl font-semibold text-[#0b2a55]">
+            <AdminIllustratedHeading kind="learning" compact><h2 className="font-heading text-xl font-semibold text-[#0b2a55]">
               <UiText>{copy.newSection}</UiText>
-            </h2>
+            </h2></AdminIllustratedHeading>
             <CategoryCreateForm locale={locale} />
           </section>
 

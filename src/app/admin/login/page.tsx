@@ -1,3 +1,4 @@
+import { AdminSectionArt } from "@/components/admin-section-art";
 
 import { UiText } from "@/components/ui-locale";
 import Link from "next/link";
@@ -28,6 +29,7 @@ export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
       <div className="catalog-hero page-enter w-full max-w-md rounded-[1.85rem] p-6 sm:p-8">
         <div className="relative z-10 mb-6 flex flex-col items-center gap-4 text-center">
           <BrandLogo size="lg" href={withLang("/nazarov", locale)} />
+          <AdminSectionArt kind="operators" priority />
           <div className="space-y-1">
             <p className="text-xs font-semibold tracking-[0.2em] text-[#1a6fd4] uppercase">
               <UiText>{copy.adminPanel}</UiText>

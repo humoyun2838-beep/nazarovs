@@ -1,4 +1,5 @@
 "use client";
+import { AdminIllustratedHeading } from "@/components/admin-section-art";
 import { UiText } from "@/components/ui-locale";
 
 
@@ -172,7 +173,8 @@ export function AdminCatalog({
     <section className="catalog-panel space-y-4 rounded-3xl p-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 className="font-heading text-xl font-semibold"><UiText>{copy.orderTitle}</UiText></h2>
+            <AdminIllustratedHeading kind="learning" compact>
+          <h2 className="font-heading text-xl font-semibold"><UiText>{copy.orderTitle}</UiText></h2></AdminIllustratedHeading>
           <p className="mt-1 text-sm text-[#5a5248]"><UiText>{copy.orderLead}</UiText></p>
         </div>
         <Input
