@@ -1,0 +1,7 @@
+DMED Admin 1.3.1 — Android 8.0 va yangiroq
+
+DMED-Admin.apk faylini telefoningizda oching va eski DMED Admin ilovasi ustiga o‘rnating. Imzo avvalgi ilova bilan bir xil. Admin login va parolingiz bilan kiring.
+
+Admin bo‘limlariga mavzuga mos 8 ta AI tasvir qo‘shildi. Darslar, mijozlar, operatorlar, chat, statistika, AI yordamchi, ilova yangilanishlari va kirishlar bo‘limlari yangilandi. Rasmlar yengil WebP formatida.
+
+Ilova https://nazarovs-production.up.railway.app serveriga ulanadi. Saytdagi dizayn va ma’lumotlar serverdan keladi. Ilovaning yuqorisidagi ↻ tugmasi sahifani yangilaydi.
