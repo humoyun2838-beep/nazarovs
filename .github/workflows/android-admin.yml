@@ -46,28 +46,7 @@ jobs:
           profile: pixel_6
           emulator-options: -no-window -gpu swiftshader -feature -Vulkan,-HardwareDecoder -cores 2 -memory 2048 -no-snapshot -noaudio -no-boot-anim -dns-server 8.8.8.8,1.1.1.1
           disable-animations: true
-          script: |
-            adb install mobile/android/app/build/outputs/apk/admin/debug/app-admin-debug.apk
-            adb shell cmd connectivity airplane-mode disable
-            adb shell svc wifi enable
-            adb shell svc data enable
-            for attempt in $(seq 1 45); do
-              if adb shell dumpsys connectivity | grep -q VALIDATED; then break; fi
-              sleep 2
-            done
-            adb shell dumpsys connectivity > admin-output/connectivity.txt
-            grep -q VALIDATED admin-output/connectivity.txt
-            adb logcat -c
-            adb shell am start -n uz.dmed.mobile.admin/uz.dmed.mobile.MainActivity
-            sleep 20
-            adb shell uiautomator dump /sdcard/admin-ui.xml
-            adb pull /sdcard/admin-ui.xml admin-output/admin-ui.xml
-            adb shell screencap -p /sdcard/admin-launch.png
-            adb pull /sdcard/admin-launch.png admin-output/admin-launch.png
-            adb logcat -d > admin-output/logcat.txt
-            adb shell dumpsys activity activities > admin-output/activity.txt
-            grep 'uz.dmed.mobile.admin/uz.dmed.mobile.MainActivity' admin-output/activity.txt
-            python3 -c "from pathlib import Path; u=Path('admin-output/admin-ui.xml').read_text(); logs=Path('admin-output/logcat.txt').read_text(); assert 'Login' in u and 'Parol' in u, 'Admin login page did not render'; assert 'FATAL EXCEPTION' not in logs; print('PASS: Android 15 admin login rendered without fatal crash')"
+          script: bash mobile/android/admin-emulator.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:
