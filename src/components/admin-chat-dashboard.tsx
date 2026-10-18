@@ -3,6 +3,8 @@ import { UiText } from "@/components/ui-locale";
 
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { OperatorLeaderboard } from "@/components/operator-leaderboard";
+import type { OperatorRank } from "@/lib/operator-analytics-core";
 import { ChatModuleAnalytics, type ModuleStat } from "@/components/chat-module-analytics";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -38,6 +40,7 @@ type ChatStats = {
   stars?: ChatStarCounts;
   daily?: ChatDay[];
   modules?: ModuleStat[];
+  operators?: OperatorRank[];
 };
 
 const UZ_MONTHS = [
@@ -373,6 +376,8 @@ export function AdminChatDashboard({ locale = "uz" }: { locale?: Locale }) {
           </div>
         ))}
       </div>
+
+      <OperatorLeaderboard rows={stats?.operators || []} locale={locale} loading={loading && !stats} />
 
       <ChatModuleAnalytics rows={stats?.modules || []} loading={loading && !stats} />
 

@@ -100,6 +100,7 @@ export const clientRequests = sqliteTable("client_requests", {
 });
 
 export const chatMessages = sqliteTable("chat_messages", {
+  actorUserId: integer("actor_user_id").notNull().default(0),
   id: integer("id").primaryKey({ autoIncrement: true }),
   sessionId: text("session_id")
     .notNull()

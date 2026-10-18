@@ -1183,7 +1183,7 @@ export async function retryFailedTelegram(limit = 20) {
   return { ok: true as const, sent, connected: true };
 }
 
-export function addOperatorReply(sessionId: string, text: string) {
+export function addOperatorReply(sessionId: string, text: string, actorUserId = 0) {
   const session = getChatSession(sessionId);
   if (!session) return false;
   if (session.status === "closed") return false;
@@ -1195,6 +1195,7 @@ export function addOperatorReply(sessionId: string, text: string) {
   db.insert(chatMessages)
     .values({
       sessionId,
+      actorUserId,
       role: "dmed",
       body,
       telegramOk: 1,

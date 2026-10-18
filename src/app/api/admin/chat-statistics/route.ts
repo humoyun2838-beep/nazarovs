@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { requireAdmin, adminStatus } from "@/lib/admin";
+import { operatorRanking } from "@/lib/operator-analytics";
 import { chatDashboard } from "@/lib/chat";
 
 export const runtime = "nodejs";
@@ -17,5 +18,5 @@ export async function GET(request: NextRequest) {
   if (from && to && Date.parse(to) - Date.parse(from) > 399 * 86_400_000) {
     return NextResponse.json({ ok: false, error: "Bir martada ko‘pi bilan 400 kunlik davrni tanlang." }, { status: 400 });
   }
-  return NextResponse.json({ ok: true, stats: chatDashboard({ from, to }), updatedAt: new Date().toISOString() }, { headers: { "Cache-Control": "private, no-store" } });
+  return NextResponse.json({ ok: true, stats: { ...chatDashboard({ from, to }), operators: operatorRanking({ from, to }) }, updatedAt: new Date().toISOString() }, { headers: { "Cache-Control": "private, no-store" } });
 }

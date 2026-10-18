@@ -1,4 +1,5 @@
 "use client";
+import { OperatorPresence } from "@/components/operator-presence";
 import { UiText } from "@/components/ui-locale";
 
 
@@ -316,6 +317,7 @@ export function OperatorDesk({
 
   return (
     <div data-operator-desk="chat" className="flex h-full min-h-0 w-full text-[#122033]">
+      <OperatorPresence />
       <aside
         className={`${mobileThread ? "hidden" : "flex"} min-h-0 w-full flex-col border-r border-[#d5dee8] bg-white md:flex md:w-[340px] md:shrink-0`}
       >

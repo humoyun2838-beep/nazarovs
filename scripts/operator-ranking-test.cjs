@@ -1,0 +1,56 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const ts = require('typescript');
+const Module = require('node:module');
+const path = require('node:path');
+const Database = require('better-sqlite3');
+const filename = path.resolve('src/lib/operator-analytics-core.ts');
+const mod = new Module(filename, module);
+mod.filename = filename; mod.paths = module.paths;
+mod._compile(ts.transpileModule(fs.readFileSync(filename,'utf8'), { compilerOptions:{module:ts.ModuleKind.CommonJS} }).outputText, filename);
+const { readOperatorRanking, recordOperatorHeartbeat } = mod.exports;
+const db = new Database(':memory:');
+db.exec(`CREATE TABLE users(id INTEGER PRIMARY KEY,full_name TEXT,username TEXT,status TEXT,role TEXT);
+CREATE TABLE chat_messages(actor_user_id INTEGER,role TEXT,created_at TEXT);
+CREATE TABLE chat_sessions(closed_by_user_id INTEGER,status TEXT,closed_at TEXT,assigned_user_id INTEGER,created_at TEXT);
+CREATE TABLE operator_work_intervals(id INTEGER PRIMARY KEY,user_id INTEGER,started_at INTEGER,ended_at INTEGER,is_open INTEGER DEFAULT 1);
+INSERT INTO users VALUES(1,'One','one','active','operator'),(2,'Two','two','active','operator'),(3,'Blocked','three','blocked','operator'),(4,'Admin','admin','active','admin'),(5,'Zero','zero','active','operator');`);
+const now = Date.parse('2026-10-18T12:00:00Z');
+recordOperatorHeartbeat(db,1,now-30000); recordOperatorHeartbeat(db,1,now-15000); recordOperatorHeartbeat(db,1,now-15000); recordOperatorHeartbeat(db,1,now);
+assert.equal(db.prepare('SELECT SUM(ended_at-started_at) AS ms FROM operator_work_intervals').get().ms,30000,'Multiple tabs do not double count');
+recordOperatorHeartbeat(db,1,now+600000); recordOperatorHeartbeat(db,1,now+615000);
+assert.equal(db.prepare('SELECT SUM(ended_at-started_at) AS ms FROM operator_work_intervals').get().ms,45000,'Sleep/offline gap is not counted');
+recordOperatorHeartbeat(db,1,now-1000000);
+assert.equal(db.prepare('SELECT COUNT(*) AS n FROM operator_work_intervals').get().n,2,'Backward clock does not create overlap');
+const msg = db.prepare('INSERT INTO chat_messages VALUES(?,?,?)');
+msg.run(1,'dmed','2026-10-17T18:59:59.999Z'); // prior day Tashkent
+msg.run(1,'dmed','2026-10-17T19:00:00.000Z');
+msg.run(2,'dmed','2026-10-18T18:59:59.999Z');
+msg.run(2,'dmed','2026-10-18T19:00:00.000Z'); // next day Tashkent
+msg.run(0,'dmed','2026-10-18T10:00:00.000Z'); // AI/system/unattributed
+msg.run(1,'visitor','2026-10-18T10:00:00.000Z');
+msg.run(4,'dmed','2026-10-18T10:00:00.000Z'); // admin
+const close = db.prepare('INSERT INTO chat_sessions VALUES(?,?,?,?,?)');
+close.run(2,'closed','2026-10-18T10:00:00.000Z',1,'2020-01-01T00:00:00.000Z');
+close.run(2,'closed','2026-10-18T10:05:00.000Z',1,'2020-01-01T00:00:00.000Z');
+close.run(1,'open','2026-10-18T10:00:00.000Z',1,'2026-10-18T00:00:00.000Z');
+const result = readOperatorRanking(db,{from:'2026-10-18',to:'2026-10-18'},now+615000);
+assert.deepEqual(result.map(r=>r.id),[2,1,3,5],'Closed chat ranking, deterministic ties and zero operators');
+assert.equal(result[0].closed,2,'Attributed to closing operator, independent of assignment and creation date');
+assert.equal(result[0].messages,1,'Exclusive upper Tashkent day boundary');
+assert.equal(result[1].messages,1,'Visitor, AI and previous day messages excluded');
+assert.equal(result[1].activeSeconds,45);
+assert.equal(result[1].online,true);
+assert.equal(readOperatorRanking(db,{},now+700000).find(r=>r.id===1).online,false,'Stale presence expires');
+const midnight = Date.parse('2026-10-17T19:00:00Z');
+recordOperatorHeartbeat(db,3,midnight-15000); recordOperatorHeartbeat(db,3,midnight+15000);
+const clipped = readOperatorRanking(db,{from:'2026-10-18',to:'2026-10-18'},midnight+15000).find(r=>r.id===3);
+assert.equal(clipped.activeSeconds,15,'Interval clipped at date boundary');
+assert.equal(clipped.online,false,'Blocked operator cannot appear online');
+assert.equal(readOperatorRanking(db,{from:'2026-10-19',to:'2026-10-19'},now).find(r=>r.id===1).activeSeconds,0);
+recordOperatorHeartbeat(db,1,now+615001,false);
+assert.equal(readOperatorRanking(db,{},now+615002).find(r=>r.id===1).online,false,'Hidden page explicitly pauses presence');
+recordOperatorHeartbeat(db,1,now+620000);
+assert.equal(readOperatorRanking(db,{},now+620000).find(r=>r.id===1).activeSeconds,45,'Brief hidden period is not counted on return');
+console.log('PASS: operator ranking attribution, day boundaries, interval clipping, multiple tabs, stale presence, zero activity, AI exclusion');
+db.close();

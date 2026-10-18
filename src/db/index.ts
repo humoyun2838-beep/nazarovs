@@ -243,6 +243,24 @@ function createDb() {
     );
   }
 
+  if (!chatCols.some((c) => c.name === "actor_user_id")) {
+    sqlite.exec(`ALTER TABLE chat_messages ADD COLUMN actor_user_id INTEGER NOT NULL DEFAULT 0`);
+  }
+  sqlite.exec(`
+    CREATE INDEX IF NOT EXISTS idx_chat_message_actor ON chat_messages(actor_user_id, created_at);
+    CREATE TABLE IF NOT EXISTS operator_work_intervals (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      started_at INTEGER NOT NULL,
+      ended_at INTEGER NOT NULL,
+      is_open INTEGER NOT NULL DEFAULT 1
+    );
+    CREATE INDEX IF NOT EXISTS idx_operator_work_user ON operator_work_intervals(user_id, ended_at);
+  `);
+
+  const workCols = sqlite.prepare("PRAGMA table_info(operator_work_intervals)").all() as { name: string }[];
+  if (!workCols.some(c => c.name === "is_open")) sqlite.exec("ALTER TABLE operator_work_intervals ADD COLUMN is_open INTEGER NOT NULL DEFAULT 1");
+
   const sessionCols = sqlite.prepare(`PRAGMA table_info(chat_sessions)`).all() as {
     name: string;
   }[];
@@ -328,6 +346,7 @@ function createDb() {
   }
 
   sqlite.exec(`
+    CREATE INDEX IF NOT EXISTS idx_chat_sessions_closed_actor ON chat_sessions(closed_by_user_id, closed_at);
     CREATE INDEX IF NOT EXISTS idx_chat_sessions_status ON chat_sessions(status);
     CREATE INDEX IF NOT EXISTS idx_chat_sessions_operator ON chat_sessions(status, last_operator_at);
     CREATE INDEX IF NOT EXISTS idx_chat_sessions_thread ON chat_sessions(thread_id);

@@ -131,7 +131,7 @@ export async function POST(request: NextRequest) {
   if (!text.trim()) return NextResponse.json({ ok: false, error: "reply" }, { status: 400 });
   const ownership = claimChat(sessionId, Number(gate.session.sub));
   if (!ownership.ok) return NextResponse.json(ownership, { status: ownership.error === "missing" ? 404 : 409 });
-  if (!addOperatorReply(sessionId, text)) {
+  if (!addOperatorReply(sessionId, text, Number(gate.session.sub))) {
     const existing = adminSession(sessionId, { markRead: false });
     return NextResponse.json(
       { ok: false, error: existing?.status === "closed" ? "closed" : "reply" },
