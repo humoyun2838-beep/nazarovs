@@ -49,7 +49,7 @@ jobs:
           script: |
             adb install mobile/android/app/build/outputs/apk/admin/debug/app-admin-debug.apk
             adb logcat -c
-            adb shell am start -n uz.dmed.mobile.admin/.MainActivity
+            adb shell am start -n uz.dmed.mobile.admin/uz.dmed.mobile.MainActivity
             sleep 20
             adb shell uiautomator dump /sdcard/admin-ui.xml
             adb pull /sdcard/admin-ui.xml admin-output/admin-ui.xml
@@ -57,7 +57,7 @@ jobs:
             adb pull /sdcard/admin-launch.png admin-output/admin-launch.png
             adb logcat -d > admin-output/logcat.txt
             adb shell dumpsys activity activities > admin-output/activity.txt
-            grep 'uz.dmed.mobile.admin/.MainActivity' admin-output/activity.txt
+            grep 'uz.dmed.mobile.admin/uz.dmed.mobile.MainActivity' admin-output/activity.txt
             python3 -c "from pathlib import Path; u=Path('admin-output/admin-ui.xml').read_text(); logs=Path('admin-output/logcat.txt').read_text(); assert 'Login' in u and 'Parol' in u, 'Admin login page did not render'; assert 'FATAL EXCEPTION' not in logs; print('PASS: Android 15 admin login rendered without fatal crash')"
       - uses: actions/upload-artifact@v4
         if: always()
