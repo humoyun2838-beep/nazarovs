@@ -48,6 +48,15 @@ jobs:
           disable-animations: true
           script: |
             adb install mobile/android/app/build/outputs/apk/admin/debug/app-admin-debug.apk
+            adb shell cmd connectivity airplane-mode disable
+            adb shell svc wifi enable
+            adb shell svc data enable
+            for attempt in $(seq 1 45); do
+              if adb shell dumpsys connectivity | grep -q VALIDATED; then break; fi
+              sleep 2
+            done
+            adb shell dumpsys connectivity > admin-output/connectivity.txt
+            grep -q VALIDATED admin-output/connectivity.txt
             adb logcat -c
             adb shell am start -n uz.dmed.mobile.admin/uz.dmed.mobile.MainActivity
             sleep 20
