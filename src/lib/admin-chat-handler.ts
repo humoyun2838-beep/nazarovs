@@ -5,7 +5,7 @@ import {
   addOperatorReply,
   adminSession,
   chatDashboard,
-  chatInboxSummary,
+  chatInboxCounts,
   closeChatByOperator,
   expireIdleChats,
   listChatInbox,
@@ -24,6 +24,11 @@ export async function GET(request: NextRequest) {
   const denied = await requireChatOperator();
   if (denied) return NextResponse.json(denied, { status: adminStatus(denied) });
   expireIdleChats();
+  const view = request.nextUrl.searchParams.get("view");
+  const summary = chatInboxCounts();
+  if (view === "summary") {
+    return NextResponse.json({ ok: true, ...summary }, { headers: { "Cache-Control": "private, no-store" } });
+  }
   const session = await getSession();
   const isAdmin = session?.role === "admin";
   const q = request.nextUrl.searchParams.get("q") || "";
@@ -32,7 +37,6 @@ export async function GET(request: NextRequest) {
   const to = request.nextUrl.searchParams.get("to") || "";
   const folder = request.nextUrl.searchParams.get("f") || "all";
   const sessions = listChatInbox({ q, includeId, folder, limit: 150 });
-  const summary = chatInboxSummary();
   return NextResponse.json({
     ok: true,
     sessions,
@@ -42,7 +46,7 @@ export async function GET(request: NextRequest) {
     folders: summary.folders,
     templates: publicChatTemplates(),
     categories: listInquiryCategories(), // Materiallar katalogidagi jonli bo‘limlar.
-    stats: isAdmin ? chatDashboard({ from, to }) : undefined,
+    stats: isAdmin && view !== "inbox" ? chatDashboard({ from, to }) : undefined,
     aiAuto: isAiChatAuto(),
     aiReady: hasAiKey(),
   });

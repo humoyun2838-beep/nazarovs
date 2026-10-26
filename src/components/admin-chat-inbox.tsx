@@ -137,6 +137,7 @@ export function AdminChatInbox({
   async function loadList() {
     const request = ++listRequest.current;
     const params = new URLSearchParams();
+    params.set("view", "inbox");
     const q = queryRef.current.trim();
     if (q) params.set("q", q);
     if (activeRef.current) params.set("s", activeRef.current);

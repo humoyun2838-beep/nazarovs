@@ -15,20 +15,35 @@ export function AdminChatNav({ locale = "uz" }: { locale?: Locale }) {
 
   useEffect(() => {
     let cancelled = false;
+    let inFlight = false;
+    let controller: AbortController | null = null;
     async function tick() {
-      const res = await fetch("/api/admin/chat", { credentials: "same-origin" });
-      const data = (await res.json().catch(() => null)) as {
-        unread?: number;
-      } | null;
-      if (!cancelled && typeof data?.unread === "number") {
-        setUnread(data.unread);
+      if (cancelled || inFlight || document.hidden) return;
+      inFlight = true;
+      controller = new AbortController();
+      const timeout = window.setTimeout(() => controller?.abort(), 10000);
+      try {
+        const res = await fetch("/api/admin/chat?view=summary", {
+          credentials: "same-origin", signal: controller.signal,
+        });
+        if (!res.ok) return;
+        const data = await res.json() as { unread?: number };
+        if (!cancelled && typeof data.unread === "number") setUnread(data.unread);
+      } catch {
+        // Keep the last confirmed count during connection loss.
+      } finally {
+        window.clearTimeout(timeout);
+        inFlight = false;
       }
     }
-    tick();
-    const id = window.setInterval(tick, 4000);
+    void tick();
+    const id = window.setInterval(() => void tick(), 12000);
+    document.addEventListener("visibilitychange", tick);
     return () => {
       cancelled = true;
+      controller?.abort();
       window.clearInterval(id);
+      document.removeEventListener("visibilitychange", tick);
     };
   }, []);
 

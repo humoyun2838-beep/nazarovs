@@ -50,25 +50,26 @@ export function CatalogBrowse({
 
   useEffect(() => {
     const q = query.trim().toLowerCase();
+    const controller = new AbortController();
     if (q.length < 2) {
       setHits([]);
+      setSearching(false);
       setSearched("");
       return;
     }
     const timer = window.setTimeout(() => {
       setSearching(true);
-      fetch(`/api/search?q=${encodeURIComponent(q)}`)
+      fetch(`/api/search?q=${encodeURIComponent(q)}`, { signal: controller.signal })
         .then((res) => res.json())
         .then((data: { hits?: Array<{ slug: string; title: string; category: string; snippet: string }> }) => {
-          setHits(Array.isArray(data?.hits) ? data.hits : []);
+          if (!controller.signal.aborted) setHits(Array.isArray(data?.hits) ? data.hits : []);
         })
-        .catch(() => setHits([]))
+        .catch(() => { if (!controller.signal.aborted) setHits([]); })
         .finally(() => {
-          setSearching(false);
-          setSearched(q);
+          if (!controller.signal.aborted) { setSearching(false); setSearched(q); }
         });
     }, 220);
-    return () => window.clearTimeout(timer);
+    return () => { window.clearTimeout(timer); controller.abort(); };
   }, [query]);
 
   useEffect(() => {

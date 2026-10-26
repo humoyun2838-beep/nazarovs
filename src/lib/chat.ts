@@ -1438,7 +1438,7 @@ export function listChatInbox(opts?: {
   });
 }
 
-export function chatInboxSummary() {
+export function chatInboxCounts() {
   const total = (
     sqlite.prepare(`SELECT COUNT(*) AS n FROM chat_sessions`).get() as {
       n: number;
@@ -1475,17 +1475,11 @@ export function chatInboxSummary() {
       )
       .get() as { n: number }
   ).n;
-  const latest = listChatInbox({ limit: 1 })[0] || null;
-  const stats = chatDashboard();
-  return {
-    total,
-    unread,
-    waiting: unread,
-    replied,
-    folders: { all: total, new: unread, replied },
-    latest,
-    stats,
-  };
+  return { total, unread, waiting: unread, replied, folders: { all: total, new: unread, replied } };
+}
+
+export function chatInboxSummary() {
+  return { ...chatInboxCounts(), latest: listChatInbox({ limit: 1 })[0] || null, stats: chatDashboard() };
 }
 
 export function chatDashboard(opts?: { from?: string; to?: string }) {

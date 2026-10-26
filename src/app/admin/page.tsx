@@ -15,7 +15,7 @@ import { SiteHeader } from "@/components/site-header";
 import { AdminChatCard } from "@/components/admin-chat-card";
 import { AdminAiChat } from "@/components/admin-ai-chat";
 import { Button } from "@/components/ui/button";
-import { chatInboxSummary } from "@/lib/chat";
+import { chatInboxCounts } from "@/lib/chat";
 import { withLang } from "@/lib/locale";
 import { routes } from "@/lib/site";
 import { uiCopy } from "@/lib/ui-copy";
@@ -38,7 +38,7 @@ export default async function AdminPage() {
   const locale = await getLocale();
   const copy = uiCopy(locale);
   const nav = publicCopy(locale);
-  const chatUnread = chatInboxSummary().unread;
+  const chatUnread = chatInboxCounts().unread;
   const categories = await getCategories();
   const materialsByCategory = categories.map((category) => ({
     category,
