@@ -28,6 +28,7 @@ export function LanguageSwitcher({
       method: "POST",
       headers: { "content-type": "application/json" },
       credentials: "same-origin",
+      signal: AbortSignal.timeout(1500),
       body: JSON.stringify({ locale: next }),
     }); } catch { /* The URL still carries the selected language when preference saving fails. */ }
     const url = new URL(window.location.href);

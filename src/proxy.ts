@@ -12,6 +12,7 @@ import { publicSlugExists } from "@/lib/slug-exists";
 import { operatorAccess } from "@/lib/operators";
 import { isAdminAreaPath } from "@/lib/admin-area";
 import { routes } from "@/lib/site";
+import quizSlugs from '@/data/quiz-section-slugs.json';
 
 const cookieClear = {
   httpOnly: true,
@@ -66,7 +67,7 @@ export async function proxy(request: NextRequest) {
   if (process.env.SEPARATE_SITES === "1" && !pathname.startsWith("/api/") && !pathname.startsWith("/_next/") && !pathname.includes(".")) {
     const entryPort = pathname.startsWith("/admin") ? "3852"
       : pathname.startsWith("/operator") || pathname === "/chat" || pathname.startsWith("/chat/") ? "3853"
-      : pathname === "/nazarov" || pathname.startsWith("/b/") || pathname.startsWith("/m/") ? "3850" : "";
+      : pathname === "/nazarov" || pathname === "/test" || pathname.startsWith("/test/") || pathname.startsWith("/b/") || pathname.startsWith("/m/") ? "3850" : "";
     const currentHost = request.headers.get("x-forwarded-host") || request.headers.get("host") || "";
     if (entryPort && /^(127\.0\.0\.1|localhost):\d+$/.test(currentHost) && !currentHost.endsWith(`:${entryPort}`)) {
       return NextResponse.redirect(new URL(`${pathname}${request.nextUrl.search}`, `http://127.0.0.1:${entryPort}`));
@@ -87,6 +88,10 @@ export async function proxy(request: NextRequest) {
   }
 
   const materialMatch = pathname.match(/^\/m\/([^/]+)\/?$/);
+  const quizMatch = pathname.match(/^\/test\/([^/]+)\/?$/);
+  if(quizMatch && (!quizSlugs.includes(quizMatch[1]) || !publicSlugExists('category',quizMatch[1]))) {
+    return rewriteTo(request,'/__not-found');
+  }
   if (materialMatch && !publicSlugExists("material", decodeURIComponent(materialMatch[1]))) {
     return rewriteTo(request, "/__not-found");
   }

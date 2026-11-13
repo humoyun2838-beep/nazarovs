@@ -15,6 +15,7 @@ import { isFaqCategory, FAQ_CATEGORY_ART } from "@/lib/faq-dmed";
 import { getLocale } from "@/lib/locale-server";
 import { publicCopy } from "@/lib/public-copy";
 import { withLang } from "@/lib/locale";
+import { quizCopy } from "@/lib/quiz-copy";
 import {
   localizeCatalogDescription,
   localizeCatalogTitle,
@@ -32,7 +33,7 @@ export default async function MaterialsPage() {
     getDmedTreeSections().map((section) => [section.slug, section]),
   );
 
-  const items = categories.map((category, index) => {
+  const items = [{href:withLang('/test',locale),title:quizCopy(locale).title,description:quizCopy(locale).entry,icon:'✓',image:'/art/dmed-test.svg',cover:'',order:1}, ...categories.map((category, index) => {
     const node = treeBySlug.get(category.slug);
     return {
       href: withLang(
@@ -47,12 +48,12 @@ export default async function MaterialsPage() {
       ),
       icon: category.icon,
       cover: sectionWash(category.slug),
-      order: index + 1,
+      order: index + 2,
       image: isFaqCategory(category.slug)
         ? FAQ_CATEGORY_ART
         : sectionSticker(category.slug),
     };
-  });
+  })];
 
   return (
     <>

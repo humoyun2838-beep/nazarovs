@@ -4,6 +4,7 @@ import { FAQ_CATEGORY_SLUG } from "@/lib/faq-dmed";
 import { faqCategoryCopy } from "@/lib/faq-locale";
 import catalogI18n from "@/data/catalog-i18n.json";
 import { translateCatalog } from "@/lib/ui-translation";
+import sectionTitles from "@/data/section-titles.json";
 
 function norm(text: string) {
   return String(text || "")
@@ -470,6 +471,9 @@ export function localizeDescription(text: string, locale: Locale) {
 }
 
 export function localizeCatalogTitle(slug: string, title: string, locale: Locale) {
+  // Known section names must not fall back to partial word replacements.
+  const section = (sectionTitles as Record<string, Partial<Record<Locale, string>>>)[slug];
+  if (locale !== "uz" && section?.[locale]) return section[locale]!;
   const complete = translateCatalog(title, locale);
   if (complete) return complete;
   if (slug === FAQ_CATEGORY_SLUG) return faqCategoryCopy(locale).title;

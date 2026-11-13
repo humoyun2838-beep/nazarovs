@@ -59,7 +59,7 @@ export function CatalogBrowse({
     }
     const timer = window.setTimeout(() => {
       setSearching(true);
-      fetch(`/api/search?q=${encodeURIComponent(q)}`, { signal: controller.signal })
+      fetch(`/api/search?q=${encodeURIComponent(q)}&lang=${locale}`, { signal: controller.signal })
         .then((res) => res.json())
         .then((data: { hits?: Array<{ slug: string; title: string; category: string; snippet: string }> }) => {
           if (!controller.signal.aborted) setHits(Array.isArray(data?.hits) ? data.hits : []);
@@ -70,7 +70,7 @@ export function CatalogBrowse({
         });
     }, 220);
     return () => { window.clearTimeout(timer); controller.abort(); };
-  }, [query]);
+  }, [query, locale]);
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 export function PageBackdrop() {
   const pathname = usePathname() || "";
   const kind = pathname.startsWith("/admin") ? "admin" : "client";
-  if (pathname.startsWith("/operator") || pathname.startsWith("/b/") || pathname.startsWith("/m/")) return null;
+  if (pathname.startsWith("/operator") || pathname === '/test' || pathname.startsWith('/test/') || pathname.startsWith("/b/") || pathname.startsWith("/m/")) return null;
   return (
     <div aria-hidden className={`page-backdrop page-backdrop-${kind}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}

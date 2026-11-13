@@ -10,6 +10,7 @@ import { routes } from "@/lib/site";
 import { publicCopy } from "@/lib/public-copy";
 import { cn } from "@/lib/utils";
 import { BrandLogo } from "@/components/brand-logo";
+import { quizCopy } from "@/lib/quiz-copy";
 
 export { BrandLogo };
 
@@ -43,6 +44,7 @@ export function SiteHeader({
 
         <div className="flex max-w-full flex-wrap items-center justify-end gap-1.5 sm:gap-2">
           {locale && !chatOnly ? <LanguageSwitcher locale={locale} /> : null}
+          {!chatOnly ? <Button asChild variant="ghost" size="sm"><Link href={withLang('/test',locale||'uz')}>{quizCopy(locale||'uz').title}</Link></Button> : null}
           {role === "admin" ? (
             <>
               <Button asChild variant="ghost" size="sm">
