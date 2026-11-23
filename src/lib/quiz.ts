@@ -4,6 +4,8 @@ export type QuizQuestion = {
   id: string; prompt: string; explanation: string; source: string;
   choices: { id: string; text: string }[]; correct: string;
 };
+/** Savollar soni — bitta joyda. O'zgartirilsa UI matni va testlar ham moslashadi. */
+export const quizQuestionCount = 10;
 export type QuizAttempt = { version: string; answers: Record<string,string>; index: number; finished: boolean };
 export function quizScore(questions: QuizQuestion[], answers: Record<string,string>) {
   const answered = questions.filter(q => q.choices.some(c => c.id === answers[q.id])).length;
